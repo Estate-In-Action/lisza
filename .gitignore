@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.db-wal
+*.db-shm
+*.duckdb
+.env
+.env_secrets
+*.log
+logs/*.log
+data/uploads/*
+inbox/telegram/*
+inbox/email/*
+!.gitkeep
