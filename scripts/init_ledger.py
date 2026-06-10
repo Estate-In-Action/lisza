@@ -73,6 +73,43 @@ CREATE TABLE IF NOT EXISTS payee_rules (
     created_at   TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
+-- Accounts Receivable: client invoices. status='open' drives AR aging.
+CREATE TABLE IF NOT EXISTS invoices (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    party      TEXT NOT NULL,
+    issue_date TEXT NOT NULL,
+    due_date   TEXT NOT NULL,
+    amount     REAL NOT NULL,
+    status     TEXT NOT NULL DEFAULT 'open' CHECK(status IN ('open','paid')),
+    paid_date  TEXT,
+    entry_id   INTEGER REFERENCES entries(id),
+    memo       TEXT
+);
+
+-- Accounts Payable: vendor bills. status='unpaid' drives AP aging.
+CREATE TABLE IF NOT EXISTS bills (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    party      TEXT NOT NULL,
+    issue_date TEXT NOT NULL,
+    due_date   TEXT NOT NULL,
+    amount     REAL NOT NULL,
+    status     TEXT NOT NULL DEFAULT 'unpaid' CHECK(status IN ('unpaid','paid')),
+    paid_date  TEXT,
+    entry_id   INTEGER REFERENCES entries(id),
+    memo       TEXT
+);
+
+-- Manual recategorization: maps an entry to a user-chosen account, overriding
+-- the originally-posted expense/income split account in reports.
+CREATE TABLE IF NOT EXISTS category_overrides (
+    entry_id     INTEGER PRIMARY KEY REFERENCES entries(id),
+    account_code TEXT NOT NULL REFERENCES accounts(code),
+    updated_at   TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_invoices_status ON invoices(status);
+CREATE INDEX IF NOT EXISTS idx_bills_status    ON bills(status);
+
 CREATE VIEW IF NOT EXISTS v_account_balances AS
 SELECT a.code, a.name, a.type, a.sign_normal,
        COALESCE(SUM(s.dr), 0) AS total_dr,
