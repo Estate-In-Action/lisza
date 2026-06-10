@@ -1,122 +1,45 @@
 code,name,type,sign_normal,group
-581,Advertising and Promotion,expense,debit,business
-587,Dues and Subscriptions,expense,debit,business
-585,Legal & Research Services,expense,debit,business
-582,Meals & Entertainment,expense,debit,business
-580,Office Supplies,expense,debit,business
-546,Cell Phone,expense,debit,communications
-550,Computer & Internet,expense,debit,communications
-545,Telephone,expense,debit,communications
-596,Accumulated Depreciation,asset,credit,contra_asset
-210,Credit Card Payable 1,liability,credit,credit_cards
-211,Credit Card Payable 2,liability,credit,credit_cards
-110,Accounts Receivable,asset,debit,current_assets
-111,Accounts Receivable Gross,asset,debit,current_assets
-106,Cash App or Google Pay - paypal/zelle,asset,debit,current_assets
-102,Business Checking,asset,debit,current_assets
-105,Money Market,asset,debit,current_assets
-103,Business Savings,asset,debit,current_assets
-104,Business Savings 2,asset,debit,current_assets
 101,Cash on Hand,asset,debit,current_assets
-107,"Digital Assets",asset,debit,current_assets
+102,Business Checking,asset,debit,current_assets
+103,Business Savings,asset,debit,current_assets
+106,Online Payments (Stripe/PayPal),asset,debit,current_assets
+110,Accounts Receivable,asset,debit,current_assets
+120,Prepaid Expenses,asset,debit,current_assets
+160,Equipment & Furniture,asset,debit,fixed_assets
+161,Computers & Software,asset,debit,fixed_assets
+165,Accumulated Depreciation,asset,debit,fixed_assets
 200,Accounts Payable,liability,credit,current_liabilities
-202,Bill of Exchange - Obligation / payable,liability,credit,current_liabilities
-220,Current Portion of Long-term Debt,liability,credit,current_liabilities
-201,Promissory Note Payable,liability,credit,current_liabilities
-586,Continuing Education,expense,debit,development
-542,Personal Development,expense,debit,development
-537,Professional Development,expense,debit,development
-584,Professional Development & Fees,expense,debit,development
-400,Employment Income,income,credit,earned_income
-401,Employment Income 2,income,credit,earned_income
-421,Gross Pay Income,income,credit,earned_income
-430,Independent Contractor Income,income,credit,earned_income
-431,Independent Contractor Income 2,income,credit,earned_income
-300,Net Worth (Owner's Equity),equity,credit,equity
-543,Child Care & Education,expense,debit,family
-597,Bank Fees,expense,debit,financial
-598,Interest Expense,expense,debit,financial
-588,Investment Fees,expense,debit,financial
-583,Contributions / donations,expense,debit,giving
-109,Savings — Car Down Payment,asset,debit,goal_savings
-147,Savings — Heras Wedding,asset,debit,goal_savings
-146,Savings — House Down Payment,asset,debit,goal_savings
-148,Savings — Kids College,asset,debit,goal_savings
-108,Savings — Vacation,asset,debit,goal_savings
-411,Disability Income,income,credit,gov_income
-402,Social Security Income,income,credit,gov_income
-533,Medical & Healthcare,expense,debit,health
-527,Pharmacy,expense,debit,health
-530,Garden Pest Control,expense,debit,housing
-523,Home Decor & Furnishings,expense,debit,housing
-522,Home Security,expense,debit,housing
-512,Housing (Mortgage or Rent),expense,debit,housing
-520,"Repairs, Maintenance & Supplies - Household",expense,debit,housing
-526,"Seeds, Gardening Supplies & Equipment",expense,debit,housing
-503,Insurance - Auto,expense,debit,insurance
-502,Insurance - Health,expense,debit,insurance
-510,Insurance - Life,expense,debit,insurance
-511,Insurance - Professional Liability,expense,debit,insurance
-122,Bill of Exchange Settlement Adjustment - Contra,asset,debit,investments
-120,Investment Accounts,asset,debit,investments
-143,Investment Accounts,asset,debit,investments
-121,Pledged Asset - Bill of Exchange,asset,debit,investments
-529,Date Night,expense,debit,leisure
-534,Entertainment & Recreation,expense,debit,leisure
-541,Gifts,expense,debit,leisure
-535,Hobbies,expense,debit,leisure
-540,Television & Streaming Services,expense,debit,leisure
-544,Vacation,expense,debit,leisure
-528,Alcohol & Liquor,expense,debit,living
-532,Clothing & Accessories,expense,debit,living
-525,Dining Out,expense,debit,living
-524,Food & Personal Care,expense,debit,living
-531,Personal Care,expense,debit,living
-251,Loan Payable,liability,credit,long_term_debt
-253,Loan Payable - Vehicle,liability,credit,long_term_debt
-252,Loan Payable 2,liability,credit,long_term_debt
-250,Mortgage Payable,liability,credit,long_term_debt
-260,Vehicle Loans,liability,credit,long_term_debt
-595,Depreciation Expense,expense,debit,non_cash
-594,Miscellaneous Expense,expense,debit,other
-589,Miscellaneous Expenses,expense,debit,other
-490,Miscellaneous Income,income,credit,other_income
-420,Other Income,income,credit,other_income
-440,Interest Earned,income,credit,passive_income
-410,Investment Income,income,credit,passive_income
-180,Home Furnishings & Decor,asset,debit,personal_property
-170,Office Furniture and Equipment,asset,debit,personal_property
-551,Pet General Expense,expense,debit,pets
-552,Pet Medical & Veterinary,expense,debit,pets
-130,Prepaid Expense - auto insurance,asset,debit,prepaid
-131,Prepaid Expense - health insurance,asset,debit,prepaid
-151,Residence - Building,asset,debit,real_property
-150,Residence - Land,asset,debit,real_property
-152,Residence - Leaseholds,asset,debit,real_property
-140,Emergency Fund,asset,debit,reserves
-144,IRA 1,asset,debit,retirement
-145,IRA 2,asset,debit,retirement
-141,Retirement Savings,asset,debit,retirement
-142,Retirement Savings 2,asset,debit,retirement
-230,Federal Income Tax Payable,liability,credit,tax_payables
-232,Property Tax Payable,liability,credit,tax_payables
-233,Sales Tax Payable,liability,credit,tax_payables
-231,State Income Tax Payable,liability,credit,tax_payables
-592,Federal Income Tax,expense,debit,taxes
-500,Property Tax,expense,debit,taxes
-590,Property Tax,expense,debit,taxes
-501,Sales Taxes,expense,debit,taxes
-591,Sales Taxes,expense,debit,taxes
-593,State Income Tax,expense,debit,taxes
-599,Tax Expense,expense,debit,taxes
-571,Public Transportation & Rideshare,expense,debit,transportation
-573,Repairs & Maintenance - Vehicle,expense,debit,transportation
-536,Transportation,expense,debit,transportation
-560,Vehicle Expense,expense,debit,transportation
-572,Travel & Lodging,expense,debit,travel
-513,Utilities - Gas,expense,debit,utilities
-514,Utilities - electric,expense,debit,utilities
-515,Utilities - other,expense,debit,utilities
-161,Vehicle 1 - TDS,asset,debit,vehicles
-162,Vehicle 2 - TMS,asset,debit,vehicles
-160,Vehicles & Equipment,asset,debit,vehicles
+210,Business Credit Card,liability,credit,current_liabilities
+211,Business Credit Card 2,liability,credit,current_liabilities
+230,Sales Tax Payable,liability,credit,current_liabilities
+250,Income Tax Payable,liability,credit,current_liabilities
+260,Equipment Loan Payable,liability,credit,long_term_debt
+300,Owner's Equity,equity,credit,equity
+400,Service Revenue,income,credit,revenue
+410,Consulting Revenue,income,credit,revenue
+420,Retainer Revenue,income,credit,revenue
+430,Project Revenue,income,credit,revenue
+440,Interest Income,income,credit,revenue
+490,Other Income,income,credit,revenue
+500,Subcontractor Costs,expense,debit,cost_of_services
+505,Media & Ad Spend,expense,debit,cost_of_services
+510,Office Supplies,expense,debit,operating_expenses
+515,Printing & Production,expense,debit,cost_of_services
+520,Rent,expense,debit,operating_expenses
+525,Meals & Entertainment,expense,debit,operating_expenses
+530,Travel,expense,debit,operating_expenses
+535,Utilities,expense,debit,operating_expenses
+540,Software & Subscriptions,expense,debit,operating_expenses
+545,Internet & Phone,expense,debit,operating_expenses
+550,Contract & Professional Services,expense,debit,operating_expenses
+555,Salaries & Wages,expense,debit,operating_expenses
+556,Payroll Taxes,expense,debit,operating_expenses
+560,Equipment & Tools,expense,debit,operating_expenses
+565,Advertising & Marketing,expense,debit,operating_expenses
+570,Insurance,expense,debit,operating_expenses
+575,Bank & Merchant Fees,expense,debit,operating_expenses
+580,Dues & Memberships,expense,debit,operating_expenses
+585,Continuing Education,expense,debit,operating_expenses
+590,Miscellaneous Expense,expense,debit,operating_expenses
+592,Income Tax Expense,expense,debit,taxes
+595,Depreciation Expense,expense,debit,operating_expenses
