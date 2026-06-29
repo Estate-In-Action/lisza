@@ -43,3 +43,8 @@ code,name,type,sign_normal,group
 590,Miscellaneous Expense,expense,debit,operating_expenses
 592,Income Tax Expense,expense,debit,taxes
 595,Depreciation Expense,expense,debit,operating_expenses
+245,Federal Income Tax Withheld Payable,liability,credit,current_liabilities
+246,FICA Payable,liability,credit,current_liabilities
+247,State Income Tax Withheld Payable,liability,credit,current_liabilities
+248,FUTA Payable,liability,credit,current_liabilities
+249,SUTA Payable,liability,credit,current_liabilities
