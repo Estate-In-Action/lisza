@@ -67,7 +67,7 @@ function kv(k, v) {
 function renderTiles() {
   const cards = DATA.clients.map(c => `
     <div class="card">
-      <h3>${esc(c.display_name)}${badge(c)}</h3>
+      <h3><a class="clink" href="#client/${esc(c.slug)}">${esc(c.display_name)}</a>${badge(c)}</h3>
       <div class="muted">${esc(c.entity_type || "")}</div>
       <div class="kv"><span>Cash</span><span class="money pos">${money(c.cash)}</span></div>
       <div class="kv"><span>Open AR</span><span class="money">${money(c.open_ar)}</span></div>
@@ -82,7 +82,7 @@ function renderList() {
   const head = `<tr><th>Client</th><th>Type</th><th>Cash</th><th>Open AR</th>
     <th>Open AP</th><th>Last entry</th></tr>`;
   const body = DATA.clients.map(c => `
-    <tr><td>${esc(c.display_name)}${badge(c)}</td><td style="text-align:left">${esc(c.entity_type || "")}</td>
+    <tr><td><a class="clink" href="#client/${esc(c.slug)}">${esc(c.display_name)}</a>${badge(c)}</td><td style="text-align:left">${esc(c.entity_type || "")}</td>
     <td class="money">${money(c.cash)}</td><td class="money">${money(c.open_ar)}</td>
     <td class="money">${money(c.open_ap)}</td><td>${esc(c.last_entry || "—")}</td></tr>`).join("");
   return `<table>${head}${body}</table>`;
@@ -96,7 +96,7 @@ function renderRolodex() {
     <div class="rolo">
       <div class="rolo-nav">
         <button id="rolo-prev" aria-label="Previous client">‹ prev</button>
-        <strong>${esc(c.display_name)}${badge(c)}</strong>
+        <strong><a class="clink" href="#client/${esc(c.slug)}">${esc(c.display_name)}</a>${badge(c)}</strong>
         <button id="rolo-next" aria-label="Next client">next ›</button>
       </div>
       <div class="muted">${esc(c.entity_type || "")} · client ${roloIndex + 1} of ${DATA.clients.length}</div>
@@ -148,14 +148,115 @@ function initLayoutButtons() {
   });
 }
 
-fetch("dashboard.json").then(r => r.json()).then(d => {
-  DATA = d;
-  loadPrefs();
-  document.getElementById("stamp").textContent = "Data as of " + d.generated_at;
-  initLayoutButtons();
-  buildFieldToggles();
-  render();
-}).catch(e => {
-  document.getElementById("board").innerHTML =
-    `<p class="muted">Could not load dashboard.json (${esc(e)}).</p>`;
-});
+function agingRows(a) {
+  const b = a.aging;
+  return [["Current", b.current], ["1–30", b.d1_30], ["31–60", b.d31_60],
+          ["61–90", b.d61_90], ["90+", b.d90_plus]]
+    .map(([k, v]) => kv(k, money(v))).join("");
+}
+
+function topOpenRows(items) {
+  if (!items || !items.length) return `<div class="muted">None open</div>`;
+  return items.map(it =>
+    `<div class="kv"><span>${esc(it.party)} ` +
+    `<span class="muted">${esc(it.due_date)}` +
+    `${it.days_past_due > 0 ? " · " + it.days_past_due + "d" : ""}</span></span>` +
+    `<span class="money">${money(it.amount)}</span></div>`).join("");
+}
+
+function trendRows(monthly) {
+  return (monthly || []).slice(-6).map(m =>
+    `<div class="kv"><span>${esc(m.month)}</span>` +
+    `<span class="money">${money(m.revenue)} ` +
+    `<span class="muted">rev</span> · ` +
+    `<span class="${m.net >= 0 ? "pos" : ""}">${money(m.net)} net</span>` +
+    `</span></div>`).join("");
+}
+
+function renderClientDetail(d) {
+  const ents = (d.admin.entities || []);
+  const entRows = ents.length > 1
+    ? "<h4>Entities</h4>" + ents.map(e =>
+        `<div class="kv"><span>${esc(e.name)}</span>` +
+        `<span class="muted">${esc(e.type)}</span></div>`).join("")
+    : "";
+  return `
+    <div class="detail">
+      <a class="back" href="#">‹ all clients</a>
+      <h2>${esc(d.display_name)} <span class="muted">${esc(d.entity_type || "")}</span></h2>
+      <div class="stamp">As of ${esc(d.as_of || "—")}</div>
+      <div class="detail-tiles">
+        <div class="card"><h3>Accounts Receivable</h3>
+          <div class="kv"><span>Open</span><span class="money">${money(d.ar.open_total)} · ${esc(d.ar.open_count)}</span></div>
+          ${agingRows(d.ar)}
+          <h4>Top open</h4>${topOpenRows(d.ar.top_open)}
+        </div>
+        <div class="card"><h3>Accounts Payable</h3>
+          <div class="kv"><span>Open</span><span class="money">${money(d.ap.open_total)} · ${esc(d.ap.open_count)}</span></div>
+          ${agingRows(d.ap)}
+          <h4>Top open</h4>${topOpenRows(d.ap.top_open)}
+        </div>
+        <div class="card"><h3>Admin</h3>
+          ${kv("Legal name", d.admin.legal_name || "—")}
+          ${kv("EIN", d.admin.ein_masked || "—")}
+          ${kv("Fiscal year end", d.admin.fiscal_year_end || "—")}
+          ${kv("Filing cadence", d.admin.filing_cadence || "—")}
+          ${kv("Next filing due", d.admin.next_filing_due || "—")}
+          ${entRows}
+        </div>
+        <div class="card"><h3>Historical</h3>
+          ${kv("Data span", (d.historical.span.first || "—") + " → " + (d.historical.span.last || "—"))}
+          ${kv("Posted entries", d.historical.entry_count)}
+          <h4>Recent months</h4>${trendRows(d.historical.monthly)}
+        </div>
+        <div class="card payroll-stub"><h3>Payroll</h3>
+          <div class="muted">${esc(d.payroll.message)}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function parseHash() {
+  const h = (typeof location !== "undefined" ? location.hash : "").replace(/^#/, "");
+  if (h.indexOf("client/") === 0) return { view: "client", slug: h.slice(7) };
+  return { view: "dashboard" };
+}
+
+function route() {
+  const r = parseHash();
+  const controls = document.querySelector(".controls");
+  const board = document.getElementById("board");
+  const stamp = document.getElementById("stamp");
+  if (r.view === "client") {
+    if (controls) controls.style.visibility = "hidden";
+    if (stamp) stamp.textContent = "";
+    board.innerHTML = `<p class="muted">Loading…</p>`;
+    fetch(`clients/${encodeURIComponent(r.slug)}.json`)
+      .then(x => x.json())
+      .then(d => { board.innerHTML = renderClientDetail(d); })
+      .catch(e => { board.innerHTML =
+        `<p class="muted">Could not load client (${esc(e)}).</p>`; });
+  } else {
+    if (controls) controls.style.visibility = "visible";
+    if (stamp && DATA) stamp.textContent = "Data as of " + DATA.generated_at;
+    render();
+  }
+}
+
+if (typeof document !== "undefined" && document.getElementById) {
+  window.addEventListener("hashchange", route);
+  fetch("dashboard.json").then(r => r.json()).then(d => {
+    DATA = d;
+    loadPrefs();
+    initLayoutButtons();
+    buildFieldToggles();
+    route();
+  }).catch(e => {
+    document.getElementById("board").innerHTML =
+      `<p class="muted">Could not load dashboard.json (${esc(e)}).</p>`;
+  });
+}
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { esc, money, kv, renderClientDetail, renderTiles, parseHash };
+}
