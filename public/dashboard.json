@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-06-29T03:35:10Z",
+  "prefs": {
+    "layout": "tile",
+    "card_fields": [
+      "cash",
+      "open_ar",
+      "open_ap",
+      "last_entry"
+    ]
+  },
+  "clients": [
+    {
+      "slug": "guitar-works",
+      "display_name": "Guitar Works",
+      "entity_type": "llc",
+      "status": "active",
+      "cash": 512051.47,
+      "open_ar": 179352.57,
+      "open_ap": 63496.38,
+      "ar_count": 23,
+      "ap_count": 14,
+      "entity_count": 1,
+      "consolidates": false,
+      "last_entry": "2026-06-09",
+      "next_filing_due": "2026-07-31"
+    },
+    {
+      "slug": "harborside-group",
+      "display_name": "Harborside Restaurant Group",
+      "entity_type": "llc",
+      "status": "active",
+      "cash": 1545642.03,
+      "open_ar": 2578035.13,
+      "open_ap": 1194746.72,
+      "ar_count": 150,
+      "ap_count": 68,
+      "entity_count": 3,
+      "consolidates": true,
+      "last_entry": "2026-06-09",
+      "next_filing_due": "2026-07-31"
+    },
+    {
+      "slug": "jb-design",
+      "display_name": "J.B. Design",
+      "entity_type": "sole_prop",
+      "status": "active",
+      "cash": 139870.59,
+      "open_ar": 204746.75,
+      "open_ap": 35273.87,
+      "ar_count": 48,
+      "ap_count": 16,
+      "entity_count": 1,
+      "consolidates": false,
+      "last_entry": "2026-06-08",
+      "next_filing_due": "2026-07-31"
+    }
+  ]
+}

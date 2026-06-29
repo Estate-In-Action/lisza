@@ -1,3 +1,4 @@
+import json
 import client_profiles
 import seed_client
 import tenancy
@@ -45,3 +46,12 @@ def test_build_dashboard_excludes_archived(tmp_path, monkeypatch):
     reg.close()
     data = build_dashboard.build_dashboard()
     assert [c["slug"] for c in data["clients"]] == ["harborside-group"]
+
+
+def test_write_dashboard_writes_file(tmp_path, monkeypatch):
+    _setup(tmp_path, monkeypatch)
+    out = build_dashboard.write_dashboard(tmp_path / "out" / "dashboard.json")
+    assert out.exists()
+    data = json.loads(out.read_text())
+    assert data["prefs"]["layout"] == "tile"
+    assert len(data["clients"]) == 2
