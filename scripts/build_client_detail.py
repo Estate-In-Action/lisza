@@ -97,3 +97,76 @@ def posted_span(con: sqlite3.Connection):
     n = con.execute(
         "SELECT COUNT(*) FROM entries WHERE status='posted'").fetchone()[0]
     return first, last, n
+
+
+def build_client_detail(slug: str) -> dict:
+    db = tenancy.resolve_db(slug)
+    con = sqlite3.connect(db)
+    con.row_factory = sqlite3.Row
+    as_of = con.execute(
+        "SELECT MAX(entry_date) FROM entries WHERE status='posted'").fetchone()[0]
+    inv = [dict(r) for r in con.execute(
+        "SELECT party, due_date, amount FROM invoices WHERE status='open'")]
+    bil = [dict(r) for r in con.execute(
+        "SELECT party, due_date, amount FROM bills WHERE status='unpaid'")]
+    prof = con.execute(
+        "SELECT slug, display_name, legal_name, ein, entity_type, "
+        "fiscal_year_end, filing_cadence FROM client_profile").fetchone()
+    ents = [dict(r) for r in con.execute(
+        "SELECT name, type FROM entities WHERE active=1 "
+        "ORDER BY is_default DESC, id")]
+    first, last, entry_count = posted_span(con)
+    monthly = monthly_trend(con, as_of) if as_of else []
+    con.close()
+
+    next_due = None
+    if as_of:
+        next_due = tenancy.compute_next_filing_due(
+            (prof["filing_cadence"] or "quarterly"),
+            date.fromisoformat(as_of),
+            (prof["fiscal_year_end"] or "12-31")).isoformat()
+
+    return {
+        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "slug": prof["slug"],
+        "display_name": prof["display_name"],
+        "entity_type": prof["entity_type"],
+        "status": "active",
+        "as_of": as_of,
+        "ar": aging_buckets(inv, as_of) if as_of else aging_buckets([], "1970-01-01"),
+        "ap": aging_buckets(bil, as_of) if as_of else aging_buckets([], "1970-01-01"),
+        "admin": {
+            "legal_name": prof["legal_name"],
+            "ein_masked": mask_ein(prof["ein"]),
+            "fiscal_year_end": prof["fiscal_year_end"],
+            "filing_cadence": prof["filing_cadence"],
+            "next_filing_due": next_due,
+            "entities": ents,
+        },
+        "historical": {
+            "span": {"first": first, "last": last},
+            "monthly": monthly,
+            "entry_count": entry_count,
+        },
+        "payroll": {"status": "pending",
+                    "message": "Payroll engine ships in 3B/3C"},
+    }
+
+
+def write_client_detail(slug: str, path=None) -> Path:
+    out = Path(path) if path else PUBLIC_DIR / "clients" / f"{slug}.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(build_client_detail(slug), indent=2))
+    return out
+
+
+def write_all() -> int:
+    n = 0
+    for row in tenancy.list_clients():
+        write_client_detail(row.slug)
+        n += 1
+    return n
+
+
+if __name__ == "__main__":
+    print(f"wrote {write_all()} client detail files")
