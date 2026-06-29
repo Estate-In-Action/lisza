@@ -35,3 +35,13 @@ def test_aging_empty():
     assert r["open_total"] == 0.0
     assert r["open_count"] == 0
     assert r["top_open"] == []
+
+
+def test_mask_ein_keeps_last_four():
+    assert bcd.mask_ein("47-2201234") == "••-•••1234"
+
+
+def test_mask_ein_none_and_short():
+    assert bcd.mask_ein(None) is None
+    assert bcd.mask_ein("") is None
+    assert bcd.mask_ein("12") is None

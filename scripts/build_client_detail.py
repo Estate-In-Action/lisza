@@ -43,3 +43,12 @@ def aging_buckets(items, as_of: str) -> dict:
     top = sorted(enriched, key=lambda r: r["amount"], reverse=True)[:TOP_N]
     return {"open_total": round(total, 2), "open_count": count,
             "aging": buckets, "top_open": top}
+
+
+def mask_ein(ein: str | None) -> str | None:
+    if not ein:
+        return None
+    digits = "".join(ch for ch in ein if ch.isdigit())
+    if len(digits) < 4:
+        return None
+    return "••-•••" + digits[-4:]
