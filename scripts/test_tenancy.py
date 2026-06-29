@@ -226,3 +226,12 @@ def test_ensure_house_registers_hidden_full_schema_book(tmp_path, monkeypatch):
     assert {"accounts", "entries", "splits", "invoices", "bills",
             "entities", "client_profile", "employees",
             "payroll_runs", "payroll_lines"} <= tables
+
+
+def test_list_clients_excludes_house(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    tenancy.register_client(slug="real-co", display_name="Real Co")
+    tenancy.ensure_house()
+    slugs = [r.slug for r in tenancy.list_clients()]
+    assert "real-co" in slugs
+    assert "_house" not in slugs

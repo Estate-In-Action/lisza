@@ -103,7 +103,8 @@ def list_clients(status: str = "active") -> list[ClientRow]:
     con = sqlite3.connect(registry_path())
     con.row_factory = sqlite3.Row
     rows = con.execute(
-        "SELECT * FROM clients WHERE status=? ORDER BY slug", (status,)).fetchall()
+        "SELECT * FROM clients WHERE status=? AND kind != 'house' ORDER BY slug",
+        (status,)).fetchall()
     con.close()
     return [ClientRow(r["client_id"], r["slug"], r["db_path"], r["status"],
                       r["display_name"], r["entity_type"]) for r in rows]
