@@ -52,3 +52,26 @@ def test_ensure_book_schema_is_idempotent(tmp_path):
     n_default = con.execute(
         "SELECT COUNT(*) FROM entities WHERE is_default=1").fetchone()[0]
     assert n_default == 1
+
+
+import tenancy
+
+
+def test_registry_init_and_resolve(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    reg = tenancy.registry_db()
+    assert reg.exists()
+    # resolve_db builds the conventional per-client path
+    p = tenancy.resolve_db("guitar-works")
+    assert p == tmp_path / "clients" / "guitar-works" / "ledger.db"
+
+
+def test_resolve_db_path_prefers_client_then_env_then_legacy(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    monkeypatch.delenv("LISZA_DB", raising=False)
+    # explicit client wins
+    assert tenancy.resolve_db_path(client="acme") == \
+        tmp_path / "clients" / "acme" / "ledger.db"
+    # env fallback
+    monkeypatch.setenv("LISZA_DB", str(tmp_path / "custom.db"))
+    assert tenancy.resolve_db_path() == tmp_path / "custom.db"
