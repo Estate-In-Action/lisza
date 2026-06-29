@@ -191,3 +191,14 @@ def test_existing_client_rows_default_to_kind_client(tmp_path, monkeypatch):
     kind = con.execute("SELECT kind FROM clients WHERE slug='defaults-co'").fetchone()[0]
     con.close()
     assert kind == "client"
+
+
+def test_register_client_writes_kind(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    tenancy.register_client(slug="house-ish", display_name="Houseish", kind="house")
+    tenancy.register_client(slug="plain-co", display_name="Plain Co")  # default
+    con = sqlite3.connect(tenancy.registry_path())
+    kinds = dict(con.execute("SELECT slug, kind FROM clients").fetchall())
+    con.close()
+    assert kinds["house-ish"] == "house"
+    assert kinds["plain-co"] == "client"

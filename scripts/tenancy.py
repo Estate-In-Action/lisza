@@ -156,7 +156,7 @@ def _ledger_core_schema(con: sqlite3.Connection) -> None:
 def register_client(*, slug: str, display_name: str, legal_name: str | None = None,
                     entity_type: str | None = None, ein: str | None = None,
                     fiscal_year_end: str = "12-31", filing_cadence: str = "quarterly",
-                    active_window: str = "1y") -> str:
+                    active_window: str = "1y", kind: str = "client") -> str:
     db = resolve_db(slug)
     db.parent.mkdir(parents=True, exist_ok=True)
     client_id = uuid.uuid4().hex[:12]
@@ -180,9 +180,9 @@ def register_client(*, slug: str, display_name: str, legal_name: str | None = No
     reg = sqlite3.connect(registry_path())
     reg.execute(
         """INSERT OR REPLACE INTO clients
-           (client_id, slug, db_path, status, display_name, entity_type)
-           VALUES (?,?,?,?,?,?)""",
-        (client_id, slug, str(db), "active", display_name, entity_type))
+           (client_id, slug, db_path, status, display_name, entity_type, kind)
+           VALUES (?,?,?,?,?,?,?)""",
+        (client_id, slug, str(db), "active", display_name, entity_type, kind))
     reg.commit()
     reg.close()
     return client_id
