@@ -27,4 +27,12 @@ def account_balance(con: sqlite3.Connection, account: str, *,
     if as_of:
         sql.append("AND e.entry_date<=?")
         params.append(as_of)
-    return con.execute(" ".join(sql), params).fetchone()[0]
+    raw = con.execute(" ".join(sql), params).fetchone()[0]
+    # Report the account's natural (sign-normal) balance: debit-normal accounts
+    # carry a positive dr-cr; credit-normal accounts (revenue, liabilities,
+    # equity) are flipped so a balance reads as a positive figure.
+    sign = con.execute(
+        "SELECT sign_normal FROM accounts WHERE code=?", (account,)).fetchone()
+    if sign and sign[0] == "credit":
+        return round(-raw, 2)
+    return raw
