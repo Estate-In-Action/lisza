@@ -1,0 +1,240 @@
+{
+  "generated_at": "2026-06-29T04:33:05Z",
+  "slug": "guitar-works",
+  "display_name": "Guitar Works",
+  "entity_type": "llc",
+  "status": "active",
+  "as_of": "2026-06-09",
+  "ar": {
+    "open_total": 179352.57,
+    "open_count": 23,
+    "aging": {
+      "current": 48169.34,
+      "d1_30": 13123.68,
+      "d31_60": 0.0,
+      "d61_90": 0.0,
+      "d90_plus": 118059.55
+    },
+    "top_open": [
+      {
+        "party": "Riverside Studios LLC",
+        "due_date": "2024-07-19",
+        "amount": 16266.34,
+        "days_past_due": 690
+      },
+      {
+        "party": "Greenfield Landscaping",
+        "due_date": "2022-05-24",
+        "amount": 13982.17,
+        "days_past_due": 1477
+      },
+      {
+        "party": "Lantern Logistics",
+        "due_date": "2026-05-13",
+        "amount": 13123.68,
+        "days_past_due": 27
+      },
+      {
+        "party": "Riverside Studios LLC",
+        "due_date": "2022-11-23",
+        "amount": 11258.44,
+        "days_past_due": 1294
+      },
+      {
+        "party": "Tidewater Marketing",
+        "due_date": "2026-07-08",
+        "amount": 11078.01,
+        "days_past_due": -29
+      },
+      {
+        "party": "Northgate Retail",
+        "due_date": "2026-06-17",
+        "amount": 10351.27,
+        "days_past_due": -8
+      },
+      {
+        "party": "Bluepeak Ventures",
+        "due_date": "2026-06-24",
+        "amount": 10307.07,
+        "days_past_due": -15
+      },
+      {
+        "party": "Northgate Retail",
+        "due_date": "2022-10-26",
+        "amount": 10258.34,
+        "days_past_due": 1322
+      }
+    ]
+  },
+  "ap": {
+    "open_total": 63496.38,
+    "open_count": 14,
+    "aging": {
+      "current": 15516.57,
+      "d1_30": 0.0,
+      "d31_60": 0.0,
+      "d61_90": 0.0,
+      "d90_plus": 47979.81
+    },
+    "top_open": [
+      {
+        "party": "Northstar Subcontractors",
+        "due_date": "2025-10-18",
+        "amount": 11127.05,
+        "days_past_due": 234
+      },
+      {
+        "party": "Northstar Subcontractors",
+        "due_date": "2026-06-18",
+        "amount": 10772.97,
+        "days_past_due": -9
+      },
+      {
+        "party": "Northstar Subcontractors",
+        "due_date": "2026-03-05",
+        "amount": 8746.31,
+        "days_past_due": 96
+      },
+      {
+        "party": "Northstar Subcontractors",
+        "due_date": "2023-01-04",
+        "amount": 8507.31,
+        "days_past_due": 1252
+      },
+      {
+        "party": "Northstar Subcontractors",
+        "due_date": "2025-03-15",
+        "amount": 8488.19,
+        "days_past_due": 451
+      },
+      {
+        "party": "Adwell Media Buying",
+        "due_date": "2026-06-17",
+        "amount": 4264.54,
+        "days_past_due": -8
+      },
+      {
+        "party": "Adwell Media Buying",
+        "due_date": "2025-11-15",
+        "amount": 4034.69,
+        "days_past_due": 206
+      },
+      {
+        "party": "Adwell Media Buying",
+        "due_date": "2024-11-15",
+        "amount": 2749.96,
+        "days_past_due": 571
+      }
+    ]
+  },
+  "admin": {
+    "legal_name": "Guitar Works LLC",
+    "ein_masked": "\u2022\u2022-\u2022\u2022\u20221234",
+    "fiscal_year_end": "12-31",
+    "filing_cadence": "quarterly",
+    "next_filing_due": "2026-07-31",
+    "entities": [
+      {
+        "name": "Guitar Works",
+        "type": "default"
+      }
+    ]
+  },
+  "historical": {
+    "span": {
+      "first": "2022-01-01",
+      "last": "2026-06-09"
+    },
+    "monthly": [
+      {
+        "month": "2025-07",
+        "revenue": 46926.14,
+        "expense": 29677.52,
+        "net": 17248.62,
+        "entries": 41
+      },
+      {
+        "month": "2025-08",
+        "revenue": 48911.12,
+        "expense": 31328.32,
+        "net": 17582.8,
+        "entries": 45
+      },
+      {
+        "month": "2025-09",
+        "revenue": 55438.34,
+        "expense": 47631.67,
+        "net": 7806.67,
+        "entries": 38
+      },
+      {
+        "month": "2025-10",
+        "revenue": 71168.71,
+        "expense": 40560.13,
+        "net": 30608.58,
+        "entries": 40
+      },
+      {
+        "month": "2025-11",
+        "revenue": 65276.93,
+        "expense": 38659.66,
+        "net": 26617.27,
+        "entries": 48
+      },
+      {
+        "month": "2025-12",
+        "revenue": 57168.38,
+        "expense": 52156.53,
+        "net": 5011.85,
+        "entries": 44
+      },
+      {
+        "month": "2026-01",
+        "revenue": 52333.39,
+        "expense": 30993.8,
+        "net": 21339.59,
+        "entries": 39
+      },
+      {
+        "month": "2026-02",
+        "revenue": 58185.31,
+        "expense": 32339.08,
+        "net": 25846.23,
+        "entries": 43
+      },
+      {
+        "month": "2026-03",
+        "revenue": 62492.19,
+        "expense": 47158.25,
+        "net": 15333.94,
+        "entries": 48
+      },
+      {
+        "month": "2026-04",
+        "revenue": 66362.51,
+        "expense": 35799.26,
+        "net": 30563.25,
+        "entries": 37
+      },
+      {
+        "month": "2026-05",
+        "revenue": 60306.02,
+        "expense": 36382.6,
+        "net": 23923.42,
+        "entries": 43
+      },
+      {
+        "month": "2026-06",
+        "revenue": 27511.0,
+        "expense": 15539.84,
+        "net": 11971.16,
+        "entries": 16
+      }
+    ],
+    "entry_count": 2252
+  },
+  "payroll": {
+    "status": "pending",
+    "message": "Payroll engine ships in 3B/3C"
+  }
+}

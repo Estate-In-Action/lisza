@@ -1,0 +1,240 @@
+{
+  "generated_at": "2026-06-29T04:33:05Z",
+  "slug": "jb-design",
+  "display_name": "J.B. Design",
+  "entity_type": "sole_prop",
+  "status": "active",
+  "as_of": "2026-06-08",
+  "ar": {
+    "open_total": 204746.75,
+    "open_count": 48,
+    "aging": {
+      "current": 14803.67,
+      "d1_30": 0.0,
+      "d31_60": 11236.05,
+      "d61_90": 7501.05,
+      "d90_plus": 171205.98
+    },
+    "top_open": [
+      {
+        "party": "Lantern Logistics",
+        "due_date": "2026-04-24",
+        "amount": 6551.11,
+        "days_past_due": 45
+      },
+      {
+        "party": "Riverside Studios",
+        "due_date": "2025-10-26",
+        "amount": 6367.74,
+        "days_past_due": 225
+      },
+      {
+        "party": "Summit Yoga",
+        "due_date": "2024-12-09",
+        "amount": 5892.74,
+        "days_past_due": 546
+      },
+      {
+        "party": "Bluepeak Ventures",
+        "due_date": "2026-01-20",
+        "amount": 5707.67,
+        "days_past_due": 139
+      },
+      {
+        "party": "Lantern Logistics",
+        "due_date": "2026-06-10",
+        "amount": 5680.35,
+        "days_past_due": -2
+      },
+      {
+        "party": "Summit Yoga",
+        "due_date": "2025-01-17",
+        "amount": 5612.45,
+        "days_past_due": 507
+      },
+      {
+        "party": "Summit Yoga",
+        "due_date": "2023-11-24",
+        "amount": 5544.51,
+        "days_past_due": 927
+      },
+      {
+        "party": "Lantern Logistics",
+        "due_date": "2023-10-15",
+        "amount": 5123.01,
+        "days_past_due": 967
+      }
+    ]
+  },
+  "ap": {
+    "open_total": 35273.87,
+    "open_count": 16,
+    "aging": {
+      "current": 3287.66,
+      "d1_30": 0.0,
+      "d31_60": 2978.03,
+      "d61_90": 0.0,
+      "d90_plus": 29008.18
+    },
+    "top_open": [
+      {
+        "party": "Adobe Tools",
+        "due_date": "2026-06-19",
+        "amount": 3287.66,
+        "days_past_due": -11
+      },
+      {
+        "party": "Citywide Internet",
+        "due_date": "2026-04-15",
+        "amount": 2978.03,
+        "days_past_due": 54
+      },
+      {
+        "party": "Freelance Collective",
+        "due_date": "2025-06-10",
+        "amount": 2878.02,
+        "days_past_due": 363
+      },
+      {
+        "party": "Apex Insurance",
+        "due_date": "2023-12-26",
+        "amount": 2740.07,
+        "days_past_due": 895
+      },
+      {
+        "party": "Apex Insurance",
+        "due_date": "2022-12-26",
+        "amount": 2602.0,
+        "days_past_due": 1260
+      },
+      {
+        "party": "Apex Insurance",
+        "due_date": "2025-07-21",
+        "amount": 2302.78,
+        "days_past_due": 322
+      },
+      {
+        "party": "Freelance Collective",
+        "due_date": "2024-09-12",
+        "amount": 2147.77,
+        "days_past_due": 634
+      },
+      {
+        "party": "Adobe Tools",
+        "due_date": "2023-10-31",
+        "amount": 2072.82,
+        "days_past_due": 951
+      }
+    ]
+  },
+  "admin": {
+    "legal_name": null,
+    "ein_masked": null,
+    "fiscal_year_end": "12-31",
+    "filing_cadence": "quarterly",
+    "next_filing_due": "2026-07-31",
+    "entities": [
+      {
+        "name": "J.B. Design",
+        "type": "default"
+      }
+    ]
+  },
+  "historical": {
+    "span": {
+      "first": "2022-01-01",
+      "last": "2026-06-08"
+    },
+    "monthly": [
+      {
+        "month": "2025-07",
+        "revenue": 9172.13,
+        "expense": 3547.29,
+        "net": 5624.84,
+        "entries": 7
+      },
+      {
+        "month": "2025-08",
+        "revenue": 14661.73,
+        "expense": 4481.62,
+        "net": 10180.11,
+        "entries": 9
+      },
+      {
+        "month": "2025-09",
+        "revenue": 17266.43,
+        "expense": 7423.25,
+        "net": 9843.18,
+        "entries": 11
+      },
+      {
+        "month": "2025-10",
+        "revenue": 10673.16,
+        "expense": 4694.43,
+        "net": 5978.73,
+        "entries": 7
+      },
+      {
+        "month": "2025-11",
+        "revenue": 14004.45,
+        "expense": 4340.3,
+        "net": 9664.15,
+        "entries": 7
+      },
+      {
+        "month": "2025-12",
+        "revenue": 21295.14,
+        "expense": 7089.39,
+        "net": 14205.75,
+        "entries": 11
+      },
+      {
+        "month": "2026-01",
+        "revenue": 6867.06,
+        "expense": 4675.36,
+        "net": 2191.7,
+        "entries": 8
+      },
+      {
+        "month": "2026-02",
+        "revenue": 17291.97,
+        "expense": 4393.13,
+        "net": 12898.84,
+        "entries": 11
+      },
+      {
+        "month": "2026-03",
+        "revenue": 15350.79,
+        "expense": 7108.75,
+        "net": 8242.04,
+        "entries": 9
+      },
+      {
+        "month": "2026-04",
+        "revenue": 9727.49,
+        "expense": 5047.9,
+        "net": 4679.59,
+        "entries": 6
+      },
+      {
+        "month": "2026-05",
+        "revenue": 19901.5,
+        "expense": 5087.66,
+        "net": 14813.84,
+        "entries": 10
+      },
+      {
+        "month": "2026-06",
+        "revenue": 0.0,
+        "expense": 1800.0,
+        "net": -1800.0,
+        "entries": 1
+      }
+    ],
+    "entry_count": 483
+  },
+  "payroll": {
+    "status": "pending",
+    "message": "Payroll engine ships in 3B/3C"
+  }
+}

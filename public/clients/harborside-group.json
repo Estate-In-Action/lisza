@@ -1,0 +1,248 @@
+{
+  "generated_at": "2026-06-29T04:33:05Z",
+  "slug": "harborside-group",
+  "display_name": "Harborside Restaurant Group",
+  "entity_type": "llc",
+  "status": "active",
+  "as_of": "2026-06-09",
+  "ar": {
+    "open_total": 2578035.13,
+    "open_count": 150,
+    "aging": {
+      "current": 124674.18,
+      "d1_30": 65508.94,
+      "d31_60": 117482.97,
+      "d61_90": 32279.36,
+      "d90_plus": 2238089.68
+    },
+    "top_open": [
+      {
+        "party": "Event Booking",
+        "due_date": "2026-06-17",
+        "amount": 27260.92,
+        "days_past_due": -8
+      },
+      {
+        "party": "Catering Client",
+        "due_date": "2025-09-05",
+        "amount": 26225.61,
+        "days_past_due": 277
+      },
+      {
+        "party": "Walk-in",
+        "due_date": "2025-09-08",
+        "amount": 25580.67,
+        "days_past_due": 274
+      },
+      {
+        "party": "Event Booking",
+        "due_date": "2026-06-25",
+        "amount": 25332.8,
+        "days_past_due": -16
+      },
+      {
+        "party": "Walk-in",
+        "due_date": "2026-06-05",
+        "amount": 25290.63,
+        "days_past_due": 4
+      },
+      {
+        "party": "Walk-in",
+        "due_date": "2025-08-07",
+        "amount": 25119.43,
+        "days_past_due": 306
+      },
+      {
+        "party": "Walk-in",
+        "due_date": "2026-01-03",
+        "amount": 24517.44,
+        "days_past_due": 157
+      },
+      {
+        "party": "Catering Client",
+        "due_date": "2024-08-16",
+        "amount": 24211.41,
+        "days_past_due": 662
+      }
+    ]
+  },
+  "ap": {
+    "open_total": 1194746.72,
+    "open_count": 68,
+    "aging": {
+      "current": 41334.54,
+      "d1_30": 18578.29,
+      "d31_60": 63049.63,
+      "d61_90": 37874.01,
+      "d90_plus": 1033910.25
+    },
+    "top_open": [
+      {
+        "party": "Utilities Group",
+        "due_date": "2025-07-13",
+        "amount": 24537.73,
+        "days_past_due": 331
+      },
+      {
+        "party": "Utilities Group",
+        "due_date": "2026-05-03",
+        "amount": 23430.28,
+        "days_past_due": 37
+      },
+      {
+        "party": "Linen & Laundry",
+        "due_date": "2026-07-06",
+        "amount": 22932.56,
+        "days_past_due": -27
+      },
+      {
+        "party": "Linen & Laundry",
+        "due_date": "2025-12-09",
+        "amount": 22510.43,
+        "days_past_due": 182
+      },
+      {
+        "party": "Restaurant Supply Co",
+        "due_date": "2025-07-05",
+        "amount": 22507.26,
+        "days_past_due": 339
+      },
+      {
+        "party": "Restaurant Supply Co",
+        "due_date": "2024-08-12",
+        "amount": 22374.43,
+        "days_past_due": 666
+      },
+      {
+        "party": "Beverage Distributor",
+        "due_date": "2024-09-12",
+        "amount": 22177.67,
+        "days_past_due": 635
+      },
+      {
+        "party": "Fresh Produce Co",
+        "due_date": "2026-01-03",
+        "amount": 22072.85,
+        "days_past_due": 157
+      }
+    ]
+  },
+  "admin": {
+    "legal_name": null,
+    "ein_masked": null,
+    "fiscal_year_end": "12-31",
+    "filing_cadence": "quarterly",
+    "next_filing_due": "2026-07-31",
+    "entities": [
+      {
+        "name": "Harborside Pier",
+        "type": "default"
+      },
+      {
+        "name": "Harborside Downtown",
+        "type": "location"
+      },
+      {
+        "name": "Harborside Express",
+        "type": "location"
+      }
+    ]
+  },
+  "historical": {
+    "span": {
+      "first": "2022-01-01",
+      "last": "2026-06-09"
+    },
+    "monthly": [
+      {
+        "month": "2025-07",
+        "revenue": 171126.47,
+        "expense": 111088.36,
+        "net": 60038.11,
+        "entries": 33
+      },
+      {
+        "month": "2025-08",
+        "revenue": 236285.12,
+        "expense": 114675.23,
+        "net": 121609.89,
+        "entries": 31
+      },
+      {
+        "month": "2025-09",
+        "revenue": 159343.05,
+        "expense": 133704.87,
+        "net": 25638.18,
+        "entries": 30
+      },
+      {
+        "month": "2025-10",
+        "revenue": 199244.96,
+        "expense": 106455.37,
+        "net": 92789.59,
+        "entries": 32
+      },
+      {
+        "month": "2025-11",
+        "revenue": 205752.09,
+        "expense": 116113.63,
+        "net": 89638.46,
+        "entries": 33
+      },
+      {
+        "month": "2025-12",
+        "revenue": 205480.48,
+        "expense": 145484.13,
+        "net": 59996.35,
+        "entries": 35
+      },
+      {
+        "month": "2026-01",
+        "revenue": 134793.88,
+        "expense": 99375.12,
+        "net": 35418.76,
+        "entries": 25
+      },
+      {
+        "month": "2026-02",
+        "revenue": 132692.55,
+        "expense": 108283.58,
+        "net": 24408.97,
+        "entries": 27
+      },
+      {
+        "month": "2026-03",
+        "revenue": 234813.57,
+        "expense": 136309.55,
+        "net": 98504.02,
+        "entries": 35
+      },
+      {
+        "month": "2026-04",
+        "revenue": 246777.14,
+        "expense": 122172.77,
+        "net": 124604.37,
+        "entries": 33
+      },
+      {
+        "month": "2026-05",
+        "revenue": 237033.31,
+        "expense": 114472.35,
+        "net": 122560.96,
+        "entries": 34
+      },
+      {
+        "month": "2026-06",
+        "revenue": 15483.2,
+        "expense": 71947.25,
+        "net": -56464.05,
+        "entries": 9
+      }
+    ],
+    "entry_count": 1638
+  },
+  "payroll": {
+    "status": "pending",
+    "message": "Payroll engine ships in 3B/3C"
+  }
+}
