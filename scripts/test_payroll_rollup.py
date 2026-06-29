@@ -93,3 +93,43 @@ def test_w2_only_includes_requested_year():
     con.commit()
     rows = pr.w2_rollup(con, "2026")
     assert rows[0]["box1_wages"] == 2000.0
+
+
+def test_form941_quarter_bucketing_and_lines():
+    con = _con()
+    _seed_one_employee(con)
+    con.executescript(
+        """INSERT INTO payroll_runs(id,entity_id,pay_date)
+             VALUES(3,1,'2026-04-10');
+           INSERT INTO payroll_lines(run_id,employee_id,gross,fed_wh,ss_ee,ss_er,
+                                     medi_ee,medi_er,addl_medi,state_wh,futa,suta,net)
+             VALUES(3,1,800,80,49.6,49.6,11.6,11.6,0,24,3.36,16.8,635.84);""")
+    con.commit()
+    rows = pr.form941_rollup(con, "2026")
+    assert len(rows) == 2
+    q1 = next(r for r in rows if r["quarter"] == 1)
+    assert q1["entity"] == "Guitar Works"
+    assert q1["year"] == 2026
+    assert q1["wages"] == 2000.0
+    assert q1["fed_wh"] == 220.0
+    assert q1["ss_tax"] == 248.0
+    assert q1["medi_tax"] == 58.0
+    assert q1["total_liability"] == 526.0
+    assert q1["run_count"] == 2
+    q2 = next(r for r in rows if r["quarter"] == 2)
+    assert q2["wages"] == 800.0
+    assert q2["run_count"] == 1
+
+
+def test_summary_totals():
+    con = _con()
+    _seed_one_employee(con)
+    s = pr.payroll_summary(con, "2026")
+    assert s["employees"] == 1
+    assert s["run_count"] == 2
+    assert s["gross"] == 2000.0
+    assert s["net"] == 1567.0
+    assert s["fed_wh"] == 220.0
+    assert s["employee_fica"] == 153.0
+    assert s["employer_fica"] == 153.0
+    assert s["employer_tax_total"] == 203.4

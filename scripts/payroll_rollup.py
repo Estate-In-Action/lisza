@@ -51,3 +51,58 @@ def w2_rollup(con: sqlite3.Connection, year: str) -> list[dict]:
             "box17_state_tax": round(r["state_wh"], 2),
         })
     return out
+
+
+def form941_rollup(con: sqlite3.Connection, year: str) -> list[dict]:
+    rows = con.execute(
+        """SELECT ent.name AS entity,
+                  ((CAST(substr(pr.pay_date, 6, 2) AS INTEGER) - 1) / 3) + 1 AS quarter,
+                  SUM(pl.gross)     AS wages,
+                  SUM(pl.fed_wh)    AS fed_wh,
+                  SUM(pl.ss_ee + pl.ss_er)                       AS ss_tax,
+                  SUM(pl.medi_ee + pl.medi_er + pl.addl_medi)    AS medi_tax,
+                  SUM(pl.fed_wh + pl.ss_ee + pl.ss_er
+                      + pl.medi_ee + pl.medi_er + pl.addl_medi)  AS total_liability,
+                  COUNT(DISTINCT pr.id) AS run_count
+           FROM payroll_lines pl
+           JOIN payroll_runs pr ON pr.id = pl.run_id
+           JOIN entities ent ON ent.id = pr.entity_id
+           WHERE substr(pr.pay_date, 1, 4) = ?
+           GROUP BY pr.entity_id, quarter
+           ORDER BY ent.name, quarter""", (year,)).fetchall()
+    return [{
+        "entity": r["entity"],
+        "quarter": int(r["quarter"]),
+        "year": int(year),
+        "wages": round(r["wages"], 2),
+        "fed_wh": round(r["fed_wh"], 2),
+        "ss_tax": round(r["ss_tax"], 2),
+        "medi_tax": round(r["medi_tax"], 2),
+        "total_liability": round(r["total_liability"], 2),
+        "run_count": r["run_count"],
+    } for r in rows]
+
+
+def payroll_summary(con: sqlite3.Connection, year: str) -> dict:
+    r = con.execute(
+        """SELECT COUNT(DISTINCT pl.employee_id) AS employees,
+                  COUNT(DISTINCT pl.run_id)       AS run_count,
+                  SUM(pl.gross)  AS gross,
+                  SUM(pl.net)    AS net,
+                  SUM(pl.fed_wh) AS fed_wh,
+                  SUM(pl.ss_ee + pl.medi_ee + pl.addl_medi) AS employee_fica,
+                  SUM(pl.ss_er + pl.medi_er)                AS employer_fica,
+                  SUM(pl.ss_er + pl.medi_er + pl.futa + pl.suta) AS employer_tax_total
+           FROM payroll_lines pl
+           JOIN payroll_runs pr ON pr.id = pl.run_id
+           WHERE substr(pr.pay_date, 1, 4) = ?""", (year,)).fetchone()
+    return {
+        "employees": r["employees"] or 0,
+        "run_count": r["run_count"] or 0,
+        "gross": round(r["gross"] or 0.0, 2),
+        "net": round(r["net"] or 0.0, 2),
+        "fed_wh": round(r["fed_wh"] or 0.0, 2),
+        "employee_fica": round(r["employee_fica"] or 0.0, 2),
+        "employer_fica": round(r["employer_fica"] or 0.0, 2),
+        "employer_tax_total": round(r["employer_tax_total"] or 0.0, 2),
+    }
