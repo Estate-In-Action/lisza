@@ -133,3 +133,17 @@ def test_refresh_summary_caches_cash_ar_ap(tmp_path, monkeypatch):
                       "WHERE client_id=(SELECT client_id FROM clients WHERE slug='sum-co')").fetchone()
     reg.close()
     assert row == (500.0, 300.0, 0.0)
+
+
+from datetime import date
+
+
+def test_next_filing_due_quarterly_monthly_annual():
+    # quarterly: next statutory quarter-end filing strictly after the reference
+    assert tenancy.compute_next_filing_due("quarterly", date(2026, 6, 9)) == date(2026, 7, 31)
+    assert tenancy.compute_next_filing_due("quarterly", date(2026, 11, 2)) == date(2027, 1, 31)
+    # monthly: last day of the month following the reference month
+    assert tenancy.compute_next_filing_due("monthly", date(2026, 6, 9)) == date(2026, 7, 31)
+    assert tenancy.compute_next_filing_due("monthly", date(2026, 12, 3)) == date(2027, 1, 31)
+    # annual: Apr 15 of the year after the next fiscal-year-end on/after reference
+    assert tenancy.compute_next_filing_due("annual", date(2026, 6, 9), "12-31") == date(2027, 4, 15)

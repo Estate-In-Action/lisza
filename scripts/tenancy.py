@@ -11,6 +11,7 @@ import os
 import sqlite3
 import uuid
 from dataclasses import dataclass
+from datetime import date, timedelta
 from pathlib import Path
 
 import book_schema
@@ -175,6 +176,42 @@ def register_client(*, slug: str, display_name: str, legal_name: str | None = No
     reg.commit()
     reg.close()
     return client_id
+
+
+def _last_day_of_month(year: int, month: int) -> date:
+    if month == 12:
+        return date(year, 12, 31)
+    return date(year, month + 1, 1) - timedelta(days=1)
+
+
+def compute_next_filing_due(cadence: str, reference: date,
+                            fiscal_year_end: str = "12-31") -> date:
+    """Next filing deadline strictly after `reference`, per cadence.
+
+    monthly   -> last day of the month following the reference month.
+    quarterly -> next of Apr 30 / Jul 31 / Oct 31 / Jan 31 after reference.
+    annual    -> Apr 15 of the year after the next fiscal-year-end on/after ref.
+    """
+    cad = (cadence or "quarterly").lower()
+    if cad == "monthly":
+        ny, nm = (reference.year + 1, 1) if reference.month == 12 \
+            else (reference.year, reference.month + 1)
+        return _last_day_of_month(ny, nm)
+    if cad == "annual":
+        mm, dd = (int(x) for x in fiscal_year_end.split("-"))
+        fye = date(reference.year, mm, dd)
+        if fye < reference:
+            fye = date(reference.year + 1, mm, dd)
+        return date(fye.year + 1, 4, 15)
+    # quarterly (default): sweep two years so we always find a date after ref
+    candidates = []
+    for y in (reference.year, reference.year + 1):
+        candidates += [date(y, 4, 30), date(y, 7, 31), date(y, 10, 31),
+                       date(y + 1, 1, 31)]
+    for c in sorted(candidates):
+        if c > reference:
+            return c
+    raise AssertionError("unreachable: two-year sweep always yields a date")
 
 
 # cash = sum over asset accounts 101,102,103,106 (debit-normal balances)
