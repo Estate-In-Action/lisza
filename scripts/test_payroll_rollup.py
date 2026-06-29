@@ -133,3 +133,16 @@ def test_summary_totals():
     assert s["employee_fica"] == 153.0
     assert s["employer_fica"] == 153.0
     assert s["employer_tax_total"] == 203.4
+
+
+def test_build_payroll_active_block():
+    con = _con()
+    _seed_one_employee(con)
+    out = pr.build_payroll(con)
+    assert out["status"] == "active"
+    assert out["year"] == 2026
+    assert out["summary"]["employees"] == 1
+    assert len(out["w2"]) == 1
+    assert out["w2"][0]["employee"] == "Dana Whitlock"
+    assert len(out["form941"]) == 1
+    assert out["form941"][0]["quarter"] == 1

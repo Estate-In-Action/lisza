@@ -16,7 +16,13 @@ def build_payroll(con: sqlite3.Connection) -> dict:
     year = latest_payroll_year(con)
     if year is None:
         return {"status": "none", "message": "No payroll runs on file"}
-    raise NotImplementedError  # filled in Task 4
+    return {
+        "status": "active",
+        "year": int(year),
+        "summary": payroll_summary(con, year),
+        "w2": w2_rollup(con, year),
+        "form941": form941_rollup(con, year),
+    }
 
 
 def w2_rollup(con: sqlite3.Connection, year: str) -> list[dict]:
