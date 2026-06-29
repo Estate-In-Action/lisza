@@ -10,13 +10,15 @@ double-entry invariants below, the reports built on it tie out. Run after seedin
 """
 from __future__ import annotations
 
+import os
 import sqlite3
 from datetime import date
 from pathlib import Path
 
 import pytest
 
-DB = Path(__file__).resolve().parent.parent / "ledger.db"
+DB = Path(os.environ.get("LISZA_DB",
+          str(Path(__file__).resolve().parent.parent / "clients" / "guitar-works" / "ledger.db")))
 AS_OF = "2026-12-31"   # past the data end → captures the whole book
 
 

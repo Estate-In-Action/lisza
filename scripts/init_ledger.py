@@ -2,12 +2,16 @@
 """Initialize LISZA/ledger.db with double-entry schema and load COA."""
 from __future__ import annotations
 import csv
+import os
 import sqlite3
 import sys
 from pathlib import Path
 
+import book_schema
+from tenancy import resolve_db_path
+
 ROOT = Path(__file__).resolve().parent.parent
-DB = ROOT / "ledger.db"
+DB = resolve_db_path(client=os.environ.get("LISZA_CLIENT"))
 COA = ROOT / "coa.csv"
 
 SCHEMA = """
@@ -144,6 +148,7 @@ def main() -> int:
     con.execute("PRAGMA foreign_keys = ON")
     con.execute("PRAGMA journal_mode = WAL")
     con.executescript(SCHEMA)
+    book_schema.ensure_book_schema(con)
 
     with COA.open() as f:
         reader = csv.DictReader(f)
