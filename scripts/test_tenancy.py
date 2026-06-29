@@ -147,3 +147,28 @@ def test_next_filing_due_quarterly_monthly_annual():
     assert tenancy.compute_next_filing_due("monthly", date(2026, 12, 3)) == date(2027, 1, 31)
     # annual: Apr 15 of the year after the next fiscal-year-end on/after reference
     assert tenancy.compute_next_filing_due("annual", date(2026, 6, 9), "12-31") == date(2027, 4, 15)
+
+
+import client_profiles
+import seed_client
+
+
+def test_refresh_summary_caches_entity_count_and_filing_due(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    tenancy.register_client(slug="jb-design", display_name="J.B. Design",
+                            entity_type="sole_prop", filing_cadence="annual")
+    seed_client.seed(client_profiles.JB_DESIGN, slug="jb-design")
+    tenancy.register_client(slug="harborside-group", display_name="Harborside Group",
+                            entity_type="llc", filing_cadence="quarterly")
+    seed_client.seed(client_profiles.HARBORSIDE_GROUP, slug="harborside-group")
+    tenancy.refresh_all()
+    reg = sqlite3.connect(tenancy.registry_path())
+    reg.row_factory = sqlite3.Row
+    rows = {r["slug"]: r for r in reg.execute(
+        "SELECT c.slug, c.next_filing_due, s.entity_count "
+        "FROM clients c JOIN client_summary s ON s.client_id=c.client_id").fetchall()}
+    reg.close()
+    assert rows["jb-design"]["entity_count"] == 1
+    assert rows["harborside-group"]["entity_count"] == 3
+    assert rows["jb-design"]["next_filing_due"] is not None
+    assert rows["harborside-group"]["next_filing_due"] is not None

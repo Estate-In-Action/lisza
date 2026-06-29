@@ -43,7 +43,8 @@ CREATE TABLE IF NOT EXISTS client_summary (
     client_id   TEXT PRIMARY KEY REFERENCES clients(client_id),
     as_of       TEXT,
     cash        REAL, open_ar REAL, open_ap REAL,
-    ar_count    INTEGER, ap_count INTEGER, last_entry_date TEXT
+    ar_count    INTEGER, ap_count INTEGER, last_entry_date TEXT,
+    entity_count INTEGER
 );
 CREATE TABLE IF NOT EXISTS bookkeeper_prefs (
     bookkeeper_id  TEXT PRIMARY KEY,
@@ -55,10 +56,16 @@ CREATE TABLE IF NOT EXISTS bookkeeper_prefs (
 """
 
 
+def _ensure_registry_columns(con: sqlite3.Connection) -> None:
+    if not book_schema._has_column(con, "client_summary", "entity_count"):
+        con.execute("ALTER TABLE client_summary ADD COLUMN entity_count INTEGER")
+
+
 def registry_db() -> Path:
     path = registry_path()
     con = sqlite3.connect(path)
     con.executescript(REGISTRY_SCHEMA)
+    _ensure_registry_columns(con)
     con.commit()
     con.close()
     return path
@@ -234,21 +241,32 @@ def refresh_summary(slug: str) -> dict:
         "FROM bills WHERE status='unpaid'").fetchone()
     last_entry = con.execute(
         "SELECT MAX(entry_date) FROM entries WHERE status='posted'").fetchone()[0]
-    cid = con.execute("SELECT client_id FROM client_profile").fetchone()[0]
+    entity_count = con.execute(
+        "SELECT COUNT(*) FROM entities WHERE active=1").fetchone()[0]
+    cid, cadence, fye = con.execute(
+        "SELECT client_id, filing_cadence, fiscal_year_end FROM client_profile"
+    ).fetchone()
     con.close()
+
+    next_due = None
+    if last_entry:
+        next_due = compute_next_filing_due(
+            cadence, date.fromisoformat(last_entry), fye or "12-31").isoformat()
 
     registry_db()
     reg = sqlite3.connect(registry_path())
     reg.execute(
         """INSERT OR REPLACE INTO client_summary
-           (client_id, as_of, cash, open_ar, open_ap, ar_count, ap_count, last_entry_date)
-           VALUES (?, datetime('now'), ?, ?, ?, ?, ?, ?)""",
-        (cid, cash, open_ar, open_ap, ar_count, ap_count, last_entry))
-    reg.execute("UPDATE clients SET last_close_date=? WHERE client_id=?",
-                (last_entry, cid))
+           (client_id, as_of, cash, open_ar, open_ap, ar_count, ap_count,
+            last_entry_date, entity_count)
+           VALUES (?, datetime('now'), ?, ?, ?, ?, ?, ?, ?)""",
+        (cid, cash, open_ar, open_ap, ar_count, ap_count, last_entry, entity_count))
+    reg.execute("UPDATE clients SET last_close_date=?, next_filing_due=? WHERE client_id=?",
+                (last_entry, next_due, cid))
     reg.commit()
     reg.close()
-    return {"cash": cash, "open_ar": open_ar, "open_ap": open_ap}
+    return {"cash": cash, "open_ar": open_ar, "open_ap": open_ap,
+            "entity_count": entity_count, "next_filing_due": next_due}
 
 
 def refresh_all() -> int:
