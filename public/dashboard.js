@@ -16,6 +16,12 @@ let layout = "tile";
 let cardFields = [];
 let roloIndex = 0;
 
+function esc(s) {
+  return String(s ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
 function money(n) {
   if (n === null || n === undefined) return "—";
   return "$" + Number(n).toLocaleString("en-US", { maximumFractionDigits: 0 });
@@ -23,8 +29,16 @@ function money(n) {
 
 function loadPrefs() {
   layout = localStorage.getItem(LS_LAYOUT) || DATA.prefs.layout || "tile";
+  const fallback = DATA.prefs.card_fields || [];
   const saved = localStorage.getItem(LS_FIELDS);
-  cardFields = saved ? JSON.parse(saved) : (DATA.prefs.card_fields || []);
+  if (!saved) { cardFields = fallback; return; }
+  try {
+    const parsed = JSON.parse(saved);
+    cardFields = Array.isArray(parsed) ? parsed : fallback;
+  } catch (_e) {
+    localStorage.removeItem(LS_FIELDS);
+    cardFields = fallback;
+  }
 }
 
 function savePrefs() {
@@ -47,19 +61,19 @@ function optionalRows(c) {
 }
 
 function kv(k, v) {
-  return `<div class="kv"><span>${k}</span><span class="money">${v}</span></div>`;
+  return `<div class="kv"><span>${esc(k)}</span><span class="money">${esc(v)}</span></div>`;
 }
 
 function renderTiles() {
   const cards = DATA.clients.map(c => `
     <div class="card">
-      <h3>${c.display_name}${badge(c)}</h3>
-      <div class="muted">${c.entity_type || ""}</div>
+      <h3>${esc(c.display_name)}${badge(c)}</h3>
+      <div class="muted">${esc(c.entity_type || "")}</div>
       <div class="kv"><span>Cash</span><span class="money pos">${money(c.cash)}</span></div>
       <div class="kv"><span>Open AR</span><span class="money">${money(c.open_ar)}</span></div>
       <div class="kv"><span>Open AP</span><span class="money">${money(c.open_ap)}</span></div>
       ${optionalRows(c)}
-      <div class="muted" style="margin-top:6px">Last entry ${c.last_entry || "—"}</div>
+      <div class="muted" style="margin-top:6px">Last entry ${esc(c.last_entry || "—")}</div>
     </div>`).join("");
   return `<div class="tiles">${cards}</div>`;
 }
@@ -68,9 +82,9 @@ function renderList() {
   const head = `<tr><th>Client</th><th>Type</th><th>Cash</th><th>Open AR</th>
     <th>Open AP</th><th>Last entry</th></tr>`;
   const body = DATA.clients.map(c => `
-    <tr><td>${c.display_name}${badge(c)}</td><td style="text-align:left">${c.entity_type || ""}</td>
+    <tr><td>${esc(c.display_name)}${badge(c)}</td><td style="text-align:left">${esc(c.entity_type || "")}</td>
     <td class="money">${money(c.cash)}</td><td class="money">${money(c.open_ar)}</td>
-    <td class="money">${money(c.open_ap)}</td><td>${c.last_entry || "—"}</td></tr>`).join("");
+    <td class="money">${money(c.open_ap)}</td><td>${esc(c.last_entry || "—")}</td></tr>`).join("");
   return `<table>${head}${body}</table>`;
 }
 
@@ -81,17 +95,17 @@ function renderRolodex() {
   return `
     <div class="rolo">
       <div class="rolo-nav">
-        <button id="rolo-prev">‹ prev</button>
-        <strong>${c.display_name}${badge(c)}</strong>
-        <button id="rolo-next">next ›</button>
+        <button id="rolo-prev" aria-label="Previous client">‹ prev</button>
+        <strong>${esc(c.display_name)}${badge(c)}</strong>
+        <button id="rolo-next" aria-label="Next client">next ›</button>
       </div>
-      <div class="muted">${c.entity_type || ""} · client ${roloIndex + 1} of ${DATA.clients.length}</div>
+      <div class="muted">${esc(c.entity_type || "")} · client ${roloIndex + 1} of ${DATA.clients.length}</div>
       <div class="big pos money" style="margin-top:10px">${money(c.cash)}
         <span class="muted" style="font-weight:400">cash</span></div>
       <div class="kv"><span>Open AR</span><span class="money">${money(c.open_ar)}</span></div>
       <div class="kv"><span>Open AP</span><span class="money">${money(c.open_ap)}</span></div>
       ${optionalRows(c)}
-      <div class="muted" style="margin-top:6px">Last entry ${c.last_entry || "—"}</div>
+      <div class="muted" style="margin-top:6px">Last entry ${esc(c.last_entry || "—")}</div>
     </div>`;
 }
 
@@ -143,5 +157,5 @@ fetch("dashboard.json").then(r => r.json()).then(d => {
   render();
 }).catch(e => {
   document.getElementById("board").innerHTML =
-    `<p class="muted">Could not load dashboard.json (${e}).</p>`;
+    `<p class="muted">Could not load dashboard.json (${esc(e)}).</p>`;
 });
