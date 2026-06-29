@@ -20,3 +20,22 @@ def test_seed_solopreneur_balances_and_single_entity(tmp_path, monkeypatch):
         "JOIN entries e ON e.id=s.entry_id AND e.status='posted'").fetchone()
     assert abs(dr - cr) < 0.01
     con.close()
+
+
+def test_harborside_multi_entity_and_eliminations(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    tenancy.register_client(slug="harborside-group", display_name="Harborside Group",
+                            entity_type="llc")
+    seed_client.seed(client_profiles.HARBORSIDE_GROUP, slug="harborside-group")
+    con = sqlite3.connect(tenancy.resolve_db("harborside-group"))
+    # three active entities
+    assert con.execute("SELECT COUNT(*) FROM entities WHERE active=1").fetchone()[0] == 3
+    # at least one flagged inter-company entry exists
+    ic = con.execute("SELECT COUNT(*) FROM entries WHERE is_intercompany=1").fetchone()[0]
+    assert ic > 0
+    # consolidated revenue nets out the inter-company management fee, so it is
+    # strictly less than the naive all-entry sum (which double-counts the fee).
+    naive = reports_entity.account_balance(con, "410")
+    consolidated = reports_entity.account_balance(con, "410", consolidated=True)
+    assert naive > 0 and consolidated == 0 and consolidated < naive
+    con.close()

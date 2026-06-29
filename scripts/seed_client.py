@@ -146,16 +146,21 @@ def seed(profile: ClientProfile, *, slug: str) -> dict:
                     _booked(con, entity_id, td, "Estimated income tax", "Tax Authority",
                             "592", "102", round(rev_target * 0.15, 2), "tax")
 
-        # parent inter-company cash sweep (multi-entity only): move cash from
-        # entity[1] to entity[0], flagged so consolidated reports net it out.
+        # parent inter-company management fee (multi-entity only): the parent
+        # (eids[0]) charges each location for shared back-office. Parent books
+        # inter-company revenue; the location books an inter-company expense.
+        # Both legs are flagged so consolidated reports net the fee out — a pure
+        # cash transfer would be invisible to consolidation, but a fee inflates
+        # gross revenue/expense and must be eliminated.
         if profile.intercompany_sweeps and len(eids) > 1:
             sd = _day(first, rng, 25, 27)
             if sd <= END:
-                amt = round(rng.uniform(2000, 6000), 2)
-                _booked(con, eids[0], sd, "Inter-company cash sweep (in)", "Internal",
-                        "102", "300", amt, "intercompany", intercompany=1)
-                _booked(con, eids[1], sd, "Inter-company cash sweep (out)", "Internal",
-                        "300", "102", amt, "intercompany", intercompany=1)
+                for loc in eids[1:]:
+                    fee = round(rng.uniform(2000, 6000), 2)
+                    _booked(con, eids[0], sd, "Inter-company management fee (revenue)",
+                            "Internal", "102", "410", fee, "intercompany", intercompany=1)
+                    _booked(con, loc, sd, "Inter-company management fee (expense)",
+                            "Internal", "500", "102", fee, "intercompany", intercompany=1)
 
     con.commit()
     dr, cr = con.execute(
