@@ -19,8 +19,9 @@ Work items for the bookkeeping app. See `PLAN.md` for phases and principles.
 > keep everything on synthetic data until the operator says otherwise.
 
 ### Step 1 — Bookkeeper dashboard (front end, customizable)
-- [ ] **Client overview dashboard** — bookkeeper lands on a view of **all active clients**, presented as their choice of layout: **tile** (a card per client with a few key figures — e.g. cash position, open AR, open AP, last-close date, next filing due), **list** (dense table), or **rolodex** (one client at a time, flip through). Layout is a user preference the bookkeeper can change.
-- [ ] **Customizable by the bookkeeper** — let them pick which fields show on a client card, reorder/hide tiles, and set the default layout. Preferences persist per bookkeeper.
+> Implemented 2026-06-29 (Spec 2) — generator `build_dashboard.py` → `public/dashboard.json`; vanilla-JS front-end (tile default + list/rolodex toggle); prefs hybrid (DB-seed + localStorage). Drill-down + write-back deferred to Spec 3/later.
+- [x] **Client overview dashboard** — bookkeeper lands on a view of **all active clients**, presented as their choice of layout: **tile** (a card per client with a few key figures — e.g. cash position, open AR, open AP, last-close date, next filing due), **list** (dense table), or **rolodex** (one client at a time, flip through). Layout is a user preference the bookkeeper can change.
+- [x] **Customizable by the bookkeeper** — let them pick which fields show on a client card, reorder/hide tiles, and set the default layout. Preferences persist per bookkeeper.
 
 ### Step 2 — Multiple realistic demo clients
 > Foundation (Spec 1) implemented 2026-06-29 — DB-per-client + lisza.db registry + entity dimension. Dashboard/tiles/cron remain.
