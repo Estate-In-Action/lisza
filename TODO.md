@@ -72,3 +72,35 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 - **FreshBooks** — client-facing, project/billing-centric. Strengths: proposal→e-sign→invoice pipeline, built-in time tracking, client collaboration hub, near-zero learning curve, strong human phone support, cheap solo tier. Weaknesses: weak core accounting engine, poor inventory scaling, expensive per-user growth (+$11/user). **Implication:** good model for the solopreneur client persona (J.B. Design) but not for multi-entity (Harborside).
 
 > **Positioning questions to resolve before committing integration scope** (from the scan): target industry mix (e-commerce / construction / professional services), expected team size per client book (drives multi-user + per-seat strategy), and inventory-vs-services emphasis (drives COGS/inventory depth vs billing/time-tracking depth).
+
+## ERP module backlog (LedgerSMB-parity targets, 2026-06-29)
+
+> Full double-entry ERP module set the operator wants LISZA to eventually cover
+> (drawn from LedgerSMB). **Direction, not committed scope** — each module is its
+> own brainstorm → spec → plan → build cycle, synthetic data only until told
+> otherwise. Many map onto modules already in flight (cross-referenced inline);
+> they raise LISZA from a bookkeeping console toward a small-business ERP.
+
+- [ ] **General Ledger & Journal Entry** — manual journals, adjusting/closing entries, full audit trail of every posting. *(Partly underway in untracked `ledger_tools.py`; the GL is the existing accounts/entries/splits core.)*
+- [ ] **Sales** — customers, quotations, sales orders, invoices (quote → order → invoice pipeline). *(Overlaps CRM intake → Client Management contracts and the AR tile.)*
+- [ ] **Purchasing** — vendors, purchase orders, vendor invoices/bills. *(Overlaps the AP tile + Cash Management below.)*
+- [ ] **Multiple currencies** — multi-currency transactions with FX gain/loss handling. *(New engine; Xero/QBO have this — see Competitive benchmark.)*
+- [ ] **Contact Management** — unified people/orgs directory spanning customers, vendors, leads. *(Strong overlap with CRM + Client Management sections; likely the shared substrate under both.)*
+- [ ] **Cash Management** — checks, receipts, bank reconciliation, cash position. *(Extends "Bank & credit-card reconciliation" + the cash-flow tile.)*
+- [ ] **Time tracking** — billable hours captured and rolled into invoices. *(Direct overlap with the locked payroll-ingestion = C/Both time-punch path; same `payroll_lines`/hours shape can feed billable-hours → invoice.)*
+- [ ] **Fixed Assets** — asset register, depreciation schedules, disposal accounting. *(New module; a "Fixed assets / trial balance" tile is already floated in Step 3 research.)*
+- [ ] **Inventory Management & Light Manufacturing** — stock tracking, assemblies/bills-of-materials, COGS. *(Heaviest new module; relevant to Harborside-style multi-entity restaurant client, not the solopreneur.)*
+- [ ] **Reporting** — full statement suite (P&L, Balance Sheet, Trial Balance) over all the above. *(Spec 2 dashboard + Step 3 P&L/BS are the first slices; this is the superset.)*
+- [ ] **Budgeting** — budgets by project/department with variance reports. *(Overlaps "Customized reporting / variance reports" in the competitive backlog.)*
+
+### Reference: Frappe Books (frappe/books) — patterns worth borrowing (2026-06-29)
+
+> AGPL-3.0 Vue/Electron/SQLite double-entry app the operator flagged for ideas.
+> Don't adopt their framework — borrow these proven structural patterns:
+>
+> - **Schema-driven model layer** — every entity (Account, Invoice, Payment, Party…) is a declarative JSON schema (fields, types, links, sections, `quickEditFields`, `keywordFields`); the framework derives DB + forms + validation from it. **This is the answer to the operator's "leave it open to be fully configurable" requirement** for Admin/CRM/Client Management: "configurable" = edit a schema, not write code. Candidate for a lightweight LISZA field-registry.
+> - **Unified `Party` + `role` (Customer / Supplier / Both)** — one contact table with a role flag, not three stores. Confirms the backlog note that Contact Management is the shared substrate under CRM + Client Management + Sales/Purchasing.
+> - **`Lead` → `Party` conversion** — Lead has a status funnel (Open → Replied → Interested → Opportunity → Quotation → Converted) and Party carries a `fromLead` reference. **This is exactly the CRM "convert onlooker → customer → client" flow** the operator described; model the CRM section on it.
+> - **Single immutable `AccountingLedgerEntry`** — every document posts to one ledger table (`party, account, debit, credit, referenceType, referenceName, reverted, reverts`). Adjustments are **reversal entries, never edits/deletes** — matches LISZA's add-don't-subtract rule and validates the untracked `ledger_tools.py` reversal/adjusting-entry direction.
+> - **Tree chart-of-accounts** (`isTree`, `parentAccount`, `rootType` = Asset/Liability/Equity/Income/Expense) — confirms LISZA's `income` (not `revenue`) choice; a parent-account tree is the upgrade path when the flat COA outgrows itself.
+> - **`NumberSeries` as a first-class entity** — document numbering (invoice #, journal #) is configurable data, not hardcoded.
