@@ -175,3 +175,48 @@ def register_client(*, slug: str, display_name: str, legal_name: str | None = No
     reg.commit()
     reg.close()
     return client_id
+
+
+# cash = sum over asset accounts 101,102,103,106 (debit-normal balances)
+CASH_ACCOUNTS = ("101", "102", "103", "106")
+
+
+def refresh_summary(slug: str) -> dict:
+    db = resolve_db(slug)
+    con = sqlite3.connect(db)
+    qmarks = ",".join("?" * len(CASH_ACCOUNTS))
+    cash = con.execute(
+        f"""SELECT ROUND(COALESCE(SUM(s.dr-s.cr),0),2) FROM splits s
+            JOIN entries e ON e.id=s.entry_id AND e.status='posted'
+            WHERE s.account IN ({qmarks})""", CASH_ACCOUNTS).fetchone()[0]
+    open_ar, ar_count = con.execute(
+        "SELECT ROUND(COALESCE(SUM(amount),0),2), COUNT(*) "
+        "FROM invoices WHERE status='open'").fetchone()
+    open_ap, ap_count = con.execute(
+        "SELECT ROUND(COALESCE(SUM(amount),0),2), COUNT(*) "
+        "FROM bills WHERE status='unpaid'").fetchone()
+    last_entry = con.execute(
+        "SELECT MAX(entry_date) FROM entries WHERE status='posted'").fetchone()[0]
+    cid = con.execute("SELECT client_id FROM client_profile").fetchone()[0]
+    con.close()
+
+    registry_db()
+    reg = sqlite3.connect(registry_path())
+    reg.execute(
+        """INSERT OR REPLACE INTO client_summary
+           (client_id, as_of, cash, open_ar, open_ap, ar_count, ap_count, last_entry_date)
+           VALUES (?, datetime('now'), ?, ?, ?, ?, ?, ?)""",
+        (cid, cash, open_ar, open_ap, ar_count, ap_count, last_entry))
+    reg.execute("UPDATE clients SET last_close_date=? WHERE client_id=?",
+                (last_entry, cid))
+    reg.commit()
+    reg.close()
+    return {"cash": cash, "open_ar": open_ar, "open_ap": open_ap}
+
+
+def refresh_all() -> int:
+    n = 0
+    for row in list_clients():
+        refresh_summary(row.slug)
+        n += 1
+    return n

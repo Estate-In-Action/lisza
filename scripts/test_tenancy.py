@@ -107,3 +107,29 @@ def test_isolation_write_to_one_book_not_seen_in_other(tmp_path, monkeypatch):
     leaked = b.execute("SELECT COUNT(*) FROM accounts WHERE code='999'").fetchone()[0]
     b.close()
     assert leaked == 0
+
+
+def test_refresh_summary_caches_cash_ar_ap(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    tenancy.register_client(slug="sum-co", display_name="Sum Co")
+    book = sqlite3.connect(tenancy.resolve_db("sum-co"))
+    # one posted entry: debit checking 500 / credit revenue 500
+    book.execute("INSERT INTO entries(entry_date,description,source,status,entity_id) "
+                 "VALUES('2026-01-05','sale','synthetic','posted',"
+                 "(SELECT id FROM entities WHERE is_default=1))")
+    eid = book.execute("SELECT last_insert_rowid()").fetchone()[0]
+    book.execute("INSERT INTO splits(entry_id,account,dr,cr) VALUES(?,?,?,?)",
+                 (eid, "102", 500, 0))
+    book.execute("INSERT INTO splits(entry_id,account,dr,cr) VALUES(?,?,?,?)",
+                 (eid, "400", 0, 500))
+    # one open invoice
+    book.execute("INSERT INTO invoices(party,issue_date,due_date,amount,status) "
+                 "VALUES('X','2026-01-01','2026-01-31',300,'open')")
+    book.commit(); book.close()
+
+    tenancy.refresh_summary("sum-co")
+    reg = sqlite3.connect(tenancy.registry_path())
+    row = reg.execute("SELECT cash, open_ar, open_ap FROM client_summary "
+                      "WHERE client_id=(SELECT client_id FROM clients WHERE slug='sum-co')").fetchone()
+    reg.close()
+    assert row == (500.0, 300.0, 0.0)
