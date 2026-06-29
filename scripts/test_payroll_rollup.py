@@ -42,3 +42,54 @@ def test_build_payroll_status_none_when_empty():
     con = _con()
     out = pr.build_payroll(con)
     assert out == {"status": "none", "message": "No payroll runs on file"}
+
+
+def _seed_one_employee(con):
+    """One entity, one employee, two runs in 2026. Two lines so SUMs are
+    non-trivial: gross 1000+1000, ss_ee 62+62, medi_ee 14.5+14.5,
+    addl_medi 0, fed_wh 100+120, state_wh 30+30."""
+    con.executescript(
+        """INSERT INTO entities(id,name,type,is_default,active)
+             VALUES(1,'Guitar Works','company',1,1);
+           INSERT INTO employees(id,entity_id,name,active)
+             VALUES(1,1,'Dana Whitlock',1);
+           INSERT INTO payroll_runs(id,entity_id,period_start,period_end,pay_date)
+             VALUES(1,1,'2026-01-01','2026-01-14','2026-01-15'),
+                   (2,1,'2026-01-15','2026-01-28','2026-01-29');
+           INSERT INTO payroll_lines(run_id,employee_id,gross,fed_wh,ss_ee,ss_er,
+                                     medi_ee,medi_er,addl_medi,state_wh,futa,suta,net)
+             VALUES(1,1,1000,100,62,62,14.5,14.5,0,30,4.2,21,793.5),
+                   (2,1,1000,120,62,62,14.5,14.5,0,30,4.2,21,773.5);""")
+    con.commit()
+
+
+def test_w2_box_identities():
+    con = _con()
+    _seed_one_employee(con)
+    rows = pr.w2_rollup(con, "2026")
+    assert len(rows) == 1
+    w = rows[0]
+    assert w["employee"] == "Dana Whitlock"
+    assert w["entity"] == "Guitar Works"
+    assert w["box1_wages"] == 2000.0
+    assert w["box2_fed_wh"] == 220.0
+    assert w["box3_ss_wages"] == 2000.0
+    assert w["box4_ss_tax"] == 124.0
+    assert w["box5_medi_wages"] == 2000.0
+    assert w["box6_medi_tax"] == 29.0
+    assert w["box16_state_wages"] == 2000.0
+    assert w["box17_state_tax"] == 60.0
+
+
+def test_w2_only_includes_requested_year():
+    con = _con()
+    _seed_one_employee(con)
+    con.executescript(
+        """INSERT INTO payroll_runs(id,entity_id,pay_date)
+             VALUES(9,1,'2025-06-01');
+           INSERT INTO payroll_lines(run_id,employee_id,gross,fed_wh,ss_ee,ss_er,
+                                     medi_ee,medi_er,addl_medi,state_wh,futa,suta,net)
+             VALUES(9,1,5000,500,310,310,72.5,72.5,0,150,21,105,3967);""")
+    con.commit()
+    rows = pr.w2_rollup(con, "2026")
+    assert rows[0]["box1_wages"] == 2000.0
