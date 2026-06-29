@@ -17,6 +17,7 @@ from pathlib import Path
 import book_schema
 
 COA_PATH = Path(__file__).resolve().parent.parent / "coa.csv"
+HOUSE_SLUG = "_house"
 
 
 def lisza_home() -> Path:
@@ -186,6 +187,23 @@ def register_client(*, slug: str, display_name: str, legal_name: str | None = No
     reg.commit()
     reg.close()
     return client_id
+
+
+def ensure_house() -> str:
+    """Register the bookkeeper's own 'house' book idempotently.
+
+    Returns the existing client_id if `_house` is already registered, otherwise
+    registers it (kind='house', hidden from the roster) and returns the new id.
+    """
+    registry_db()
+    reg = sqlite3.connect(registry_path())
+    row = reg.execute(
+        "SELECT client_id FROM clients WHERE slug=?", (HOUSE_SLUG,)).fetchone()
+    reg.close()
+    if row:
+        return row[0]
+    return register_client(
+        slug=HOUSE_SLUG, display_name="House (My Books)", kind="house")
 
 
 def _last_day_of_month(year: int, month: int) -> date:

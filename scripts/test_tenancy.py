@@ -202,3 +202,27 @@ def test_register_client_writes_kind(tmp_path, monkeypatch):
     con.close()
     assert kinds["house-ish"] == "house"
     assert kinds["plain-co"] == "client"
+
+
+def test_ensure_house_registers_hidden_full_schema_book(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    cid1 = tenancy.ensure_house()
+    cid2 = tenancy.ensure_house()  # idempotent: same id, no duplicate row
+    assert cid1 == cid2
+
+    con = sqlite3.connect(tenancy.registry_path())
+    rows = con.execute("SELECT slug, kind FROM clients WHERE slug='_house'").fetchall()
+    con.close()
+    assert rows == [("_house", "house")]
+
+    p = tenancy.resolve_db("_house")
+    assert p == tmp_path / "clients" / "_house" / "ledger.db"
+    assert p.exists()
+
+    book = sqlite3.connect(p)
+    tables = {r[0] for r in book.execute(
+        "SELECT name FROM sqlite_master WHERE type='table'")}
+    book.close()
+    assert {"accounts", "entries", "splits", "invoices", "bills",
+            "entities", "client_profile", "employees",
+            "payroll_runs", "payroll_lines"} <= tables
