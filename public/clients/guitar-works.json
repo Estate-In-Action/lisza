@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T04:51:06Z",
+  "generated_at": "2026-06-29T05:23:09Z",
   "slug": "guitar-works",
   "display_name": "Guitar Works",
   "entity_type": "llc",
@@ -149,79 +149,79 @@
       {
         "month": "2025-07",
         "revenue": 46926.14,
-        "expense": 29677.52,
-        "net": 17248.62,
-        "entries": 41
+        "expense": 91783.28,
+        "net": -44857.14,
+        "entries": 43
       },
       {
         "month": "2025-08",
         "revenue": 48911.12,
-        "expense": 31328.32,
-        "net": 17582.8,
-        "entries": 45
+        "expense": 93434.08,
+        "net": -44522.96,
+        "entries": 47
       },
       {
         "month": "2025-09",
         "revenue": 55438.34,
-        "expense": 47631.67,
-        "net": 7806.67,
-        "entries": 38
+        "expense": 109373.05,
+        "net": -53934.71,
+        "entries": 40
       },
       {
         "month": "2025-10",
         "revenue": 71168.71,
-        "expense": 40560.13,
-        "net": 30608.58,
-        "entries": 40
+        "expense": 130213.39,
+        "net": -59044.68,
+        "entries": 43
       },
       {
         "month": "2025-11",
         "revenue": 65276.93,
-        "expense": 38659.66,
-        "net": 26617.27,
-        "entries": 48
+        "expense": 98428.5,
+        "net": -33151.57,
+        "entries": 50
       },
       {
         "month": "2025-12",
         "revenue": 57168.38,
-        "expense": 52156.53,
-        "net": 5011.85,
-        "entries": 44
+        "expense": 111925.37,
+        "net": -54756.99,
+        "entries": 46
       },
       {
         "month": "2026-01",
         "revenue": 52333.39,
-        "expense": 30993.8,
-        "net": 21339.59,
-        "entries": 39
+        "expense": 94459.56,
+        "net": -42126.17,
+        "entries": 41
       },
       {
         "month": "2026-02",
         "revenue": 58185.31,
-        "expense": 32339.08,
-        "net": 25846.23,
-        "entries": 43
+        "expense": 94764.84,
+        "net": -36579.53,
+        "entries": 45
       },
       {
         "month": "2026-03",
         "revenue": 62492.19,
-        "expense": 47158.25,
-        "net": 15333.94,
-        "entries": 48
+        "expense": 109264.01,
+        "net": -46771.82,
+        "entries": 50
       },
       {
         "month": "2026-04",
         "revenue": 66362.51,
-        "expense": 35799.26,
-        "net": 30563.25,
-        "entries": 37
+        "expense": 97905.02,
+        "net": -31542.51,
+        "entries": 39
       },
       {
         "month": "2026-05",
         "revenue": 60306.02,
-        "expense": 36382.6,
-        "net": 23923.42,
-        "entries": 43
+        "expense": 129541.24,
+        "net": -69235.22,
+        "entries": 46
       },
       {
         "month": "2026-06",
@@ -231,7 +231,7 @@
         "entries": 16
       }
     ],
-    "entry_count": 2252
+    "entry_count": 2367
   },
   "payroll": {
     "status": "pending",

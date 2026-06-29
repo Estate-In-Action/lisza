@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T04:51:09Z",
+  "generated_at": "2026-06-29T05:23:09Z",
   "prefs": {
     "layout": "tile",
     "card_fields": [
@@ -30,11 +30,11 @@
       "display_name": "Harborside Restaurant Group",
       "entity_type": "llc",
       "status": "active",
-      "cash": 1545642.03,
-      "open_ar": 2578035.13,
-      "open_ap": 1194746.72,
-      "ar_count": 150,
-      "ap_count": 68,
+      "cash": 1927554.9,
+      "open_ar": 2697818.47,
+      "open_ap": 956766.59,
+      "ar_count": 157,
+      "ap_count": 56,
       "entity_count": 3,
       "consolidates": true,
       "last_entry": "2026-06-09",

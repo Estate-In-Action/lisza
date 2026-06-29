@@ -1,129 +1,129 @@
 {
-  "generated_at": "2026-06-29T04:51:06Z",
+  "generated_at": "2026-06-29T05:23:09Z",
   "slug": "harborside-group",
   "display_name": "Harborside Restaurant Group",
   "entity_type": "llc",
   "status": "active",
   "as_of": "2026-06-09",
   "ar": {
-    "open_total": 2578035.13,
-    "open_count": 150,
+    "open_total": 2697818.47,
+    "open_count": 157,
     "aging": {
-      "current": 124674.18,
-      "d1_30": 65508.94,
-      "d31_60": 117482.97,
-      "d61_90": 32279.36,
-      "d90_plus": 2238089.68
+      "current": 131968.61,
+      "d1_30": 72629.39,
+      "d31_60": 82167.26,
+      "d61_90": 81615.1,
+      "d90_plus": 2329438.11
     },
     "top_open": [
       {
         "party": "Event Booking",
+        "due_date": "2026-06-07",
+        "amount": 26803.15,
+        "days_past_due": 2
+      },
+      {
+        "party": "Catering Client",
+        "due_date": "2025-08-25",
+        "amount": 26754.82,
+        "days_past_due": 288
+      },
+      {
+        "party": "Walk-in",
+        "due_date": "2025-07-21",
+        "amount": 26442.37,
+        "days_past_due": 323
+      },
+      {
+        "party": "Catering Client",
+        "due_date": "2025-07-12",
+        "amount": 25872.98,
+        "days_past_due": 332
+      },
+      {
+        "party": "Walk-in",
         "due_date": "2026-06-17",
-        "amount": 27260.92,
+        "amount": 25670.76,
         "days_past_due": -8
       },
       {
-        "party": "Catering Client",
-        "due_date": "2025-09-05",
-        "amount": 26225.61,
-        "days_past_due": 277
-      },
-      {
-        "party": "Walk-in",
-        "due_date": "2025-09-08",
-        "amount": 25580.67,
-        "days_past_due": 274
-      },
-      {
         "party": "Event Booking",
-        "due_date": "2026-06-25",
-        "amount": 25332.8,
-        "days_past_due": -16
+        "due_date": "2025-12-23",
+        "amount": 24554.74,
+        "days_past_due": 168
       },
       {
         "party": "Walk-in",
-        "due_date": "2026-06-05",
-        "amount": 25290.63,
-        "days_past_due": 4
-      },
-      {
-        "party": "Walk-in",
-        "due_date": "2025-08-07",
-        "amount": 25119.43,
-        "days_past_due": 306
-      },
-      {
-        "party": "Walk-in",
-        "due_date": "2026-01-03",
-        "amount": 24517.44,
-        "days_past_due": 157
+        "due_date": "2024-07-18",
+        "amount": 24441.03,
+        "days_past_due": 691
       },
       {
         "party": "Catering Client",
-        "due_date": "2024-08-16",
-        "amount": 24211.41,
-        "days_past_due": 662
+        "due_date": "2024-08-31",
+        "amount": 24425.38,
+        "days_past_due": 647
       }
     ]
   },
   "ap": {
-    "open_total": 1194746.72,
-    "open_count": 68,
+    "open_total": 956766.59,
+    "open_count": 56,
     "aging": {
-      "current": 41334.54,
-      "d1_30": 18578.29,
-      "d31_60": 63049.63,
-      "d61_90": 37874.01,
-      "d90_plus": 1033910.25
+      "current": 43612.1,
+      "d1_30": 18952.11,
+      "d31_60": 19544.23,
+      "d61_90": 0.0,
+      "d90_plus": 874658.15
     },
     "top_open": [
       {
-        "party": "Utilities Group",
-        "due_date": "2025-07-13",
-        "amount": 24537.73,
-        "days_past_due": 331
-      },
-      {
-        "party": "Utilities Group",
-        "due_date": "2026-05-03",
-        "amount": 23430.28,
-        "days_past_due": 37
+        "party": "Seafood Direct",
+        "due_date": "2026-06-19",
+        "amount": 25473.46,
+        "days_past_due": -10
       },
       {
         "party": "Linen & Laundry",
-        "due_date": "2026-07-06",
-        "amount": 22932.56,
-        "days_past_due": -27
+        "due_date": "2025-06-02",
+        "amount": 22813.47,
+        "days_past_due": 372
       },
       {
         "party": "Linen & Laundry",
-        "due_date": "2025-12-09",
-        "amount": 22510.43,
-        "days_past_due": 182
+        "due_date": "2024-07-23",
+        "amount": 22456.17,
+        "days_past_due": 686
       },
       {
         "party": "Restaurant Supply Co",
-        "due_date": "2025-07-05",
-        "amount": 22507.26,
-        "days_past_due": 339
+        "due_date": "2024-05-03",
+        "amount": 21352.6,
+        "days_past_due": 767
       },
       {
-        "party": "Restaurant Supply Co",
-        "due_date": "2024-08-12",
-        "amount": 22374.43,
-        "days_past_due": 666
+        "party": "Seafood Direct",
+        "due_date": "2025-11-24",
+        "amount": 21319.65,
+        "days_past_due": 197
       },
       {
-        "party": "Beverage Distributor",
-        "due_date": "2024-09-12",
-        "amount": 22177.67,
-        "days_past_due": 635
+        "party": "Linen & Laundry",
+        "due_date": "2025-04-05",
+        "amount": 21283.68,
+        "days_past_due": 430
       },
       {
-        "party": "Fresh Produce Co",
-        "due_date": "2026-01-03",
-        "amount": 22072.85,
-        "days_past_due": 157
+        "party": "Utilities Group",
+        "due_date": "2025-04-24",
+        "amount": 21037.24,
+        "days_past_due": 411
+      },
+      {
+        "party": "Linen & Laundry",
+        "due_date": "2023-07-19",
+        "amount": 20754.28,
+        "days_past_due": 1056
       }
     ]
   },
@@ -156,90 +156,90 @@
     "monthly": [
       {
         "month": "2025-07",
-        "revenue": 171126.47,
-        "expense": 111088.36,
-        "net": 60038.11,
-        "entries": 33
+        "revenue": 256208.99,
+        "expense": 101262.02,
+        "net": 154946.97,
+        "entries": 36
       },
       {
         "month": "2025-08",
-        "revenue": 236285.12,
-        "expense": 114675.23,
-        "net": 121609.89,
-        "entries": 31
-      },
-      {
-        "month": "2025-09",
-        "revenue": 159343.05,
-        "expense": 133704.87,
-        "net": 25638.18,
-        "entries": 30
-      },
-      {
-        "month": "2025-10",
-        "revenue": 199244.96,
-        "expense": 106455.37,
-        "net": 92789.59,
-        "entries": 32
-      },
-      {
-        "month": "2025-11",
-        "revenue": 205752.09,
-        "expense": 116113.63,
-        "net": 89638.46,
-        "entries": 33
-      },
-      {
-        "month": "2025-12",
-        "revenue": 205480.48,
-        "expense": 145484.13,
-        "net": 59996.35,
-        "entries": 35
-      },
-      {
-        "month": "2026-01",
-        "revenue": 134793.88,
-        "expense": 99375.12,
-        "net": 35418.76,
-        "entries": 25
-      },
-      {
-        "month": "2026-02",
-        "revenue": 132692.55,
-        "expense": 108283.58,
-        "net": 24408.97,
-        "entries": 27
-      },
-      {
-        "month": "2026-03",
-        "revenue": 234813.57,
-        "expense": 136309.55,
-        "net": 98504.02,
-        "entries": 35
-      },
-      {
-        "month": "2026-04",
-        "revenue": 246777.14,
-        "expense": 122172.77,
-        "net": 124604.37,
-        "entries": 33
-      },
-      {
-        "month": "2026-05",
-        "revenue": 237033.31,
-        "expense": 114472.35,
-        "net": 122560.96,
+        "revenue": 141850.84,
+        "expense": 97146.65,
+        "net": 44704.19,
         "entries": 34
       },
       {
+        "month": "2025-09",
+        "revenue": 165406.24,
+        "expense": 126052.05,
+        "net": 39354.19,
+        "entries": 32
+      },
+      {
+        "month": "2025-10",
+        "revenue": 168464.74,
+        "expense": 111513.83,
+        "net": 56950.91,
+        "entries": 35
+      },
+      {
+        "month": "2025-11",
+        "revenue": 223606.25,
+        "expense": 95626.64,
+        "net": 127979.61,
+        "entries": 38
+      },
+      {
+        "month": "2025-12",
+        "revenue": 146070.75,
+        "expense": 137586.76,
+        "net": 8483.99,
+        "entries": 37
+      },
+      {
+        "month": "2026-01",
+        "revenue": 211080.63,
+        "expense": 88115.47,
+        "net": 122965.16,
+        "entries": 40
+      },
+      {
+        "month": "2026-02",
+        "revenue": 209580.23,
+        "expense": 97158.57,
+        "net": 112421.66,
+        "entries": 29
+      },
+      {
+        "month": "2026-03",
+        "revenue": 187044.96,
+        "expense": 129091.98,
+        "net": 57952.98,
+        "entries": 39
+      },
+      {
+        "month": "2026-04",
+        "revenue": 188352.38,
+        "expense": 107892.06,
+        "net": 80460.32,
+        "entries": 36
+      },
+      {
+        "month": "2026-05",
+        "revenue": 169569.32,
+        "expense": 120265.08,
+        "net": 49304.24,
+        "entries": 33
+      },
+      {
         "month": "2026-06",
-        "revenue": 15483.2,
-        "expense": 71947.25,
-        "net": -56464.05,
-        "entries": 9
+        "revenue": 42212.19,
+        "expense": 5400.0,
+        "net": 36812.19,
+        "entries": 5
       }
     ],
-    "entry_count": 1638
+    "entry_count": 1840
   },
   "payroll": {
     "status": "pending",
