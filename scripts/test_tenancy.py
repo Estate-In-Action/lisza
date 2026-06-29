@@ -235,3 +235,18 @@ def test_list_clients_excludes_house(tmp_path, monkeypatch):
     slugs = [r.slug for r in tenancy.list_clients()]
     assert "real-co" in slugs
     assert "_house" not in slugs
+
+
+import json as _json
+
+
+def test_house_config_default_then_override(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    tenancy.ensure_house()
+    cfg = tenancy.get_house_config()
+    assert isinstance(cfg["tiles"], list) and len(cfg["tiles"]) >= 1
+    assert all("key" in t and "label" in t for t in cfg["tiles"])
+    new_cfg = {"tiles": cfg["tiles"] + [{"key": "custom_x", "label": "Custom X", "hint": "added"}]}
+    tenancy.set_house_config(new_cfg)
+    again = tenancy.get_house_config()
+    assert any(t["key"] == "custom_x" for t in again["tiles"])

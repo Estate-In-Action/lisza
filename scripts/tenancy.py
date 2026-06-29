@@ -19,6 +19,16 @@ import book_schema
 COA_PATH = Path(__file__).resolve().parent.parent / "coa.csv"
 HOUSE_SLUG = "_house"
 
+# Default housekeeping config for the house tenant. The seam: add tiles here
+# (or via set_house_config) and the Admin -> Housekeeping surface renders them.
+HOUSE_CONFIG_DEFAULT = {
+    "tiles": [
+        {"key": "my_pnl", "label": "My P&L", "hint": "Overview tab"},
+        {"key": "my_ar", "label": "Fees receivable", "hint": "what clients owe me"},
+        {"key": "my_payroll", "label": "Staff payroll", "hint": "Payroll tab"},
+    ]
+}
+
 
 def lisza_home() -> Path:
     return Path(os.environ.get("LISZA_HOME", str(Path(__file__).resolve().parent.parent)))
@@ -205,6 +215,36 @@ def ensure_house() -> str:
         return row[0]
     return register_client(
         slug=HOUSE_SLUG, display_name="House (My Books)", kind="house")
+
+
+def get_house_config() -> dict:
+    """Read the house housekeeping config, falling back to the default."""
+    registry_db()
+    reg = sqlite3.connect(registry_path())
+    row = reg.execute(
+        "SELECT card_fields_json FROM bookkeeper_prefs WHERE bookkeeper_id=?",
+        (HOUSE_SLUG,)).fetchone()
+    reg.close()
+    if row and row[0]:
+        import json
+        try:
+            return json.loads(row[0])
+        except (ValueError, TypeError):
+            pass
+    return dict(HOUSE_CONFIG_DEFAULT)
+
+
+def set_house_config(config: dict) -> None:
+    """Persist a housekeeping config for the house tenant (extension seam)."""
+    import json
+    registry_db()
+    reg = sqlite3.connect(registry_path())
+    reg.execute(
+        """INSERT OR REPLACE INTO bookkeeper_prefs (bookkeeper_id, card_fields_json, updated_at)
+           VALUES (?, ?, datetime('now'))""",
+        (HOUSE_SLUG, json.dumps(config)))
+    reg.commit()
+    reg.close()
 
 
 def _last_day_of_month(year: int, month: int) -> date:
