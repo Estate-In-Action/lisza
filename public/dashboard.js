@@ -173,6 +173,42 @@ function trendRows(monthly) {
     `</span></div>`).join("");
 }
 
+function w2Rows(list) {
+  if (!list || !list.length) return `<div class="muted">No W-2s</div>`;
+  return list.map(w =>
+    `<div class="kv"><span>${esc(w.employee)} ` +
+    `<span class="muted">${esc(w.entity)}</span></span>` +
+    `<span class="money">${money(w.box1_wages)} ` +
+    `<span class="muted">wages</span> · ` +
+    `${money(w.box2_fed_wh)} fed</span></div>`).join("");
+}
+
+function form941Rows(list) {
+  if (!list || !list.length) return `<div class="muted">No 941 periods</div>`;
+  return list.map(f =>
+    `<div class="kv"><span>${esc(f.entity)} ` +
+    `<span class="muted">Q${esc(f.quarter)} ${esc(f.year)}</span></span>` +
+    `<span class="money">${money(f.total_liability)} ` +
+    `<span class="muted">liability</span></span></div>`).join("");
+}
+
+function payrollTile(p) {
+  if (!p || p.status !== "active") {
+    return `<div class="card payroll-stub"><h3>Payroll</h3>` +
+      `<div class="muted">${esc((p && p.message) || "No payroll runs on file")}</div></div>`;
+  }
+  const s = p.summary;
+  return `<div class="card"><h3>Payroll <span class="muted">${esc(p.year)}</span></h3>` +
+    kv("Employees", s.employees) +
+    kv("Pay runs", s.run_count) +
+    kv("Gross", money(s.gross)) +
+    kv("Net", money(s.net)) +
+    kv("Employer tax", money(s.employer_tax_total)) +
+    `<h4>W-2 (per employee)</h4>${w2Rows(p.w2)}` +
+    `<h4>941 (per entity / quarter)</h4>${form941Rows(p.form941)}` +
+    `</div>`;
+}
+
 function renderClientDetail(d) {
   const ents = (d.admin.entities || []);
   const entRows = ents.length > 1
@@ -209,9 +245,7 @@ function renderClientDetail(d) {
           ${kv("Posted entries", d.historical.entry_count)}
           <h4>Recent months</h4>${trendRows(d.historical.monthly)}
         </div>
-        <div class="card payroll-stub"><h3>Payroll</h3>
-          <div class="muted">${esc(d.payroll.message)}</div>
-        </div>
+        ${payrollTile(d.payroll)}
       </div>
     </div>`;
 }
@@ -258,5 +292,5 @@ if (typeof document !== "undefined" && document.getElementById) {
 }
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { esc, money, kv, renderClientDetail, renderTiles, parseHash };
+  module.exports = { esc, money, kv, renderClientDetail, renderTiles, parseHash, payrollTile };
 }
