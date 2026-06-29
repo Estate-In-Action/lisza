@@ -41,7 +41,7 @@ def aging_buckets(items, as_of: str) -> dict:
                          "amount": round(amt, 2), "days_past_due": dpd})
     buckets = {k: round(v, 2) for k, v in buckets.items()}
     top = sorted(enriched, key=lambda r: r["amount"], reverse=True)[:TOP_N]
-    return {"open_total": round(total, 2), "open_count": count,
+    return {"open_total": round(sum(buckets.values()), 2), "open_count": count,
             "aging": buckets, "top_open": top}
 
 
@@ -103,21 +103,25 @@ def build_client_detail(slug: str) -> dict:
     db = tenancy.resolve_db(slug)
     con = sqlite3.connect(db)
     con.row_factory = sqlite3.Row
-    as_of = con.execute(
-        "SELECT MAX(entry_date) FROM entries WHERE status='posted'").fetchone()[0]
-    inv = [dict(r) for r in con.execute(
-        "SELECT party, due_date, amount FROM invoices WHERE status='open'")]
-    bil = [dict(r) for r in con.execute(
-        "SELECT party, due_date, amount FROM bills WHERE status='unpaid'")]
-    prof = con.execute(
-        "SELECT slug, display_name, legal_name, ein, entity_type, "
-        "fiscal_year_end, filing_cadence FROM client_profile").fetchone()
-    ents = [dict(r) for r in con.execute(
-        "SELECT name, type FROM entities WHERE active=1 "
-        "ORDER BY is_default DESC, id")]
-    first, last, entry_count = posted_span(con)
-    monthly = monthly_trend(con, as_of) if as_of else []
-    con.close()
+    try:
+        as_of = con.execute(
+            "SELECT MAX(entry_date) FROM entries WHERE status='posted'").fetchone()[0]
+        inv = [dict(r) for r in con.execute(
+            "SELECT party, due_date, amount FROM invoices WHERE status='open'")]
+        bil = [dict(r) for r in con.execute(
+            "SELECT party, due_date, amount FROM bills WHERE status='unpaid'")]
+        prof = con.execute(
+            "SELECT slug, display_name, legal_name, ein, entity_type, "
+            "fiscal_year_end, filing_cadence FROM client_profile").fetchone()
+        ents = [dict(r) for r in con.execute(
+            "SELECT name, type FROM entities WHERE active=1 "
+            "ORDER BY is_default DESC, id")]
+        first, last, entry_count = posted_span(con)
+        monthly = monthly_trend(con, as_of) if as_of else []
+    finally:
+        con.close()
+
+    ref_date = as_of or date.today().isoformat()
 
     next_due = None
     if as_of:
@@ -133,8 +137,8 @@ def build_client_detail(slug: str) -> dict:
         "entity_type": prof["entity_type"],
         "status": "active",
         "as_of": as_of,
-        "ar": aging_buckets(inv, as_of) if as_of else aging_buckets([], "1970-01-01"),
-        "ap": aging_buckets(bil, as_of) if as_of else aging_buckets([], "1970-01-01"),
+        "ar": aging_buckets(inv, ref_date),
+        "ap": aging_buckets(bil, ref_date),
         "admin": {
             "legal_name": prof["legal_name"],
             "ein_masked": mask_ein(prof["ein"]),

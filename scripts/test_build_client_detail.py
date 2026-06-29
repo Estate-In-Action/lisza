@@ -89,16 +89,7 @@ def test_span_and_entry_count():
     assert first == "2026-05-10" and last == "2026-06-20" and n == 3
 
 
-import os
-import tempfile
 import importlib
-
-
-def _isolated_home(tmp):
-    os.environ["LISZA_HOME"] = tmp
-    import tenancy
-    importlib.reload(tenancy)
-    importlib.reload(bcd)
 
 
 def test_build_detail_end_to_end(tmp_path, monkeypatch):
@@ -145,7 +136,7 @@ def test_client_isolation(tmp_path, monkeypatch):
     importlib.reload(tenancy)
     importlib.reload(bcd)
     monkeypatch.setattr(tenancy, "COA_PATH",
-                        __import__("pathlib").Path("/home/workspace/LISZA") / "coa.csv")
+                        __import__("pathlib").Path("/home/workspace/LISZA-spec3a") / "coa.csv")
 
     # Register two clients
     tenancy.register_client(slug="client_a", display_name="Alpha Co", entity_type="llc")
@@ -197,7 +188,7 @@ def test_aging_sum_equals_open_total_ar_and_ap(tmp_path, monkeypatch):
     importlib.reload(tenancy)
     importlib.reload(bcd)
     monkeypatch.setattr(tenancy, "COA_PATH",
-                        __import__("pathlib").Path("/home/workspace/LISZA") / "coa.csv")
+                        __import__("pathlib").Path("/home/workspace/LISZA-spec3a") / "coa.csv")
 
     tenancy.register_client(slug="aging_co", display_name="Aging Co", entity_type="llc",
                             ein="47-2201234", filing_cadence="quarterly")
@@ -229,6 +220,59 @@ def test_aging_sum_equals_open_total_ar_and_ap(tmp_path, monkeypatch):
         f"AR aging sum {sum(ar['aging'].values())} != open_total {ar['open_total']}")
     assert sum(ap["aging"].values()) == ap["open_total"], (
         f"AP aging sum {sum(ap['aging'].values())} != open_total {ap['open_total']}")
+
+
+def test_ar_ap_visible_when_as_of_is_none(tmp_path, monkeypatch):
+    """When there are no posted entries (as_of is None), open invoices and bills
+    must still appear in ar/ap — they must NOT be silently discarded."""
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    import tenancy
+    importlib.reload(tenancy)
+    importlib.reload(bcd)
+    monkeypatch.setattr(tenancy, "COA_PATH",
+                        __import__("pathlib").Path("/home/workspace/LISZA-spec3a") / "coa.csv")
+
+    tenancy.register_client(slug="no_entries_co", display_name="No Entries Co",
+                            entity_type="llc", ein="47-2201234", filing_cadence="quarterly")
+    db = tenancy.resolve_db("no_entries_co")
+    con = __import__("sqlite3").connect(db)
+    # Insert an open invoice and unpaid bill but NO posted entries -> as_of will be None
+    con.executescript(
+        """INSERT INTO invoices(party,issue_date,due_date,amount,status)
+             VALUES('CustX','2026-05-01','2026-05-15',750.00,'open');
+           INSERT INTO bills(party,issue_date,due_date,amount,status)
+             VALUES('VendX','2026-05-01','2026-05-20',320.00,'unpaid');""")
+    con.commit()
+    con.close()
+
+    d = bcd.build_client_detail("no_entries_co")
+    assert d["as_of"] is None, "as_of should be None when no posted entries exist"
+    assert d["ar"]["open_total"] == 750.0, (
+        f"Expected AR open_total 750.0 but got {d['ar']['open_total']} — "
+        "invoices are being silently discarded when as_of is None")
+    assert d["ap"]["open_total"] == 320.0, (
+        f"Expected AP open_total 320.0 but got {d['ap']['open_total']} — "
+        "bills are being silently discarded when as_of is None")
+
+
+def test_aging_rounding_invariant():
+    """open_total must equal sum(aging.values()) even near half-cent boundaries.
+    Three amounts of 0.155 spread across different aging buckets expose the
+    float-accumulation divergence: round(0.465, 2) == 0.46 but
+    round(0.155,2)+round(0.155,2)+round(0.155,2) == 0.45 (approx).
+    The fix is to derive open_total from the already-rounded buckets."""
+    # as_of = "2026-06-09"
+    # due "2026-06-09"  -> dpd=0  -> current
+    # due "2026-05-25"  -> dpd=15 -> d1_30
+    # due "2026-04-30"  -> dpd=40 -> d31_60
+    items = [
+        {"party": "A", "due_date": "2026-06-09", "amount": 0.155},
+        {"party": "B", "due_date": "2026-05-25", "amount": 0.155},
+        {"party": "C", "due_date": "2026-04-30", "amount": 0.155},
+    ]
+    r = bcd.aging_buckets(items, "2026-06-09")
+    assert round(sum(r["aging"].values()), 2) == r["open_total"], (
+        f"aging sum {round(sum(r['aging'].values()), 2)} != open_total {r['open_total']}")
 
 
 def test_write_client_detail_writes_file(tmp_path, monkeypatch):
