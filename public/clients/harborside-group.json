@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T04:40:55Z",
+  "generated_at": "2026-06-29T04:44:31Z",
   "slug": "harborside-group",
   "display_name": "Harborside Restaurant Group",
   "entity_type": "llc",
@@ -128,8 +128,8 @@
     ]
   },
   "admin": {
-    "legal_name": null,
-    "ein_masked": null,
+    "legal_name": "Harborside Restaurant Group LLC",
+    "ein_masked": "\u2022\u2022-\u2022\u2022\u20221890",
     "fiscal_year_end": "12-31",
     "filing_cadence": "quarterly",
     "next_filing_due": "2026-07-31",
