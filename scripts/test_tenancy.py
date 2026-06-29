@@ -228,6 +228,23 @@ def test_ensure_house_registers_hidden_full_schema_book(tmp_path, monkeypatch):
             "payroll_runs", "payroll_lines"} <= tables
 
 
+def test_ensure_house_book_has_report_view(tmp_path, monkeypatch):
+    # The console Overview reads v_account_balances; ensure_house must make the
+    # house book console-ready (and self-heal an already-registered house book).
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    tenancy.ensure_house()
+    book = sqlite3.connect(tenancy.resolve_db("_house"))
+    views = {r[0] for r in book.execute(
+        "SELECT name FROM sqlite_master WHERE type='view'")}
+    tables = {r[0] for r in book.execute(
+        "SELECT name FROM sqlite_master WHERE type='table'")}
+    book.close()
+    assert "v_account_balances" in views
+    assert "category_overrides" in tables
+    # idempotent: a second call must not raise
+    tenancy.ensure_house()
+
+
 def test_list_clients_excludes_house(tmp_path, monkeypatch):
     monkeypatch.setenv("LISZA_HOME", str(tmp_path))
     tenancy.register_client(slug="real-co", display_name="Real Co")

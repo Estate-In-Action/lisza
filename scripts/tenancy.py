@@ -212,9 +212,17 @@ def ensure_house() -> str:
         "SELECT client_id FROM clients WHERE slug=?", (HOUSE_SLUG,)).fetchone()
     reg.close()
     if row:
-        return row[0]
-    return register_client(
-        slug=HOUSE_SLUG, display_name="House (My Books)", kind="house")
+        client_id = row[0]
+    else:
+        client_id = register_client(
+            slug=HOUSE_SLUG, display_name="House (My Books)", kind="house")
+    # register_client builds the core/entity/payroll schema but not the report
+    # objects (v_account_balances view, category_overrides) the console Overview
+    # reads — real client books get those from ensure_report_schema. Apply them
+    # here so the house book is console-ready and self-heal older house books.
+    import ensure_report_schema
+    ensure_report_schema.apply(str(resolve_db(HOUSE_SLUG)))
+    return client_id
 
 
 def get_house_config() -> dict:
