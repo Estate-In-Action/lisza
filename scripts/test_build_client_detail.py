@@ -45,3 +45,45 @@ def test_mask_ein_none_and_short():
     assert bcd.mask_ein(None) is None
     assert bcd.mask_ein("") is None
     assert bcd.mask_ein("12") is None
+
+
+import sqlite3
+
+
+def _trend_fixture():
+    con = sqlite3.connect(":memory:")
+    con.executescript(
+        """
+        CREATE TABLE accounts(code TEXT PRIMARY KEY, type TEXT);
+        CREATE TABLE entries(id INTEGER PRIMARY KEY, entry_date TEXT, status TEXT);
+        CREATE TABLE splits(entry_id INTEGER, account TEXT, dr REAL, cr REAL);
+        INSERT INTO accounts VALUES('400','income'),('500','expense');
+        INSERT INTO entries VALUES(1,'2026-06-05','posted'),(2,'2026-06-20','posted'),
+                                  (3,'2026-05-10','posted'),(4,'2026-06-01','pending');
+        INSERT INTO splits VALUES(1,'400',0,1000),(2,'500',300,0),
+                                 (3,'400',0,500),(4,'400',0,9999);
+        """)
+    con.commit()
+    return con
+
+
+def test_monthly_trend_signs_and_window():
+    con = _trend_fixture()
+    rows = bcd.monthly_trend(con, "2026-06-20", n=12)
+    assert len(rows) == 12
+    assert rows[-1]["month"] == "2026-06"
+    jun = rows[-1]
+    assert jun["revenue"] == 1000.0     # credit on income, posted only (pending excluded)
+    assert jun["expense"] == 300.0      # debit on expense
+    assert jun["net"] == 700.0
+    assert jun["entries"] == 2
+    may = rows[-2]
+    assert may["month"] == "2026-05" and may["revenue"] == 500.0
+    # a month with no activity is present and zeroed
+    assert rows[0]["revenue"] == 0.0 and rows[0]["entries"] == 0
+
+
+def test_span_and_entry_count():
+    con = _trend_fixture()
+    first, last, n = bcd.posted_span(con)
+    assert first == "2026-05-10" and last == "2026-06-20" and n == 3

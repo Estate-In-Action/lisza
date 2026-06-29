@@ -52,3 +52,48 @@ def mask_ein(ein: str | None) -> str | None:
     if len(digits) < 4:
         return None
     return "••-•••" + digits[-4:]
+
+
+def _months_back(as_of: str, n: int) -> list[str]:
+    ref = date.fromisoformat(as_of)
+    y, m = ref.year, ref.month
+    out = []
+    for _ in range(n):
+        out.append(f"{y:04d}-{m:02d}")
+        m -= 1
+        if m == 0:
+            m, y = 12, y - 1
+    return list(reversed(out))
+
+
+def monthly_trend(con: sqlite3.Connection, as_of: str, n: int = 12) -> list[dict]:
+    months = _months_back(as_of, n)
+    rows = con.execute(
+        """SELECT substr(e.entry_date,1,7) AS ym,
+                  ROUND(SUM(CASE WHEN a.type='income'  THEN s.cr-s.dr ELSE 0 END),2) rev,
+                  ROUND(SUM(CASE WHEN a.type='expense' THEN s.dr-s.cr ELSE 0 END),2) exp,
+                  COUNT(DISTINCT e.id) ent
+           FROM splits s
+           JOIN entries e ON e.id=s.entry_id AND e.status='posted'
+           JOIN accounts a ON a.code=s.account
+           WHERE substr(e.entry_date,1,7) >= ? AND substr(e.entry_date,1,7) <= ?
+           GROUP BY ym""", (months[0], months[-1])).fetchall()
+    by = {r[0]: r for r in rows}
+    out = []
+    for ym in months:
+        r = by.get(ym)
+        rev = (r[1] if r and r[1] is not None else 0.0)
+        exp = (r[2] if r and r[2] is not None else 0.0)
+        ent = (r[3] if r else 0)
+        out.append({"month": ym, "revenue": rev, "expense": exp,
+                    "net": round(rev - exp, 2), "entries": ent})
+    return out
+
+
+def posted_span(con: sqlite3.Connection):
+    first, last = con.execute(
+        "SELECT MIN(entry_date), MAX(entry_date) FROM entries "
+        "WHERE status='posted'").fetchone()
+    n = con.execute(
+        "SELECT COUNT(*) FROM entries WHERE status='posted'").fetchone()[0]
+    return first, last, n
