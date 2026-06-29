@@ -146,3 +146,32 @@ def test_build_payroll_active_block():
     assert out["w2"][0]["employee"] == "Dana Whitlock"
     assert len(out["form941"]) == 1
     assert out["form941"][0]["quarter"] == 1
+
+
+def test_additional_medicare_and_capped_ss_base():
+    """Regression guard for the two box identities a transcription bug could
+    silently drop: Box 6 must include addl_medi (not just medi_ee), and Box 3
+    (capped SS base = ss_ee/0.062) must be recoverable even when it falls BELOW
+    Box 1 gross — the realistic over-the-SS-cap high earner. The other tests
+    seed addl_medi=0 and ss_ee/0.062 == gross, so neither term is exercised."""
+    con = _con()
+    con.executescript(
+        """INSERT INTO entities(id,name,type,is_default,active)
+             VALUES(1,'Harborside','company',1,1);
+           INSERT INTO employees(id,entity_id,name,active)
+             VALUES(1,1,'Avery Cap',1);
+           INSERT INTO payroll_runs(id,entity_id,pay_date)
+             VALUES(1,1,'2026-03-20');
+           INSERT INTO payroll_lines(run_id,employee_id,gross,fed_wh,ss_ee,ss_er,
+                                     medi_ee,medi_er,addl_medi,state_wh,futa,suta,net)
+             VALUES(1,1,200000,40000,10918.20,10918.20,2900,2900,135,12000,
+                    42,210,134046.80);""")
+    con.commit()
+    w = pr.w2_rollup(con, "2026")[0]
+    assert w["box1_wages"] == 200000.0
+    assert w["box3_ss_wages"] == 176100.0          # ss_ee/0.062, capped below gross
+    assert w["box3_ss_wages"] != w["box1_wages"]   # the divergence is the point
+    assert w["box6_medi_tax"] == 3035.0            # medi_ee 2900 + addl_medi 135
+    f = pr.form941_rollup(con, "2026")[0]
+    assert f["medi_tax"] == 5935.0                 # medi_ee + medi_er + addl_medi
+    assert f["total_liability"] == 67771.4         # includes the addl_medi term
