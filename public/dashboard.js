@@ -66,7 +66,7 @@ function kv(k, v) {
 
 function renderTiles() {
   const cards = DATA.clients.map(c => `
-    <div class="card">
+    <div class="card clickable" data-slug="${esc(c.slug)}">
       <h3><a class="clink" href="#client/${esc(c.slug)}">${esc(c.display_name)}</a>${badge(c)}</h3>
       <div class="muted">${esc(c.entity_type || "")}</div>
       <div class="kv"><span>Cash</span><span class="money pos">${money(c.cash)}</span></div>
@@ -82,7 +82,7 @@ function renderList() {
   const head = `<tr><th>Client</th><th>Type</th><th>Cash</th><th>Open AR</th>
     <th>Open AP</th><th>Last entry</th></tr>`;
   const body = DATA.clients.map(c => `
-    <tr><td><a class="clink" href="#client/${esc(c.slug)}">${esc(c.display_name)}</a>${badge(c)}</td><td style="text-align:left">${esc(c.entity_type || "")}</td>
+    <tr class="clickable" data-slug="${esc(c.slug)}"><td><a class="clink" href="#client/${esc(c.slug)}">${esc(c.display_name)}</a>${badge(c)}</td><td style="text-align:left">${esc(c.entity_type || "")}</td>
     <td class="money">${money(c.cash)}</td><td class="money">${money(c.open_ar)}</td>
     <td class="money">${money(c.open_ap)}</td><td>${esc(c.last_entry || "—")}</td></tr>`).join("");
   return `<table>${head}${body}</table>`;
@@ -118,6 +118,13 @@ function render() {
 
   document.querySelectorAll("#layout-seg button").forEach(b =>
     b.classList.toggle("active", b.dataset.layout === layout));
+
+  board.querySelectorAll("[data-slug]").forEach(el => {
+    el.onclick = (ev) => {
+      if (ev.target.closest("a")) return;
+      location.hash = "client/" + el.dataset.slug;
+    };
+  });
 
   if (layout === "rolodex") {
     const prev = document.getElementById("rolo-prev");
