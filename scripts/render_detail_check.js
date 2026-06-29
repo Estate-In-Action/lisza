@@ -23,5 +23,9 @@ for (const tile of ["Accounts Receivable", "Accounts Payable", "Admin",
 }
 assert(html.includes("‹ all clients"), "back link present");
 assert(!/\b\d{2}-\d{7}\b/.test(html), "raw EIN must not appear");
-assert(html.includes("•"), "masked EIN dots present");
+// Masking is only asserted when this client actually has an EIN; demo books
+// legitimately carry null EINs (rendered as "—"), so don't couple the test to data.
+if (detail.admin && detail.admin.ein_masked) {
+  assert(html.includes("•"), "masked EIN dots present when EIN exists");
+}
 console.log(`OK ${slug}: all 5 tiles render (${html.length} bytes)`);
