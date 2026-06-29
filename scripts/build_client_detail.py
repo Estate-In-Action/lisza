@@ -7,6 +7,7 @@ import sqlite3
 from datetime import date, datetime, timezone
 from pathlib import Path
 
+import payroll_rollup
 import tenancy
 
 PUBLIC_DIR = Path(__file__).resolve().parent.parent / "public"
@@ -118,6 +119,7 @@ def build_client_detail(slug: str) -> dict:
             "ORDER BY is_default DESC, id")]
         first, last, entry_count = posted_span(con)
         monthly = monthly_trend(con, as_of) if as_of else []
+        payroll = payroll_rollup.build_payroll(con)
     finally:
         con.close()
 
@@ -152,8 +154,7 @@ def build_client_detail(slug: str) -> dict:
             "monthly": monthly,
             "entry_count": entry_count,
         },
-        "payroll": {"status": "pending",
-                    "message": "Payroll engine ships in 3B/3C"},
+        "payroll": payroll,
     }
 
 
