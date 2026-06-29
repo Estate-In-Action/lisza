@@ -138,6 +138,99 @@ def test_build_detail_end_to_end(tmp_path, monkeypatch):
     assert len(d["historical"]["monthly"]) == 12
 
 
+def test_client_isolation(tmp_path, monkeypatch):
+    """Build for client_a must reflect only client_a's data, not client_b's."""
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    import tenancy
+    importlib.reload(tenancy)
+    importlib.reload(bcd)
+    monkeypatch.setattr(tenancy, "COA_PATH",
+                        __import__("pathlib").Path("/home/workspace/LISZA") / "coa.csv")
+
+    # Register two clients
+    tenancy.register_client(slug="client_a", display_name="Alpha Co", entity_type="llc")
+    tenancy.register_client(slug="client_b", display_name="Beta Co", entity_type="llc")
+
+    con_a = __import__("sqlite3").connect(tenancy.resolve_db("client_a"))
+    con_a.executescript(
+        """INSERT INTO entries(id,entry_date,description,source,status)
+             VALUES(1,'2026-06-09','rev','x','posted');
+           INSERT INTO splits(entry_id,account,dr,cr) VALUES(1,'400',0,1000);
+           INSERT INTO invoices(party,issue_date,due_date,amount,status)
+             VALUES('Cust-A','2026-05-01','2026-05-15',1111,'open');
+           INSERT INTO bills(party,issue_date,due_date,amount,status)
+             VALUES('Vend-A','2026-05-01','2026-05-20',222,'unpaid');""")
+    con_a.commit()
+    con_a.close()
+
+    con_b = __import__("sqlite3").connect(tenancy.resolve_db("client_b"))
+    con_b.executescript(
+        """INSERT INTO entries(id,entry_date,description,source,status)
+             VALUES(1,'2026-06-09','rev','x','posted');
+           INSERT INTO splits(entry_id,account,dr,cr) VALUES(1,'400',0,9999);
+           INSERT INTO invoices(party,issue_date,due_date,amount,status)
+             VALUES('Cust-B','2026-05-01','2026-05-15',8888,'open');
+           INSERT INTO bills(party,issue_date,due_date,amount,status)
+             VALUES('Vend-B','2026-05-01','2026-05-20',7777,'unpaid');""")
+    con_b.commit()
+    con_b.close()
+
+    d = bcd.build_client_detail("client_a")
+
+    # Must reflect client_a's figures only
+    assert d["slug"] == "client_a"
+    assert d["ar"]["open_total"] == 1111.0, (
+        f"Expected client_a AR 1111.0, got {d['ar']['open_total']}")
+    assert d["ap"]["open_total"] == 222.0, (
+        f"Expected client_a AP 222.0, got {d['ap']['open_total']}")
+
+    # Must NOT contain any of client_b's figures
+    assert d["ar"]["open_total"] != 8888.0
+    assert d["ap"]["open_total"] != 7777.0
+
+
+def test_aging_sum_equals_open_total_ar_and_ap(tmp_path, monkeypatch):
+    """AR aging buckets must sum to open_total, and AP aging buckets must sum to
+    open_total, in a full end-to-end build_client_detail call."""
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    import tenancy
+    importlib.reload(tenancy)
+    importlib.reload(bcd)
+    monkeypatch.setattr(tenancy, "COA_PATH",
+                        __import__("pathlib").Path("/home/workspace/LISZA") / "coa.csv")
+
+    tenancy.register_client(slug="aging_co", display_name="Aging Co", entity_type="llc",
+                            ein="47-2201234", filing_cadence="quarterly")
+    db = tenancy.resolve_db("aging_co")
+    con = __import__("sqlite3").connect(db)
+    con.executescript(
+        """INSERT INTO entries(id,entry_date,description,source,status)
+             VALUES(1,'2026-06-09','rev','x','posted');
+           INSERT INTO splits(entry_id,account,dr,cr) VALUES(1,'400',0,500);
+           -- Two open invoices spanning different aging buckets
+           INSERT INTO invoices(party,issue_date,due_date,amount,status)
+             VALUES('Cust1','2026-05-01','2026-06-09',300,'open');
+           INSERT INTO invoices(party,issue_date,due_date,amount,status)
+             VALUES('Cust2','2026-04-01','2026-05-01',700,'open');
+           -- Two unpaid bills spanning different aging buckets
+           INSERT INTO bills(party,issue_date,due_date,amount,status)
+             VALUES('Vend1','2026-05-01','2026-06-09',150,'unpaid');
+           INSERT INTO bills(party,issue_date,due_date,amount,status)
+             VALUES('Vend2','2026-04-01','2026-05-01',250,'unpaid');""")
+    con.commit()
+    con.close()
+
+    d = bcd.build_client_detail("aging_co")
+
+    ar = d["ar"]
+    ap = d["ap"]
+
+    assert sum(ar["aging"].values()) == ar["open_total"], (
+        f"AR aging sum {sum(ar['aging'].values())} != open_total {ar['open_total']}")
+    assert sum(ap["aging"].values()) == ap["open_total"], (
+        f"AP aging sum {sum(ap['aging'].values())} != open_total {ap['open_total']}")
+
+
 def test_write_client_detail_writes_file(tmp_path, monkeypatch):
     monkeypatch.setenv("LISZA_HOME", str(tmp_path))
     import tenancy
