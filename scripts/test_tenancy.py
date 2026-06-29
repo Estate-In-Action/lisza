@@ -172,3 +172,22 @@ def test_refresh_summary_caches_entity_count_and_filing_due(tmp_path, monkeypatc
     assert rows["harborside-group"]["entity_count"] == 3
     assert rows["jb-design"]["next_filing_due"] is not None
     assert rows["harborside-group"]["next_filing_due"] is not None
+
+
+def test_kind_column_migration_is_idempotent(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    tenancy.registry_db()
+    tenancy.registry_db()
+    con = sqlite3.connect(tenancy.registry_path())
+    kind_cols = [r for r in con.execute("PRAGMA table_info(clients)") if r[1] == "kind"]
+    con.close()
+    assert len(kind_cols) == 1
+
+
+def test_existing_client_rows_default_to_kind_client(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    tenancy.register_client(slug="defaults-co", display_name="Defaults Co")
+    con = sqlite3.connect(tenancy.registry_path())
+    kind = con.execute("SELECT kind FROM clients WHERE slug='defaults-co'").fetchone()[0]
+    con.close()
+    assert kind == "client"

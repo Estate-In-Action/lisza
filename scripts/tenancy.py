@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS clients (
     created_at   TEXT NOT NULL DEFAULT (datetime('now')),
     display_name TEXT,
     entity_type  TEXT,
+    kind         TEXT NOT NULL DEFAULT 'client',
     last_close_date TEXT,
     next_filing_due TEXT
 );
@@ -59,6 +60,8 @@ CREATE TABLE IF NOT EXISTS bookkeeper_prefs (
 def _ensure_registry_columns(con: sqlite3.Connection) -> None:
     if not book_schema._has_column(con, "client_summary", "entity_count"):
         con.execute("ALTER TABLE client_summary ADD COLUMN entity_count INTEGER")
+    if not book_schema._has_column(con, "clients", "kind"):
+        con.execute("ALTER TABLE clients ADD COLUMN kind TEXT NOT NULL DEFAULT 'client'")
 
 
 def registry_db() -> Path:
