@@ -87,9 +87,6 @@ def seed(profile: ClientProfile, *, slug: str) -> dict:
             # recurring opex
             _booked(con, entity_id, _day(first, rng, 1, 8), "Office rent",
                     rng.choice(profile.vendors), "520", "102", 1800.0)
-            if profile.has_payroll:
-                _booked(con, entity_id, _day(first, rng, 1, 8), "Salaries & wages",
-                        "Payroll", "555", "102", round(rev_target * 0.22, 2))
             # revenue -> AR
             for _ in range(rng.randint(2, 4)):
                 issue = _day(first, rng, 0, 25)
@@ -166,6 +163,11 @@ def seed(profile: ClientProfile, *, slug: str) -> dict:
     dr, cr = con.execute(
         "SELECT ROUND(SUM(dr),2),ROUND(SUM(cr),2) FROM splits").fetchone()
     con.close()
+
+    # real payroll history replaces the lump-sum wage placeholder
+    import seed_payroll
+    seed_payroll.seed_payroll(slug=slug)
+
     return {"slug": slug, "invoices": n_inv, "bills": n_bill, "dr": dr, "cr": cr}
 
 
