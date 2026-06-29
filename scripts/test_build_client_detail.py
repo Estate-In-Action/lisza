@@ -1,4 +1,9 @@
+import os
+
 import build_client_detail as bcd
+
+# Repo coa.csv resolved relative to this test file (worktree-independent).
+COA_PATH = os.path.join(os.path.dirname(__file__), "..", "coa.csv")
 
 
 def test_aging_buckets_classify_and_total():
@@ -98,9 +103,8 @@ def test_build_detail_end_to_end(tmp_path, monkeypatch):
     importlib.reload(tenancy)
     importlib.reload(bcd)
     # COA must resolve: point at the repo coa.csv
-    repo = "/home/workspace/LISZA-spec3a"
     monkeypatch.setattr(tenancy, "COA_PATH",
-                        __import__("pathlib").Path(repo) / "coa.csv")
+                        __import__("pathlib").Path(COA_PATH))
     cid = tenancy.register_client(slug="acme", display_name="Acme LLC",
                                   legal_name="Acme LLC", entity_type="llc",
                                   ein="47-2201234", filing_cadence="quarterly")
@@ -136,7 +140,7 @@ def test_client_isolation(tmp_path, monkeypatch):
     importlib.reload(tenancy)
     importlib.reload(bcd)
     monkeypatch.setattr(tenancy, "COA_PATH",
-                        __import__("pathlib").Path("/home/workspace/LISZA-spec3a") / "coa.csv")
+                        __import__("pathlib").Path(COA_PATH))
 
     # Register two clients
     tenancy.register_client(slug="client_a", display_name="Alpha Co", entity_type="llc")
@@ -188,7 +192,7 @@ def test_aging_sum_equals_open_total_ar_and_ap(tmp_path, monkeypatch):
     importlib.reload(tenancy)
     importlib.reload(bcd)
     monkeypatch.setattr(tenancy, "COA_PATH",
-                        __import__("pathlib").Path("/home/workspace/LISZA-spec3a") / "coa.csv")
+                        __import__("pathlib").Path(COA_PATH))
 
     tenancy.register_client(slug="aging_co", display_name="Aging Co", entity_type="llc",
                             ein="47-2201234", filing_cadence="quarterly")
@@ -230,7 +234,7 @@ def test_ar_ap_visible_when_as_of_is_none(tmp_path, monkeypatch):
     importlib.reload(tenancy)
     importlib.reload(bcd)
     monkeypatch.setattr(tenancy, "COA_PATH",
-                        __import__("pathlib").Path("/home/workspace/LISZA-spec3a") / "coa.csv")
+                        __import__("pathlib").Path(COA_PATH))
 
     tenancy.register_client(slug="no_entries_co", display_name="No Entries Co",
                             entity_type="llc", ein="47-2201234", filing_cadence="quarterly")
@@ -281,7 +285,7 @@ def test_write_client_detail_writes_file(tmp_path, monkeypatch):
     importlib.reload(tenancy)
     importlib.reload(bcd)
     monkeypatch.setattr(tenancy, "COA_PATH",
-                        __import__("pathlib").Path("/home/workspace/LISZA-spec3a") / "coa.csv")
+                        __import__("pathlib").Path(COA_PATH))
     tenancy.register_client(slug="acme", display_name="Acme", entity_type="llc")
     out = bcd.write_client_detail("acme", path=tmp_path / "acme.json")
     assert out.exists()

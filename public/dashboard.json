@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T05:23:09Z",
+  "generated_at": "2026-06-29T05:29:13Z",
   "prefs": {
     "layout": "tile",
     "card_fields": [
@@ -15,15 +15,15 @@
       "display_name": "Guitar Works",
       "entity_type": "llc",
       "status": "active",
-      "cash": 512051.47,
-      "open_ar": 179352.57,
-      "open_ap": 63496.38,
-      "ar_count": 23,
-      "ap_count": 14,
+      "cash": null,
+      "open_ar": null,
+      "open_ap": null,
+      "ar_count": null,
+      "ap_count": null,
       "entity_count": 1,
       "consolidates": false,
-      "last_entry": "2026-06-09",
-      "next_filing_due": "2026-07-31"
+      "last_entry": null,
+      "next_filing_due": null
     },
     {
       "slug": "harborside-group",

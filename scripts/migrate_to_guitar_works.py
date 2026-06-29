@@ -13,6 +13,7 @@ import uuid
 from pathlib import Path
 
 import book_schema
+import seed_payroll
 import tenancy
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -28,6 +29,9 @@ def main() -> int:
     con = sqlite3.connect(dest)
     con.execute("PRAGMA foreign_keys=ON")
     book_schema.ensure_book_schema(con)
+    # legacy book predates the payroll-liability COA codes (245-249); refresh
+    # the accounts table so payroll splits can reference them.
+    tenancy._load_coa(con)
     cid = uuid.uuid4().hex[:12]
     con.execute(
         """INSERT OR REPLACE INTO client_profile
@@ -49,7 +53,11 @@ def main() -> int:
         (cid, "guitar-works", str(dest), "active", "Guitar Works", "llc"))
     reg.commit()
     reg.close()
-    print(f"migrated legacy book -> {dest} (client_id={cid})")
+
+    # seed real payroll history (the legacy copy starts with no employees, so a
+    # fresh migrate yields exactly one roster — re-running stays clean).
+    runs = seed_payroll.seed_payroll(slug="guitar-works")
+    print(f"migrated legacy book -> {dest} (client_id={cid}); payroll runs={runs}")
     return 0
 
 
