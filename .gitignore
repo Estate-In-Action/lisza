@@ -11,3 +11,4 @@ data/uploads/*
 inbox/telegram/*
 inbox/email/*
 !.gitkeep
+.superpowers/
