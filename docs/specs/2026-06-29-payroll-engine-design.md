@@ -155,17 +155,23 @@ Net = `gross − fed_wh − ss_ee − medi_ee − addl_medi − state_wh`.
 Worksheet 1A logic, per pay period:
 1. Annualize: `annual_wage = gross × pay_periods` (biweekly → 26).
 2. `adjusted = annual_wage + w4_other_income − w4_deductions` (floor 0).
-3. Select the annual bracket schedule for `filing_status`; use the
-   Step-2-checkbox schedule iff `w4_multiple_jobs`, else the Standard schedule.
+3. Select the annual Standard-withholding bracket schedule for `filing_status`.
 4. `tentative_annual = base + pct × (adjusted − bracket_floor)`.
 5. `per_period = tentative_annual / pay_periods`.
 6. Subtract dependent credit: `per_period −= w4_dependents_amt / pay_periods` (floor 0).
 7. Add `w4_extra_withholding`.
-The actual annual bracket schedules (2024, 2025) are embedded in
+The actual annual Standard bracket schedules (2024, 2025) are embedded in
 `payroll_tax_tables.py`. **2026 uses the 2025 schedule** as a documented demo
 stand-in (official 2026 percentage-method tables publish late in 2025; this is
 synthetic data, so penny-accuracy for a future year is not a goal — the engine
 math is the deliverable).
+
+**Step-2-checkbox schedule deferred.** The `w4_multiple_jobs` field is retained
+in the employee model (W-4 completeness for 3C), but the engine uses the
+Standard schedule regardless; the separate Step-2-checkbox rate schedules are
+out of scope for 3B. The synthetic roster contains no checkbox employees, so the
+behavior is fully exercised. Adding the checkbox schedules later is a
+`payroll_tax_tables.py` data addition, not an engine change.
 
 ### FICA
 
@@ -229,7 +235,7 @@ calendar year, so caps reset on Jan 1 and accumulate correctly within a year.
 ## Testing
 
 - `test_payroll_engine.py`:
-  - bracket math at known points for each filing status (Standard + checkbox);
+  - bracket math at known points for each filing status (Standard schedule);
   - dependent credit and extra withholding applied correctly;
   - SS stops at the wage base (YTD straddling the cap taxes only the under-cap
     portion; fully-over yields 0);
