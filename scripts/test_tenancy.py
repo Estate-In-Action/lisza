@@ -75,3 +75,35 @@ def test_resolve_db_path_prefers_client_then_env_then_legacy(tmp_path, monkeypat
     # env fallback
     monkeypatch.setenv("LISZA_DB", str(tmp_path / "custom.db"))
     assert tenancy.resolve_db_path() == tmp_path / "custom.db"
+
+
+def test_register_client_creates_isolated_book(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    cid = tenancy.register_client(
+        slug="acme-co", display_name="Acme Co", entity_type="llc",
+        legal_name="Acme Co LLC", ein="11-1111111", filing_cadence="quarterly")
+    assert cid
+    # registry row exists with cached projection
+    rows = tenancy.list_clients()
+    assert [r.slug for r in rows] == ["acme-co"]
+    assert rows[0].display_name == "Acme Co"
+    # the book exists, is entity-aware, and carries its own profile
+    book = sqlite3.connect(tenancy.resolve_db("acme-co"))
+    prof = book.execute("SELECT display_name, slug FROM client_profile").fetchone()
+    assert prof == ("Acme Co", "acme-co")
+    assert book.execute("SELECT COUNT(*) FROM entities WHERE is_default=1").fetchone()[0] == 1
+    book.close()
+
+
+def test_isolation_write_to_one_book_not_seen_in_other(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    tenancy.register_client(slug="a-co", display_name="A")
+    tenancy.register_client(slug="b-co", display_name="B")
+    a = sqlite3.connect(tenancy.resolve_db("a-co"))
+    a.execute("INSERT INTO accounts(code,name,type,sign_normal) "
+              "VALUES('999','Test','asset','debit')")
+    a.commit(); a.close()
+    b = sqlite3.connect(tenancy.resolve_db("b-co"))
+    leaked = b.execute("SELECT COUNT(*) FROM accounts WHERE code='999'").fetchone()[0]
+    b.close()
+    assert leaked == 0
