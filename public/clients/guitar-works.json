@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T05:29:13Z",
+  "generated_at": "2026-06-29T13:28:57Z",
   "slug": "guitar-works",
   "display_name": "Guitar Works",
   "entity_type": "llc",
@@ -234,7 +234,79 @@
     "entry_count": 2367
   },
   "payroll": {
-    "status": "pending",
-    "message": "Payroll engine ships in 3B/3C"
+    "status": "active",
+    "year": 2026,
+    "summary": {
+      "employees": 3,
+      "run_count": 11,
+      "gross": 158653.88,
+      "net": 109689.03,
+      "fed_wh": 26988.94,
+      "employee_fica": 12136.96,
+      "employer_fica": 12136.96,
+      "employer_tax_total": 12976.96
+    },
+    "w2": [
+      {
+        "employee": "Dana Whitlock",
+        "entity": "Guitar Works",
+        "box1_wages": 30461.53,
+        "box2_fed_wh": 1739.32,
+        "box3_ss_wages": 30461.13,
+        "box4_ss_tax": 1888.59,
+        "box5_medi_wages": 30461.53,
+        "box6_medi_tax": 441.65,
+        "box16_state_wages": 30461.53,
+        "box17_state_tax": 708.18
+      },
+      {
+        "employee": "Marco Ferreira",
+        "entity": "Guitar Works",
+        "box1_wages": 24538.47,
+        "box2_fed_wh": 2651.0,
+        "box3_ss_wages": 24538.87,
+        "box4_ss_tax": 1521.41,
+        "box5_medi_wages": 24538.47,
+        "box6_medi_tax": 355.85,
+        "box16_state_wages": 24538.47,
+        "box17_state_tax": 915.97
+      },
+      {
+        "employee": "Priya Anand",
+        "entity": "Guitar Works",
+        "box1_wages": 103653.88,
+        "box2_fed_wh": 22598.62,
+        "box3_ss_wages": 103653.71,
+        "box4_ss_tax": 6426.53,
+        "box5_medi_wages": 103653.88,
+        "box6_medi_tax": 1502.93,
+        "box16_state_wages": 103653.88,
+        "box17_state_tax": 8214.8
+      }
+    ],
+    "form941": [
+      {
+        "entity": "Guitar Works",
+        "quarter": 1,
+        "year": 2026,
+        "wages": 86538.48,
+        "fed_wh": 14721.24,
+        "ss_tax": 10730.76,
+        "medi_tax": 2509.56,
+        "total_liability": 27961.56,
+        "run_count": 6
+      },
+      {
+        "entity": "Guitar Works",
+        "quarter": 2,
+        "year": 2026,
+        "wages": 72115.4,
+        "fed_wh": 12267.7,
+        "ss_tax": 8942.3,
+        "medi_tax": 2091.3,
+        "total_liability": 23301.3,
+        "run_count": 5
+      }
+    ]
   }
 }

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T05:29:13Z",
+  "generated_at": "2026-06-29T13:28:57Z",
   "slug": "jb-design",
   "display_name": "J.B. Design",
   "entity_type": "sole_prop",
@@ -234,7 +234,7 @@
     "entry_count": 483
   },
   "payroll": {
-    "status": "pending",
-    "message": "Payroll engine ships in 3B/3C"
+    "status": "none",
+    "message": "No payroll runs on file"
   }
 }

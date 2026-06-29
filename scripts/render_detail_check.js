@@ -28,4 +28,13 @@ assert(!/\b\d{2}-\d{7}\b/.test(html), "raw EIN must not appear");
 if (detail.admin && detail.admin.ein_masked) {
   assert(html.includes("•"), "masked EIN dots present when EIN exists");
 }
+
+const p = detail.payroll || {};
+if (p.status === "active") {
+  assert(html.includes("W-2 (per employee)"), "W-2 section renders for active payroll");
+  assert(html.includes("941 (per entity / quarter)"), "941 section renders for active payroll");
+  assert(p.w2 && p.w2.length > 0, "active payroll has at least one W-2");
+} else {
+  assert(html.includes("No payroll runs on file"), "empty payroll state renders");
+}
 console.log(`OK ${slug}: all 5 tiles render (${html.length} bytes)`);

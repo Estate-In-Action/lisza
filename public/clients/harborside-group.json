@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T05:29:13Z",
+  "generated_at": "2026-06-29T13:28:57Z",
   "slug": "harborside-group",
   "display_name": "Harborside Restaurant Group",
   "entity_type": "llc",
@@ -242,7 +242,159 @@
     "entry_count": 1840
   },
   "payroll": {
-    "status": "pending",
-    "message": "Payroll engine ships in 3B/3C"
+    "status": "active",
+    "year": 2026,
+    "summary": {
+      "employees": 6,
+      "run_count": 33,
+      "gross": 142153.88,
+      "net": 115015.89,
+      "fed_wh": 11899.14,
+      "employee_fica": 10874.71,
+      "employer_fica": 10874.71,
+      "employer_tax_total": 13340.14
+    },
+    "w2": [
+      {
+        "employee": "Aisha Bello",
+        "entity": "Harborside Express",
+        "box1_wages": 26653.88,
+        "box2_fed_wh": 2128.5,
+        "box3_ss_wages": 26653.71,
+        "box4_ss_tax": 1652.53,
+        "box5_medi_wages": 26653.88,
+        "box6_medi_tax": 386.43,
+        "box16_state_wages": 26653.88,
+        "box17_state_tax": 818.29
+      },
+      {
+        "employee": "Grace Lim",
+        "entity": "Harborside Downtown",
+        "box1_wages": 16076.94,
+        "box2_fed_wh": 1503.37,
+        "box3_ss_wages": 16077.74,
+        "box4_ss_tax": 996.82,
+        "box5_medi_wages": 16076.94,
+        "box6_medi_tax": 233.09,
+        "box16_state_wages": 16076.94,
+        "box17_state_tax": 493.57
+      },
+      {
+        "employee": "Hector Ruiz",
+        "entity": "Harborside Express",
+        "box1_wages": 19884.59,
+        "box2_fed_wh": 1960.31,
+        "box3_ss_wages": 19885.16,
+        "box4_ss_tax": 1232.88,
+        "box5_medi_wages": 19884.59,
+        "box6_medi_tax": 288.31,
+        "box16_state_wages": 19884.59,
+        "box17_state_tax": 610.5
+      },
+      {
+        "employee": "Lena Kowalski",
+        "entity": "Harborside Pier",
+        "box1_wages": 17769.18,
+        "box2_fed_wh": 1706.43,
+        "box3_ss_wages": 17768.55,
+        "box4_ss_tax": 1101.65,
+        "box5_medi_wages": 17769.18,
+        "box6_medi_tax": 257.62,
+        "box16_state_wages": 17769.18,
+        "box17_state_tax": 545.49
+      },
+      {
+        "employee": "Sam Okafor",
+        "entity": "Harborside Downtown",
+        "box1_wages": 21576.94,
+        "box2_fed_wh": 847.44,
+        "box3_ss_wages": 21577.74,
+        "box4_ss_tax": 1337.82,
+        "box5_medi_wages": 21576.94,
+        "box6_medi_tax": 312.84,
+        "box16_state_wages": 21576.94,
+        "box17_state_tax": 662.42
+      },
+      {
+        "employee": "Tom Vasquez",
+        "entity": "Harborside Pier",
+        "box1_wages": 40192.35,
+        "box2_fed_wh": 3753.09,
+        "box3_ss_wages": 40192.58,
+        "box4_ss_tax": 2491.94,
+        "box5_medi_wages": 40192.35,
+        "box6_medi_tax": 582.78,
+        "box16_state_wages": 40192.35,
+        "box17_state_tax": 1233.87
+      }
+    ],
+    "form941": [
+      {
+        "entity": "Harborside Downtown",
+        "quarter": 1,
+        "year": 2026,
+        "wages": 20538.48,
+        "fed_wh": 1282.26,
+        "ss_tax": 2546.88,
+        "medi_tax": 595.56,
+        "total_liability": 4424.7,
+        "run_count": 6
+      },
+      {
+        "entity": "Harborside Downtown",
+        "quarter": 2,
+        "year": 2026,
+        "wages": 17115.4,
+        "fed_wh": 1068.55,
+        "ss_tax": 2122.4,
+        "medi_tax": 496.3,
+        "total_liability": 3687.25,
+        "run_count": 5
+      },
+      {
+        "entity": "Harborside Express",
+        "quarter": 1,
+        "year": 2026,
+        "wages": 25384.62,
+        "fed_wh": 2230.26,
+        "ss_tax": 3147.72,
+        "medi_tax": 736.08,
+        "total_liability": 6114.06,
+        "run_count": 6
+      },
+      {
+        "entity": "Harborside Express",
+        "quarter": 2,
+        "year": 2026,
+        "wages": 21153.85,
+        "fed_wh": 1858.55,
+        "ss_tax": 2623.1,
+        "medi_tax": 613.4,
+        "total_liability": 5095.05,
+        "run_count": 5
+      },
+      {
+        "entity": "Harborside Pier",
+        "quarter": 1,
+        "year": 2026,
+        "wages": 31615.38,
+        "fed_wh": 2977.92,
+        "ss_tax": 3920.28,
+        "medi_tax": 916.8,
+        "total_liability": 7815.0,
+        "run_count": 6
+      },
+      {
+        "entity": "Harborside Pier",
+        "quarter": 2,
+        "year": 2026,
+        "wages": 26346.15,
+        "fed_wh": 2481.6,
+        "ss_tax": 3266.9,
+        "medi_tax": 764.0,
+        "total_liability": 6512.5,
+        "run_count": 5
+      }
+    ]
   }
 }
