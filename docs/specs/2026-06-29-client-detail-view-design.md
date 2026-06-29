@@ -104,7 +104,7 @@ dashboard.js  --click tile--> #client/<slug> --fetch--> render detail tiles
    (`••-•••NNNN`); `null` if no EIN. `entities` lists
    active entities (single-entity clients show one row; Harborside shows 3).
 4. **Historical** — last 12 months ending at `as_of`. Revenue = credit-normal
-   movement on revenue accounts (type `revenue`); expense = debit-normal
+   movement on revenue accounts (type `income` in the COA); expense = debit-normal
    movement on expense accounts (type `expense`); net = revenue - expense.
    Plus total `entry_count` and the full data `span`.
 5. **Payroll** — static placeholder object; the front-end renders a muted
