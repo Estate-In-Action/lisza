@@ -451,6 +451,24 @@ function setupRows(setup) {
     rows;
 }
 
+function documentRequestTile(docs) {
+  if (!docs || !docs.requests) {
+    return `<div class="card"><h3>Client Portal / Documents</h3><div class="muted">No document queue generated</div></div>`;
+  }
+  const summary = docs.summary || {};
+  const rows = docs.requests.length ? docs.requests.slice(0, 10).map(r =>
+    `<div class="kv"><span>${esc(r.label || r.doc_key)} ` +
+    `<span class="muted">${esc(r.doc_key || "document")} · due ${esc(r.due_date || "—")}</span></span>` +
+    `<span class="money">${esc(r.status || "requested")} · ${esc(r.followup_count || 0)} followups</span></div>`
+  ).join("") : `<div class="muted">No document requests open.</div>`;
+  return `<div class="card"><h3>Client Portal / Documents</h3>` +
+    kv("Open", summary.open ?? 0) +
+    kv("Requested", summary.requested ?? 0) +
+    kv("Overdue", summary.overdue ?? 0) +
+    kv("Received", summary.received ?? 0) +
+    `<h4>Request queue</h4>${rows}</div>`;
+}
+
 function automationWorkflowTile(d) {
   const p = effectiveProfile(d);
   const reports = p.reports || {};
@@ -527,6 +545,7 @@ function renderClientDetail(d) {
         ${pnlBalanceTile(d.pnl_balance)}
         ${reconciliationTile(d.reconciliation)}
         ${filingTile(d.filing_obligations)}
+        ${documentRequestTile(d.document_requests)}
         ${automationWorkflowTile(d)}
         ${inspectionTile(d.inspection)}
         ${payrollTile(d.payroll)}
@@ -658,6 +677,6 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     esc, money, kv, renderClientDetail, renderTiles, parseHash, payrollTile,
     inspectionTile, inspectionRows, cashFlowTile, pnlBalanceTile, reconciliationTile,
-    filingTile, dueJobRows, automationWorkflowTile
+    filingTile, dueJobRows, automationWorkflowTile, documentRequestTile
   };
 }

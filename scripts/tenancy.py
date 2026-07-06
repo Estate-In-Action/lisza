@@ -110,6 +110,31 @@ CREATE TABLE IF NOT EXISTS workflow_events (
     payload_json TEXT,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+CREATE TABLE IF NOT EXISTS document_requests (
+    document_request_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    client_id    TEXT NOT NULL REFERENCES clients(client_id),
+    doc_key      TEXT NOT NULL,
+    label        TEXT NOT NULL,
+    description  TEXT,
+    due_date     TEXT,
+    status       TEXT NOT NULL DEFAULT 'requested'
+        CHECK(status IN ('requested','received','waived','overdue')),
+    requested_at TEXT NOT NULL DEFAULT (datetime('now')),
+    received_at  TEXT,
+    last_followup_at TEXT,
+    followup_count INTEGER NOT NULL DEFAULT 0,
+    payload_json TEXT NOT NULL DEFAULT '{}',
+    updated_at   TEXT NOT NULL DEFAULT (datetime('now')),
+    UNIQUE(client_id, doc_key)
+);
+CREATE TABLE IF NOT EXISTS document_request_events (
+    document_request_event_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    document_request_id INTEGER NOT NULL REFERENCES document_requests(document_request_id),
+    event_type TEXT NOT NULL,
+    note TEXT,
+    payload_json TEXT,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
 """
 
 

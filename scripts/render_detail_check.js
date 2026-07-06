@@ -68,13 +68,21 @@ if (!detail.automation_setup) {
 if (!detail.due_jobs) {
   detail.due_jobs = [{ key: "monthly_close", label: "Monthly close review", due_date: "2026-07-05", status: "due_now", source: "last_entry_date" }];
 }
+if (!detail.document_requests) {
+  detail.document_requests = {
+    summary: { open: 1, requested: 1, overdue: 0, received: 0, waived: 0 },
+    requests: [
+      { doc_key: "w9", label: "W-9 or tax identity form", due_date: "2026-07-20", status: "requested", followup_count: 0 },
+    ],
+  };
+}
 
 const html = renderClientDetail(detail);
 
 for (const tile of ["Accounts Receivable", "Accounts Payable", "Admin",
                     "Historical", "Cash Flow", "P&L / Balance Sheet",
                     "Reconciliation", "Filing / Tax", "Automation Workflow",
-                    "Inspection", "Payroll"]) {
+                    "Client Portal / Documents", "Inspection", "Payroll"]) {
   assert(html.includes(tile), `${tile} tile present`);
 }
 assert(html.includes("Guided setup"), "guided setup section present");

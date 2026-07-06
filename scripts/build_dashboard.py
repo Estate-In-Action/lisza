@@ -14,6 +14,7 @@ from pathlib import Path
 import tenancy
 import automation_profile
 import workflow_runner
+import document_requests
 
 PUBLIC_DIR = Path(__file__).resolve().parent.parent / "public"
 DEFAULT_CARD_FIELDS = ["cash", "open_ar", "open_ap", "last_entry"]
@@ -72,6 +73,7 @@ def build_dashboard() -> dict:
         "prefs": prefs,
         "clients": clients,
         "workflow": workflow_runner.list_jobs(limit=200),
+        "document_requests": document_requests.list_requests(),
     }
 
 

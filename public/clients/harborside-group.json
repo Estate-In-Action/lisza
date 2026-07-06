@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T19:50:13Z",
+  "generated_at": "2026-07-06T20:04:24Z",
   "slug": "harborside-group",
   "display_name": "Harborside Restaurant Group",
   "entity_type": "llc",
@@ -11306,6 +11306,77 @@
       "approval_required": true
     }
   ],
+  "document_requests": {
+    "summary": {
+      "requested": 4,
+      "received": 0,
+      "waived": 0,
+      "overdue": 0,
+      "open": 4
+    },
+    "requests": [
+      {
+        "document_request_id": 6,
+        "client_slug": "harborside-group",
+        "client_name": "Harborside Restaurant Group",
+        "doc_key": "bank_statement_current",
+        "label": "Current bank statement",
+        "description": "Needed for reconciliation and opening balance review.",
+        "due_date": "2026-07-20",
+        "status": "requested",
+        "requested_at": "2026-07-06 20:04:24",
+        "received_at": null,
+        "last_followup_at": null,
+        "followup_count": 0,
+        "updated_at": "2026-07-06 20:04:24"
+      },
+      {
+        "document_request_id": 8,
+        "client_slug": "harborside-group",
+        "client_name": "Harborside Restaurant Group",
+        "doc_key": "entity_docs",
+        "label": "Entity formation documents",
+        "description": "Needed to confirm legal name, entity type, and ownership.",
+        "due_date": "2026-07-20",
+        "status": "requested",
+        "requested_at": "2026-07-06 20:04:24",
+        "received_at": null,
+        "last_followup_at": null,
+        "followup_count": 0,
+        "updated_at": "2026-07-06 20:04:24"
+      },
+      {
+        "document_request_id": 7,
+        "client_slug": "harborside-group",
+        "client_name": "Harborside Restaurant Group",
+        "doc_key": "prior_year_tax_return",
+        "label": "Prior-year tax return",
+        "description": "Needed to understand carryovers and filing history.",
+        "due_date": "2026-07-20",
+        "status": "requested",
+        "requested_at": "2026-07-06 20:04:24",
+        "received_at": null,
+        "last_followup_at": null,
+        "followup_count": 0,
+        "updated_at": "2026-07-06 20:04:24"
+      },
+      {
+        "document_request_id": 5,
+        "client_slug": "harborside-group",
+        "client_name": "Harborside Restaurant Group",
+        "doc_key": "w9",
+        "label": "W-9 or tax identity form",
+        "description": "Needed before 1099/vendor tax handling.",
+        "due_date": "2026-07-20",
+        "status": "requested",
+        "requested_at": "2026-07-06 20:04:24",
+        "received_at": null,
+        "last_followup_at": null,
+        "followup_count": 0,
+        "updated_at": "2026-07-06 20:04:24"
+      }
+    ]
+  },
   "payroll": {
     "status": "active",
     "year": 2026,

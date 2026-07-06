@@ -1,6 +1,6 @@
 {
   "summary": {
-    "pending_approval": 12,
+    "pending_approval": 28,
     "approved": 0,
     "skipped": 0,
     "completed": 0,
@@ -19,10 +19,10 @@
       "workflow_status": "pending_approval",
       "source": "last_entry_date",
       "approval_required": 1,
-      "planned_at": "2026-07-06 19:50:13",
+      "planned_at": "2026-07-06 20:04:16",
       "decided_at": null,
       "executed_at": null,
-      "updated_at": "2026-07-06 19:50:13"
+      "updated_at": "2026-07-06 20:04:24"
     },
     {
       "workflow_job_id": 2,
@@ -35,10 +35,10 @@
       "workflow_status": "pending_approval",
       "source": "last_entry_date",
       "approval_required": 1,
-      "planned_at": "2026-07-06 19:50:13",
+      "planned_at": "2026-07-06 20:04:16",
       "decided_at": null,
       "executed_at": null,
-      "updated_at": "2026-07-06 19:50:13"
+      "updated_at": "2026-07-06 20:04:24"
     },
     {
       "workflow_job_id": 3,
@@ -51,10 +51,10 @@
       "workflow_status": "pending_approval",
       "source": "last_entry_date",
       "approval_required": 1,
-      "planned_at": "2026-07-06 19:50:13",
+      "planned_at": "2026-07-06 20:04:16",
       "decided_at": null,
       "executed_at": null,
-      "updated_at": "2026-07-06 19:50:13"
+      "updated_at": "2026-07-06 20:04:24"
     },
     {
       "workflow_job_id": 4,
@@ -67,10 +67,10 @@
       "workflow_status": "pending_approval",
       "source": "profile.payroll_schedule",
       "approval_required": 1,
-      "planned_at": "2026-07-06 19:50:13",
+      "planned_at": "2026-07-06 20:04:16",
       "decided_at": null,
       "executed_at": null,
-      "updated_at": "2026-07-06 19:50:13"
+      "updated_at": "2026-07-06 20:04:24"
     },
     {
       "workflow_job_id": 5,
@@ -83,10 +83,10 @@
       "workflow_status": "pending_approval",
       "source": "profile.reports",
       "approval_required": 1,
-      "planned_at": "2026-07-06 19:50:13",
+      "planned_at": "2026-07-06 20:04:16",
       "decided_at": null,
       "executed_at": null,
-      "updated_at": "2026-07-06 19:50:13"
+      "updated_at": "2026-07-06 20:04:24"
     },
     {
       "workflow_job_id": 6,
@@ -99,10 +99,10 @@
       "workflow_status": "pending_approval",
       "source": "profile.payroll_schedule",
       "approval_required": 1,
-      "planned_at": "2026-07-06 19:50:13",
+      "planned_at": "2026-07-06 20:04:16",
       "decided_at": null,
       "executed_at": null,
-      "updated_at": "2026-07-06 19:50:13"
+      "updated_at": "2026-07-06 20:04:24"
     },
     {
       "workflow_job_id": 7,
@@ -115,10 +115,10 @@
       "workflow_status": "pending_approval",
       "source": "profile.reports",
       "approval_required": 1,
-      "planned_at": "2026-07-06 19:50:13",
+      "planned_at": "2026-07-06 20:04:16",
       "decided_at": null,
       "executed_at": null,
-      "updated_at": "2026-07-06 19:50:13"
+      "updated_at": "2026-07-06 20:04:24"
     },
     {
       "workflow_job_id": 8,
@@ -131,10 +131,10 @@
       "workflow_status": "pending_approval",
       "source": "profile.reports",
       "approval_required": 1,
-      "planned_at": "2026-07-06 19:50:13",
+      "planned_at": "2026-07-06 20:04:16",
       "decided_at": null,
       "executed_at": null,
-      "updated_at": "2026-07-06 19:50:13"
+      "updated_at": "2026-07-06 20:04:24"
     },
     {
       "workflow_job_id": 9,
@@ -147,10 +147,10 @@
       "workflow_status": "pending_approval",
       "source": "profile.reports",
       "approval_required": 1,
-      "planned_at": "2026-07-06 19:50:13",
+      "planned_at": "2026-07-06 20:04:16",
       "decided_at": null,
       "executed_at": null,
-      "updated_at": "2026-07-06 19:50:13"
+      "updated_at": "2026-07-06 20:04:24"
     },
     {
       "workflow_job_id": 10,
@@ -163,10 +163,10 @@
       "workflow_status": "pending_approval",
       "source": "next_filing_due",
       "approval_required": 1,
-      "planned_at": "2026-07-06 19:50:13",
+      "planned_at": "2026-07-06 20:04:16",
       "decided_at": null,
       "executed_at": null,
-      "updated_at": "2026-07-06 19:50:13"
+      "updated_at": "2026-07-06 20:04:24"
     },
     {
       "workflow_job_id": 11,
@@ -179,10 +179,10 @@
       "workflow_status": "pending_approval",
       "source": "next_filing_due",
       "approval_required": 1,
-      "planned_at": "2026-07-06 19:50:13",
+      "planned_at": "2026-07-06 20:04:16",
       "decided_at": null,
       "executed_at": null,
-      "updated_at": "2026-07-06 19:50:13"
+      "updated_at": "2026-07-06 20:04:24"
     },
     {
       "workflow_job_id": 12,
@@ -195,10 +195,266 @@
       "workflow_status": "pending_approval",
       "source": "next_filing_due",
       "approval_required": 1,
-      "planned_at": "2026-07-06 19:50:13",
+      "planned_at": "2026-07-06 20:04:16",
       "decided_at": null,
       "executed_at": null,
-      "updated_at": "2026-07-06 19:50:13"
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 16,
+      "client_slug": "guitar-works",
+      "client_name": "Guitar Works",
+      "job_key": "document_request:1",
+      "label": "Document request: W-9 or tax identity form",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 13,
+      "client_slug": "guitar-works",
+      "client_name": "Guitar Works",
+      "job_key": "document_request:2",
+      "label": "Document request: Current bank statement",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 15,
+      "client_slug": "guitar-works",
+      "client_name": "Guitar Works",
+      "job_key": "document_request:3",
+      "label": "Document request: Prior-year tax return",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 14,
+      "client_slug": "guitar-works",
+      "client_name": "Guitar Works",
+      "job_key": "document_request:4",
+      "label": "Document request: Entity formation documents",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 20,
+      "client_slug": "harborside-group",
+      "client_name": "Harborside Restaurant Group",
+      "job_key": "document_request:5",
+      "label": "Document request: W-9 or tax identity form",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 17,
+      "client_slug": "harborside-group",
+      "client_name": "Harborside Restaurant Group",
+      "job_key": "document_request:6",
+      "label": "Document request: Current bank statement",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 19,
+      "client_slug": "harborside-group",
+      "client_name": "Harborside Restaurant Group",
+      "job_key": "document_request:7",
+      "label": "Document request: Prior-year tax return",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 18,
+      "client_slug": "harborside-group",
+      "client_name": "Harborside Restaurant Group",
+      "job_key": "document_request:8",
+      "label": "Document request: Entity formation documents",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 21,
+      "client_slug": "jb-design",
+      "client_name": "J.B. Design",
+      "job_key": "document_request:10",
+      "label": "Document request: Current bank statement",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 23,
+      "client_slug": "jb-design",
+      "client_name": "J.B. Design",
+      "job_key": "document_request:11",
+      "label": "Document request: Prior-year tax return",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 22,
+      "client_slug": "jb-design",
+      "client_name": "J.B. Design",
+      "job_key": "document_request:12",
+      "label": "Document request: Entity formation documents",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 24,
+      "client_slug": "jb-design",
+      "client_name": "J.B. Design",
+      "job_key": "document_request:9",
+      "label": "Document request: W-9 or tax identity form",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 28,
+      "client_slug": "lakeside-bakery",
+      "client_name": "Lakeside Bakery",
+      "job_key": "document_request:13",
+      "label": "Document request: W-9 or tax identity form",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 25,
+      "client_slug": "lakeside-bakery",
+      "client_name": "Lakeside Bakery",
+      "job_key": "document_request:14",
+      "label": "Document request: Current bank statement",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 27,
+      "client_slug": "lakeside-bakery",
+      "client_name": "Lakeside Bakery",
+      "job_key": "document_request:15",
+      "label": "Document request: Prior-year tax return",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
+    },
+    {
+      "workflow_job_id": 26,
+      "client_slug": "lakeside-bakery",
+      "client_name": "Lakeside Bakery",
+      "job_key": "document_request:16",
+      "label": "Document request: Entity formation documents",
+      "due_date": "2026-07-20",
+      "planner_status": "upcoming",
+      "workflow_status": "pending_approval",
+      "source": "client_portal.document_requests",
+      "approval_required": 1,
+      "planned_at": "2026-07-06 20:04:24",
+      "decided_at": null,
+      "executed_at": null,
+      "updated_at": "2026-07-06 20:04:24"
     }
   ]
 }

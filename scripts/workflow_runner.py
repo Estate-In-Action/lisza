@@ -15,6 +15,7 @@ from datetime import date
 from pathlib import Path
 
 import automation_profile
+import document_requests
 import tenancy
 
 TERMINAL = {"skipped", "completed"}
@@ -25,6 +26,7 @@ RUNNABLE = {
     "tax_packet",
     "payroll_review",
     "sales_tax_review",
+    "document_followup",
 }
 
 
@@ -55,11 +57,12 @@ def sync_jobs(*, as_of: date | None = None,
     ref = as_of or date.today()
     queue = automation_profile.workflow_queue(
         as_of=ref, include_scheduled=include_scheduled)
+    planned_items = list(queue["queue"]) + document_requests.workflow_items(as_of=ref)
     con = _connect()
     inserted = 0
     updated = 0
     try:
-        for item in queue["queue"]:
+        for item in planned_items:
             client_id = tenancy._client_id_for_slug(con, item["client_slug"])
             workflow_status = "pending_approval" if item.get("approval_required") else "blocked"
             payload = json.dumps(item, sort_keys=True)
@@ -192,6 +195,7 @@ def get_job(job_id: int) -> dict:
 
 def _write_receipt(job: sqlite3.Row) -> dict:
     payload = json.loads(job["payload_json"])
+    execution = "document_followup" if str(job["job_key"]).startswith("document_request:") else "report_prep_only"
     receipt = {
         "workflow_job_id": job["workflow_job_id"],
         "client_slug": job["client_slug"],
@@ -199,7 +203,7 @@ def _write_receipt(job: sqlite3.Row) -> dict:
         "job_key": job["job_key"],
         "label": job["label"],
         "due_date": job["due_date"],
-        "execution": "report_prep_only",
+        "execution": execution,
         "external_delivery": "disabled",
         "ledger_write": "disabled",
         "tax_or_payment_action": "disabled",
@@ -208,9 +212,15 @@ def _write_receipt(job: sqlite3.Row) -> dict:
     public_dir = tenancy.lisza_home() / "public"
     workflow_dir = public_dir / "workflows"
     workflow_dir.mkdir(parents=True, exist_ok=True)
-    out = workflow_dir / f"{job['client_slug']}-{job['job_key']}-{job['due_date']}.json"
+    safe_key = str(job["job_key"]).replace(":", "-").replace("/", "-")
+    out = workflow_dir / f"{job['client_slug']}-{safe_key}-{job['due_date']}.json"
     out.write_text(json.dumps(receipt, indent=2))
     receipt["artifact"] = str(out.relative_to(tenancy.lisza_home()))
+    if execution == "document_followup" and payload.get("document_request_id"):
+        document_requests.record_followup(
+            int(payload["document_request_id"]),
+            note=f"Prepared follow-up via workflow job {job['workflow_job_id']}",
+        )
     return receipt
 
 
@@ -229,7 +239,8 @@ def run_approved(*, limit: int = 25) -> dict:
             (limit,),
         ).fetchall()
         for row in rows:
-            if row["job_key"] not in RUNNABLE:
+            runnable = row["job_key"] in RUNNABLE or str(row["job_key"]).startswith("document_request:")
+            if not runnable:
                 con.execute(
                     """UPDATE workflow_jobs
                        SET workflow_status='failed', executed_at=datetime('now'),

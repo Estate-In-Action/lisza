@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T19:50:13Z",
+  "generated_at": "2026-07-06T20:04:24Z",
   "slug": "lakeside-bakery",
   "display_name": "Lakeside Bakery",
   "entity_type": null,
@@ -238,6 +238,77 @@
       "approval_required": true
     }
   ],
+  "document_requests": {
+    "summary": {
+      "requested": 4,
+      "received": 0,
+      "waived": 0,
+      "overdue": 0,
+      "open": 4
+    },
+    "requests": [
+      {
+        "document_request_id": 14,
+        "client_slug": "lakeside-bakery",
+        "client_name": "Lakeside Bakery",
+        "doc_key": "bank_statement_current",
+        "label": "Current bank statement",
+        "description": "Needed for reconciliation and opening balance review.",
+        "due_date": "2026-07-20",
+        "status": "requested",
+        "requested_at": "2026-07-06 20:04:24",
+        "received_at": null,
+        "last_followup_at": null,
+        "followup_count": 0,
+        "updated_at": "2026-07-06 20:04:24"
+      },
+      {
+        "document_request_id": 16,
+        "client_slug": "lakeside-bakery",
+        "client_name": "Lakeside Bakery",
+        "doc_key": "entity_docs",
+        "label": "Entity formation documents",
+        "description": "Needed to confirm legal name, entity type, and ownership.",
+        "due_date": "2026-07-20",
+        "status": "requested",
+        "requested_at": "2026-07-06 20:04:24",
+        "received_at": null,
+        "last_followup_at": null,
+        "followup_count": 0,
+        "updated_at": "2026-07-06 20:04:24"
+      },
+      {
+        "document_request_id": 15,
+        "client_slug": "lakeside-bakery",
+        "client_name": "Lakeside Bakery",
+        "doc_key": "prior_year_tax_return",
+        "label": "Prior-year tax return",
+        "description": "Needed to understand carryovers and filing history.",
+        "due_date": "2026-07-20",
+        "status": "requested",
+        "requested_at": "2026-07-06 20:04:24",
+        "received_at": null,
+        "last_followup_at": null,
+        "followup_count": 0,
+        "updated_at": "2026-07-06 20:04:24"
+      },
+      {
+        "document_request_id": 13,
+        "client_slug": "lakeside-bakery",
+        "client_name": "Lakeside Bakery",
+        "doc_key": "w9",
+        "label": "W-9 or tax identity form",
+        "description": "Needed before 1099/vendor tax handling.",
+        "due_date": "2026-07-20",
+        "status": "requested",
+        "requested_at": "2026-07-06 20:04:24",
+        "received_at": null,
+        "last_followup_at": null,
+        "followup_count": 0,
+        "updated_at": "2026-07-06 20:04:24"
+      }
+    ]
+  },
   "payroll": {
     "status": "none",
     "message": "No payroll runs on file"

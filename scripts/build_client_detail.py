@@ -10,6 +10,7 @@ from pathlib import Path
 import payroll_rollup
 import tenancy
 import automation_profile
+import document_requests
 
 PUBLIC_DIR = Path(__file__).resolve().parent.parent / "public"
 TOP_N = 8
@@ -384,6 +385,7 @@ def build_client_detail(slug: str) -> dict:
         include_scheduled=True,
     )
     workflow_setup = automation_profile.setup_flow(slug)
+    doc_requests = document_requests.list_requests(slug)
     return {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "slug": prof["slug"],
@@ -423,6 +425,7 @@ def build_client_detail(slug: str) -> dict:
         "automation_profile": workflow_profile,
         "automation_setup": workflow_setup,
         "due_jobs": workflow_jobs,
+        "document_requests": doc_requests,
         "payroll": payroll,
     }
 
