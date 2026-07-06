@@ -34,6 +34,7 @@ def get_db() -> sqlite3.Connection:
     con.execute("PRAGMA journal_mode=WAL")
     con.execute("PRAGMA foreign_keys=ON")
     ensure_reconciliation_schema(con)
+    ensure_journal_audit_schema(con)
     return con
 
 
@@ -95,6 +96,34 @@ def ensure_reconciliation_schema(con: sqlite3.Connection) -> None:
     con.commit()
 
 
+def ensure_journal_audit_schema(con: sqlite3.Connection) -> None:
+    con.execute(
+        """CREATE TABLE IF NOT EXISTS journal_audit (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            entry_id INTEGER REFERENCES entries(id),
+            event_type TEXT NOT NULL,
+            event_at TEXT NOT NULL DEFAULT (datetime('now')),
+            payload_json TEXT NOT NULL DEFAULT '{}'
+        )"""
+    )
+    con.commit()
+
+
+def record_journal_audit(
+    con: sqlite3.Connection,
+    *,
+    entry_id: int | None,
+    event_type: str,
+    payload: dict,
+) -> None:
+    ensure_journal_audit_schema(con)
+    con.execute(
+        """INSERT INTO journal_audit(entry_id, event_type, payload_json)
+           VALUES (?, ?, ?)""",
+        (entry_id, event_type, json.dumps(payload, sort_keys=True)),
+    )
+
+
 def parse_split(text: str) -> Split:
     # account:dr:100.25:memo or account:cr:100.25
     parts = text.split(":", 3)
@@ -153,6 +182,19 @@ def post_journal(
             "INSERT INTO splits(entry_id, account, dr, cr, memo) VALUES (?, ?, ?, ?, ?)",
             (entry_id, split.account, split.dr, split.cr, split.memo),
         )
+    record_journal_audit(
+        con,
+        entry_id=entry_id,
+        event_type="journal_posted" if posted else "journal_saved_pending",
+        payload={
+            "entry_date": entry_date,
+            "description": description,
+            "source": source,
+            "source_ref": source_ref,
+            "status": status,
+            "split_count": len(rows),
+        },
+    )
     con.commit()
     return entry_id
 
@@ -210,6 +252,18 @@ def post_adjustment(
                 posted=True,
             )
         )
+    record_journal_audit(
+        con,
+        entry_id=original_entry_id,
+        event_type="adjustment_created",
+        payload={
+            "original_entry_id": original_entry_id,
+            "created_entry_ids": ids,
+            "description": description,
+            "replacement_posted": bool(replacement_splits),
+        },
+    )
+    con.commit()
     return ids
 
 

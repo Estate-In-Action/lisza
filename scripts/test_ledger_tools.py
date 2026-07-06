@@ -1,4 +1,5 @@
 import csv
+import json
 import sqlite3
 from pathlib import Path
 
@@ -68,6 +69,9 @@ def test_post_journal_requires_balanced_splits(tmp_path, monkeypatch):
     )
     totals = con.execute("SELECT ROUND(SUM(dr),2), ROUND(SUM(cr),2) FROM splits WHERE entry_id=?", (entry_id,)).fetchone()
     assert tuple(totals) == (100.0, 100.0)
+    audit = con.execute("SELECT event_type, payload_json FROM journal_audit WHERE entry_id=?", (entry_id,)).fetchone()
+    assert audit["event_type"] == "journal_posted"
+    assert json.loads(audit["payload_json"])["split_count"] == 2
     con.close()
 
 
@@ -90,6 +94,12 @@ def test_adjustment_reverses_original_and_posts_replacement(tmp_path, monkeypatc
     rows = con.execute("SELECT source_ref FROM entries WHERE id IN (?, ?) ORDER BY id", created).fetchall()
     assert rows[0]["source_ref"].endswith(":reversal")
     assert rows[1]["source_ref"].endswith(":replacement")
+    audit = con.execute(
+        "SELECT event_type, payload_json FROM journal_audit WHERE entry_id=? AND event_type='adjustment_created'",
+        (original,),
+    ).fetchone()
+    assert audit is not None
+    assert json.loads(audit["payload_json"])["created_entry_ids"] == created
     con.close()
 
 
