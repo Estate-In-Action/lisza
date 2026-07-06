@@ -188,6 +188,12 @@ _PAYMENT_PATTERNS = [
     (r"\bdiscover\b", "Discover"),
 ]
 
+_LINE_ITEM_SKIP_RE = re.compile(
+    r"\b(total|subtotal|tax|tip|discount|amount due|balance|change|cash|visa|mastercard|amex|receipt|invoice)\b",
+    re.IGNORECASE,
+)
+_LINE_ITEM_RE = re.compile(r"^\s*(?P<label>[A-Za-z][A-Za-z0-9 &'\-.,/#]{2,}?)\s+\$?(?P<amount>-?\d{1,6}(?:,\d{3})*\.\d{2})\s*$")
+
 
 def _parse_date(text: str) -> str:
     for fmt, pattern in _DATE_FMTS:
@@ -234,6 +240,24 @@ def _extract_vendor(text: str) -> str:
     return "Unknown Vendor"
 
 
+def parse_line_items(text: str) -> list[dict]:
+    items: list[dict] = []
+    for raw in text.splitlines():
+        line = raw.strip()
+        if not line or _LINE_ITEM_SKIP_RE.search(line):
+            continue
+        if re.search(r"\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b", line):
+            continue
+        match = _LINE_ITEM_RE.match(line)
+        if not match:
+            continue
+        label = re.sub(r"\s+", " ", match.group("label")).strip(" -")
+        amount = round(float(match.group("amount").replace(",", "")), 2)
+        if label and amount > 0:
+            items.append({"description": label[:80], "amount": amount})
+    return items[:50]
+
+
 # ─────────────────────────── Core API ────────────────────────────
 
 def classify_vendor(vendor: str) -> str:
@@ -277,6 +301,7 @@ def scan_receipt(text_content: str) -> dict:
         currency = "CAD"
 
     # Collect notable lines for notes
+    line_items = parse_line_items(text)
     notable = [
         ln.strip() for ln in text.splitlines()
         if re.search(r"total|subtotal|tax|tip|discount|fee", ln, re.IGNORECASE)
@@ -290,6 +315,8 @@ def scan_receipt(text_content: str) -> dict:
         "currency": currency,
         "category": category,
         "payment_method": payment,
+        "line_items": line_items,
+        "line_item_total": round(sum(item["amount"] for item in line_items), 2),
         "notes": notes,
     }
 
@@ -339,6 +366,8 @@ def scan_text_arg(raw: str) -> dict:
         "currency": "USD",
         "category": category_override or classify_vendor(vendor),
         "payment_method": "Unknown",
+        "line_items": [],
+        "line_item_total": 0.0,
         "notes": f"cli entry: {raw}",
     }
 
@@ -363,6 +392,23 @@ def insert_into_ledger(expense: dict, conn: sqlite3.Connection) -> Optional[int]
     Status is 'new' so it waits for human review before posting.
     Returns the new row ID or None on failure.
     """
+    conn.execute(
+        """
+        CREATE TABLE IF NOT EXISTS pending_inbox (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            received_at TEXT NOT NULL DEFAULT (datetime('now')),
+            source TEXT NOT NULL,
+            raw_path TEXT,
+            parsed_json TEXT,
+            suggested_account TEXT,
+            suggested_amount REAL,
+            status TEXT NOT NULL DEFAULT 'new'
+                CHECK(status IN ('new','reviewed','posted','rejected')),
+            entry_id INTEGER REFERENCES entries(id),
+            notes TEXT
+        )
+        """
+    )
     payload = json.dumps({
         "vendor": expense["vendor"],
         "date": expense["date"],
@@ -370,6 +416,8 @@ def insert_into_ledger(expense: dict, conn: sqlite3.Connection) -> Optional[int]
         "currency": expense["currency"],
         "category_hint": expense["category"],
         "payment_method": expense["payment_method"],
+        "line_items": expense.get("line_items", []),
+        "line_item_total": expense.get("line_item_total", 0.0),
         "coded": True,
         "notes": expense.get("notes", ""),
     })
