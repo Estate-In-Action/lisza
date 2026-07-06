@@ -433,6 +433,24 @@ function dueJobRows(jobs) {
   ).join("");
 }
 
+function setupRows(setup) {
+  if (!setup || !setup.questions) {
+    return `<div class="muted">No guided setup questions generated.</div>`;
+  }
+  const rows = setup.questions.map(q => {
+    const state = q.complete ? "done" : (q.required ? "needed" : "optional");
+    const current = Array.isArray(q.current)
+      ? (q.current.length ? q.current.join(", ") : "—")
+      : (typeof q.current === "object" ? JSON.stringify(q.current) : (q.current || "—"));
+    return `<div class="kv"><span>${esc(q.label)} ` +
+      `<span class="muted">${esc(q.hint || q.field)}</span></span>` +
+      `<span class="money">${esc(state)} · ${esc(current)}</span></div>`;
+  }).join("");
+  return `<div class="muted">${esc(setup.status || "setup")} · ` +
+    `${esc(setup.required_complete ?? 0)}/${esc(setup.required_total ?? 0)} required complete</div>` +
+    rows;
+}
+
 function automationWorkflowTile(d) {
   const p = effectiveProfile(d);
   const reports = p.reports || {};
@@ -444,6 +462,7 @@ function automationWorkflowTile(d) {
     kv("Payroll", p.payroll_schedule || "none") +
     kv("Sales tax", jurisdictions || "—") +
     `<h4>Due jobs</h4>${dueJobRows(d.due_jobs)}` +
+    `<h4>Guided setup</h4>${setupRows(d.automation_setup)}` +
     `<h4>Profile draft</h4>` +
     `<div class="form-grid">` +
       `<label>Delivery<select data-profile-field="delivery">` +
@@ -460,6 +479,7 @@ function automationWorkflowTile(d) {
       `<label><input type="checkbox" data-profile-report="quarterly_packet" ${reports.quarterly_packet !== false ? "checked" : ""}> Quarterly packet</label>` +
     `</div>` +
     `<div class="actions"><button data-profile-save="${esc(d.slug)}">Save draft</button>` +
+    `<button data-profile-apply-suggested="${esc(d.slug)}">Apply suggested setup</button>` +
     `<button data-profile-persist="${esc(d.slug)}">Persist profile</button>` +
     `<button data-profile-clear="${esc(d.slug)}">Clear draft</button></div>` +
     `<div class="muted" data-profile-status>Save a draft locally, or persist through the API profile writer.</div>` +
@@ -531,12 +551,36 @@ function bindWorkflowDrafts(host, d) {
     });
     return profile;
   };
+  const fillProfile = (card, profile) => {
+    const reports = profile.reports || {};
+    card.querySelectorAll("[data-profile-field]").forEach(inp => {
+      const key = inp.dataset.profileField;
+      if (key === "sales_tax_jurisdictions") {
+        inp.value = (profile[key] || []).join(", ");
+      } else if (profile[key] !== undefined && profile[key] !== null) {
+        inp.value = profile[key];
+      }
+    });
+    card.querySelectorAll("[data-profile-report]").forEach(inp => {
+      const value = reports[inp.dataset.profileReport];
+      inp.checked = value !== false;
+    });
+  };
   host.querySelectorAll("[data-profile-save]").forEach(btn => {
     btn.onclick = () => {
       const card = btn.closest("[data-workflow-slug]");
       const profile = collectProfile(card);
       localStorage.setItem(profileDraftKey(d.slug), JSON.stringify(profile));
       card.querySelector("[data-profile-status]").textContent = "Draft saved in this browser.";
+    };
+  });
+  host.querySelectorAll("[data-profile-apply-suggested]").forEach(btn => {
+    btn.onclick = () => {
+      const card = btn.closest("[data-workflow-slug]");
+      const profile = (d.automation_setup && d.automation_setup.suggested_profile) || effectiveProfile(d);
+      fillProfile(card, profile);
+      localStorage.setItem(profileDraftKey(d.slug), JSON.stringify(profile));
+      card.querySelector("[data-profile-status]").textContent = "Suggested setup applied as a browser draft.";
     };
   });
   host.querySelectorAll("[data-profile-persist]").forEach(btn => {

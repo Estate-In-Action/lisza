@@ -46,7 +46,7 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 ### Step 4 — Per-client automation + config
 > Progress 2026-07-06 — registry now has `client_automation_profiles`, CLI/API profile get/set, an advisory due-job planner, durable workflow approval rows, generated workflow payloads, and a browser-side profile/control panel. Cron execution remains approval-gated and report-prep-only; no tax/payment/ledger actions are automatic.
 - [x] **Per-client cron jobs** — reports generated on that client's cadence/need; **tax prep + filing on the client's schedule** (monthly / quarterly / annual depending on the client).
-- [ ] **Per-client config flow** — a guided setup that **asks the bookkeeper what to configure for each client**: which reports, filing cadence, sales-tax jurisdictions, active-window length, payroll schedule, etc. Stored as the client's automation profile and consumed by the cron layer.
+- [x] **Per-client config flow** — a guided setup that **asks the bookkeeper what to configure for each client**: which reports, filing cadence, sales-tax jurisdictions, active-window length, payroll schedule, etc. Stored as the client's automation profile and consumed by the cron layer.
   - [x] Registry-level automation profile scaffold: reports enabled, filing cadence, sales-tax jurisdictions, active window, payroll schedule, delivery channel.
   - [x] CLI config writer for bookkeeper setup (`scripts/automation_profile.py get|set`).
   - [x] Advisory planner that turns profiles into due/upcoming jobs without running tax/payment actions automatically (`scripts/automation_profile.py plan`).
@@ -55,6 +55,7 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
   - [x] Durable workflow approval queue and audit trail (`workflow_jobs`, `workflow_events`).
   - [x] Real scheduler/cron runner that consumes due jobs after operator approval.
   - [x] Safe execution boundary: approved jobs generate report-prep receipts only; tax filing, payments, ledger writes, and external delivery stay disabled.
+  - [x] Guided setup checklist + suggested profile defaults in client detail/API (`automation_profile.py setup`, `automation_setup`).
 
 ## Competitive feature backlog (market-parity targets, 2026-06-29)
 

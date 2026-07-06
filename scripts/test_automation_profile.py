@@ -90,3 +90,26 @@ def test_set_json_and_workflow_queue(tmp_path, monkeypatch):
     assert queue["execution"] == "disabled"
     assert queue["summary"]["approval_required"] >= 1
     assert any(j["key"] == "sales_tax_review" for j in queue["queue"])
+
+
+def test_setup_flow_marks_required_questions_and_suggestions(tmp_path, monkeypatch):
+    _client(tmp_path, monkeypatch)
+    con = __import__("sqlite3").connect(tenancy.resolve_db("acme"))
+    ent = con.execute("SELECT id FROM entities WHERE is_default=1").fetchone()[0]
+    con.execute(
+        "INSERT INTO employees(entity_id,name,filing_status,work_state,"
+        "residence_state,annual_salary) VALUES(?,?,?,?,?,?)",
+        (ent, "Ada", "single", "DE", "DE", 52000.0))
+    con.commit()
+    con.close()
+    profile = tenancy.get_automation_profile("acme")
+    profile["payroll_schedule"] = "none"
+    tenancy.set_automation_profile("acme", profile)
+
+    setup = automation_profile.setup_flow("acme")
+    payroll = next(q for q in setup["questions"] if q["key"] == "payroll_schedule")
+
+    assert setup["status"] == "needs_setup"
+    assert payroll["required"] is True
+    assert payroll["complete"] is False
+    assert setup["suggested_profile"]["payroll_schedule"] == "biweekly"

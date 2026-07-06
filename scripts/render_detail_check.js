@@ -54,6 +54,17 @@ if (!detail.automation_profile) {
     delivery: "dashboard",
   };
 }
+if (!detail.automation_setup) {
+  detail.automation_setup = {
+    status: "configured",
+    required_complete: 4,
+    required_total: 4,
+    questions: [
+      { key: "delivery", label: "How should completed report-prep receipts be surfaced?", field: "delivery", current: "dashboard", required: true, complete: true },
+    ],
+    suggested_profile: detail.automation_profile,
+  };
+}
 if (!detail.due_jobs) {
   detail.due_jobs = [{ key: "monthly_close", label: "Monthly close review", due_date: "2026-07-05", status: "due_now", source: "last_entry_date" }];
 }
@@ -66,6 +77,8 @@ for (const tile of ["Accounts Receivable", "Accounts Payable", "Admin",
                     "Inspection", "Payroll"]) {
   assert(html.includes(tile), `${tile} tile present`);
 }
+assert(html.includes("Guided setup"), "guided setup section present");
+assert(html.includes("Apply suggested setup"), "suggested setup action present");
 assert(html.includes("‹ all clients"), "back link present");
 assert(html.includes("Read-only ledger slices"), "inspection helper copy present");
 if (detail.inspection && detail.inspection.periods) {

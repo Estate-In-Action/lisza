@@ -48,7 +48,8 @@ def _client_context(slug: str) -> dict:
     con = sqlite3.connect(tenancy.registry_path())
     con.row_factory = sqlite3.Row
     row = con.execute(
-        """SELECT c.slug, c.next_filing_due, s.last_entry_date
+        """SELECT c.slug, c.display_name, c.entity_type, c.next_filing_due,
+                  s.last_entry_date, s.entity_count
            FROM clients c
            LEFT JOIN client_summary s ON s.client_id=c.client_id
            WHERE c.slug=?""",
@@ -58,6 +59,19 @@ def _client_context(slug: str) -> dict:
     if not row:
         raise ValueError(f"unknown client: {slug}")
     return dict(row)
+
+
+def _has_payroll(slug: str) -> bool:
+    import sqlite3
+
+    con = sqlite3.connect(tenancy.resolve_db(slug))
+    try:
+        row = con.execute("SELECT COUNT(*) FROM employees").fetchone()
+    except sqlite3.OperationalError:
+        return False
+    finally:
+        con.close()
+    return bool(row and row[0])
 
 
 def plan_due_jobs(slug: str, *, as_of: date | None = None,
@@ -145,6 +159,81 @@ def workflow_queue(*, as_of: date | None = None, include_scheduled: bool = False
     }
 
 
+def setup_flow(slug: str) -> dict:
+    """Return guided setup questions and defaults for a client's automation profile."""
+    profile = tenancy.get_automation_profile(slug)
+    ctx = _client_context(slug)
+    reports = profile.get("reports", {})
+    has_payroll = _has_payroll(slug)
+    entity_type = (ctx.get("entity_type") or "").lower()
+    suggested = json.loads(json.dumps(profile))
+    suggested.setdefault("reports", {})
+    for key in ("weekly_digest", "monthly_close", "quarterly_packet"):
+        suggested["reports"].setdefault(key, True)
+    if has_payroll and suggested.get("payroll_schedule") in (None, "", "none"):
+        suggested["payroll_schedule"] = "biweekly"
+    if "sole" in entity_type:
+        suggested["filing_cadence"] = "annual"
+    else:
+        suggested.setdefault("filing_cadence", "quarterly")
+    suggested.setdefault("active_window", "1y")
+    suggested.setdefault("delivery", "dashboard")
+    suggested.setdefault("sales_tax_jurisdictions", profile.get("sales_tax_jurisdictions") or [])
+
+    def q(key: str, label: str, field: str, current, *,
+          required: bool = True, complete: bool | None = None,
+          options: list[str] | None = None, hint: str = "") -> dict:
+        if complete is None:
+            complete = current not in (None, "", [])
+        return {
+            "key": key,
+            "label": label,
+            "field": field,
+            "current": current,
+            "required": required,
+            "complete": bool(complete),
+            "options": options or [],
+            "hint": hint,
+        }
+
+    questions = [
+        q("delivery", "How should completed report-prep receipts be surfaced?",
+          "delivery", profile.get("delivery", "dashboard"),
+          options=["dashboard", "email", "telegram"]),
+        q("filing_cadence", "What filing cadence applies to this client?",
+          "filing_cadence", profile.get("filing_cadence", "quarterly"),
+          options=["monthly", "quarterly", "annual"]),
+        q("active_window", "What active book window should remain editable/reviewable?",
+          "active_window", profile.get("active_window", "1y"),
+          options=["1m", "1q", "1y", "2y"]),
+        q("payroll_schedule", "Does this client need payroll review scheduling?",
+          "payroll_schedule", profile.get("payroll_schedule", "none"),
+          required=has_payroll,
+          complete=(not has_payroll) or profile.get("payroll_schedule") not in (None, "", "none"),
+          options=["none", "weekly", "biweekly", "semimonthly", "monthly"],
+          hint="Required when employees exist in the client book."),
+        q("sales_tax_jurisdictions", "Which sales-tax jurisdictions need liability review?",
+          "sales_tax_jurisdictions", profile.get("sales_tax_jurisdictions") or [],
+          required=False,
+          complete=True,
+          hint="Optional until a taxable jurisdiction is known."),
+        q("reports", "Which recurring reports should enter the approval queue?",
+          "reports", reports,
+          complete=all(isinstance(reports.get(k, True), bool)
+                       for k in ("weekly_digest", "monthly_close", "quarterly_packet")),
+          hint="Every generated job still requires approval before execution."),
+    ]
+    required = [item for item in questions if item["required"]]
+    complete = [item for item in required if item["complete"]]
+    return {
+        "status": "configured" if len(complete) == len(required) else "needs_setup",
+        "required_complete": len(complete),
+        "required_total": len(required),
+        "questions": questions,
+        "suggested_profile": suggested,
+    }
+
+
 def _bool(value: str) -> bool:
     v = value.strip().lower()
     if v in ("1", "true", "yes", "on"):
@@ -223,6 +312,9 @@ def main() -> int:
     planp.add_argument("--as-of")
     planp.add_argument("--include-scheduled", action="store_true")
 
+    setupp = sub.add_parser("setup", help="print guided setup questions")
+    setupp.add_argument("slug")
+
     queuep = sub.add_parser("queue", help="print or write the dry-run workflow queue")
     queuep.add_argument("--as-of")
     queuep.add_argument("--include-scheduled", action="store_true")
@@ -247,6 +339,8 @@ def main() -> int:
         else:
             data = plan_all(as_of=ref, include_scheduled=args.include_scheduled)
         print(json.dumps(data, indent=2))
+    elif args.cmd == "setup":
+        print(json.dumps(setup_flow(args.slug), indent=2))
     elif args.cmd == "queue":
         ref = _parse_date(args.as_of)
         data = workflow_queue(as_of=ref, include_scheduled=args.include_scheduled)

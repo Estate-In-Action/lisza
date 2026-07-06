@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T19:36:39Z",
+  "generated_at": "2026-07-06T19:50:13Z",
   "slug": "jb-design",
   "display_name": "J.B. Design",
   "entity_type": "sole_prop",
@@ -2243,6 +2243,108 @@
     "active_window": "1y",
     "payroll_schedule": "none",
     "delivery": "dashboard"
+  },
+  "automation_setup": {
+    "status": "configured",
+    "required_complete": 4,
+    "required_total": 4,
+    "questions": [
+      {
+        "key": "delivery",
+        "label": "How should completed report-prep receipts be surfaced?",
+        "field": "delivery",
+        "current": "dashboard",
+        "required": true,
+        "complete": true,
+        "options": [
+          "dashboard",
+          "email",
+          "telegram"
+        ],
+        "hint": ""
+      },
+      {
+        "key": "filing_cadence",
+        "label": "What filing cadence applies to this client?",
+        "field": "filing_cadence",
+        "current": "annual",
+        "required": true,
+        "complete": true,
+        "options": [
+          "monthly",
+          "quarterly",
+          "annual"
+        ],
+        "hint": ""
+      },
+      {
+        "key": "active_window",
+        "label": "What active book window should remain editable/reviewable?",
+        "field": "active_window",
+        "current": "1y",
+        "required": true,
+        "complete": true,
+        "options": [
+          "1m",
+          "1q",
+          "1y",
+          "2y"
+        ],
+        "hint": ""
+      },
+      {
+        "key": "payroll_schedule",
+        "label": "Does this client need payroll review scheduling?",
+        "field": "payroll_schedule",
+        "current": "none",
+        "required": false,
+        "complete": true,
+        "options": [
+          "none",
+          "weekly",
+          "biweekly",
+          "semimonthly",
+          "monthly"
+        ],
+        "hint": "Required when employees exist in the client book."
+      },
+      {
+        "key": "sales_tax_jurisdictions",
+        "label": "Which sales-tax jurisdictions need liability review?",
+        "field": "sales_tax_jurisdictions",
+        "current": [],
+        "required": false,
+        "complete": true,
+        "options": [],
+        "hint": "Optional until a taxable jurisdiction is known."
+      },
+      {
+        "key": "reports",
+        "label": "Which recurring reports should enter the approval queue?",
+        "field": "reports",
+        "current": {
+          "weekly_digest": true,
+          "monthly_close": true,
+          "quarterly_packet": true
+        },
+        "required": true,
+        "complete": true,
+        "options": [],
+        "hint": "Every generated job still requires approval before execution."
+      }
+    ],
+    "suggested_profile": {
+      "reports": {
+        "weekly_digest": true,
+        "monthly_close": true,
+        "quarterly_packet": true
+      },
+      "filing_cadence": "annual",
+      "sales_tax_jurisdictions": [],
+      "active_window": "1y",
+      "payroll_schedule": "none",
+      "delivery": "dashboard"
+    }
   },
   "due_jobs": [
     {

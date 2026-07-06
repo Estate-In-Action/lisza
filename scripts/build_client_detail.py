@@ -383,6 +383,7 @@ def build_client_detail(slug: str) -> dict:
         as_of=date.fromisoformat(ref_date),
         include_scheduled=True,
     )
+    workflow_setup = automation_profile.setup_flow(slug)
     return {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "slug": prof["slug"],
@@ -420,6 +421,7 @@ def build_client_detail(slug: str) -> dict:
         "reconciliation": reconciliation,
         "filing_obligations": filing,
         "automation_profile": workflow_profile,
+        "automation_setup": workflow_setup,
         "due_jobs": workflow_jobs,
         "payroll": payroll,
     }
