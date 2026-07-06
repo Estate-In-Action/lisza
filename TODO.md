@@ -31,18 +31,26 @@ Work items for the bookkeeping app. See `PLAN.md` for phases and principles.
 - [x] Generate each via the `seed_client.py` path, tweaked per business type so the numbers read realistically (different COA emphasis, transaction mix, seasonality).
 
 ### Step 3 — Per-client tiles (drill-down)
-> Progress 2026-07-06 — client detail JSON and console now surface Payroll, AR, AP, Admin, Historical, and read-only Inspection tiles. Broader default-tile research remains open.
+> Progress 2026-07-06 — client detail JSON and console now surface Payroll, AR, AP, Admin, Historical, read-only Inspection, Cash Flow, P&L / Balance Sheet, Reconciliation, and Filing / Tax tiles. Default-tile research is closed into this first standard set.
 Decide the standard tile set a bookkeeper needs per client. Candidate set:
 - [x] **Payroll** — employees, pay runs, liabilities.
 - [x] **AR** (accounts receivable) — open invoices, aging.
 - [x] **AP** (accounts payable) — bills due, aging.
 - [x] **Admin / master data** — that client's profile (legal name, EIN, entity type, fiscal year, filing cadence, contacts, bank accounts, COA).
 - [x] **Historical** — bookkeeper has an **active window** (last month / quarter / year / 2 years, configurable); everything older is "prior/historical" and surfaced here read-only. (Respects Principle #2 — history is never mutated.)
-- [ ] Research **what other tiles general small businesses need** (e.g. cash flow, sales tax liability, fixed assets, trial balance, P&L/Balance Sheet, reconciliation status) and propose the default set.
+- [x] Research **what other tiles general small businesses need** and propose the default set.
+  - **Default tile set:** Cash / bank balances, Reconciliation status, AR, AP, Payroll, P&L, Balance Sheet, Trial Balance, Admin, Historical, Inspection.
+  - **Conditional tiles:** Cash-flow forecast (when AR/AP timing is meaningful), Sales-tax liability (when taxable jurisdictions are configured), Fixed assets (when depreciable assets exist), Project/time billing (service clients), Inventory/COGS (manufacturing/retail/restaurant clients).
+  - **Why:** Xero's accounting dashboard centers bank balances, invoices, bills, fixed assets, and reconciliation prompts; QuickBooks centers cash flow, bills, reconciliation, P&L/cash-flow reporting, and tax organization; FreshBooks centers invoices, expenses/receipts, time tracking, clients, payments, and financial reports. LISZA's default should therefore bias toward bookkeeper operating risk first: unreconciled cash, money owed/owing, payroll/tax obligations, and statement readiness.
 
 ### Step 4 — Per-client automation + config
+> Started 2026-07-06 — registry now has `client_automation_profiles` plus tested helpers for default/override profiles. Cron execution and UI config are still open.
 - [ ] **Per-client cron jobs** — reports generated on that client's cadence/need; **tax prep + filing on the client's schedule** (monthly / quarterly / annual depending on the client).
 - [ ] **Per-client config flow** — a guided setup that **asks the bookkeeper what to configure for each client**: which reports, filing cadence, sales-tax jurisdictions, active-window length, payroll schedule, etc. Stored as the client's automation profile and consumed by the cron layer.
+  - [x] Registry-level automation profile scaffold: reports enabled, filing cadence, sales-tax jurisdictions, active window, payroll schedule, delivery channel.
+  - [ ] CLI/API config writer for bookkeeper setup.
+  - [ ] Dashboard/Admin UI for editing a client's automation profile.
+  - [ ] Cron planner that turns profiles into due jobs without running tax/payment actions automatically.
 
 ## Competitive feature backlog (market-parity targets, 2026-06-29)
 

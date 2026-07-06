@@ -25,10 +25,24 @@ if (!detail.inspection) {
   };
 }
 
+if (!detail.cash_flow) {
+  detail.cash_flow = { status: "active", start: "2026-06-01", end: "2026-06-30", inflow: 1000, outflow: 400, net: 600, ending_cash: 600 };
+}
+if (!detail.pnl_balance) {
+  detail.pnl_balance = { status: "active", period: { income: 1000, expense: 400, net_income: 600 }, balance_sheet: { assets: 600, liabilities: 0, equity_total: 600 } };
+}
+if (!detail.reconciliation) {
+  detail.reconciliation = { status: "needs_review", statement_count: 2, matched_count: 1, unmatched_count: 1, latest_statement_date: "2026-06-30" };
+}
+if (!detail.filing_obligations) {
+  detail.filing_obligations = { status: "due_soon", filing_cadence: "quarterly", next_filing_due: "2026-07-31", days_until_due: 22, estimated_tax_paid_ytd: 100, payroll_tax_liability: 25 };
+}
+
 const html = renderClientDetail(detail);
 
 for (const tile of ["Accounts Receivable", "Accounts Payable", "Admin",
-                    "Historical", "Inspection", "Payroll"]) {
+                    "Historical", "Cash Flow", "P&L / Balance Sheet",
+                    "Reconciliation", "Filing / Tax", "Inspection", "Payroll"]) {
   assert(html.includes(tile), `${tile} tile present`);
 }
 assert(html.includes("‹ all clients"), "back link present");
@@ -53,4 +67,4 @@ if (p.status === "active") {
 } else {
   assert(html.includes("No payroll runs on file"), "empty payroll state renders");
 }
-console.log(`OK ${slug}: all 6 tiles render (${html.length} bytes)`);
+console.log(`OK ${slug}: all 10 tiles render (${html.length} bytes)`);

@@ -292,3 +292,60 @@ def test_write_client_detail_writes_file(tmp_path, monkeypatch):
     import json
     j = json.loads(out.read_text())
     assert j["slug"] == "acme"
+
+
+def test_default_tile_payloads_end_to_end(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    import tenancy
+    import importlib
+    importlib.reload(tenancy)
+    importlib.reload(bcd)
+    monkeypatch.setattr(tenancy, "COA_PATH",
+                        __import__("pathlib").Path(COA_PATH))
+    tenancy.register_client(slug="tiles", display_name="Tiles LLC",
+                            legal_name="Tiles LLC", entity_type="llc",
+                            ein="47-2201234", filing_cadence="quarterly")
+    db = tenancy.resolve_db("tiles")
+    con = __import__("sqlite3").connect(db)
+    con.executescript("""
+        INSERT INTO entries(id,entry_date,description,source,status)
+          VALUES(1,'2026-06-01','cash sale','manual','posted'),
+                (2,'2026-06-05','expense','manual','posted'),
+                (3,'2026-06-09','estimated tax','tax','posted'),
+                (4,'2026-06-10','pending sale','manual','pending'),
+                (5,'2026-07-01','void sale','manual','void');
+        INSERT INTO splits(entry_id,account,dr,cr) VALUES
+          (1,'102',1000,0),(1,'400',0,1000),
+          (2,'500',300,0),(2,'102',0,300),
+          (3,'592',100,0),(3,'102',0,100),
+          (4,'102',9000,0),(4,'400',0,9000),
+          (5,'102',5000,0),(5,'400',0,5000);
+        CREATE TABLE statement_lines (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            statement_account TEXT NOT NULL,
+            statement_date TEXT NOT NULL,
+            description TEXT,
+            amount REAL NOT NULL,
+            external_ref TEXT,
+            status TEXT NOT NULL DEFAULT 'unmatched'
+        );
+        INSERT INTO statement_lines(statement_account, statement_date, description, amount, status)
+          VALUES('102','2026-06-01','cash sale',1000,'matched'),
+                ('102','2026-06-05','expense',-300,'unmatched');
+    """)
+    con.commit()
+    con.close()
+
+    d = bcd.build_client_detail("tiles")
+    assert d["cash_flow"]["inflow"] == 1000.0
+    assert d["cash_flow"]["outflow"] == 400.0
+    assert d["cash_flow"]["ending_cash"] == 600.0
+    assert d["pnl_balance"]["period"]["income"] == 1000.0
+    assert d["pnl_balance"]["period"]["expense"] == 400.0
+    assert d["pnl_balance"]["period"]["net_income"] == 600.0
+    assert d["pnl_balance"]["balance_sheet"]["assets"] == 600.0
+    assert d["reconciliation"]["status"] == "needs_review"
+    assert d["reconciliation"]["matched_count"] == 1
+    assert d["reconciliation"]["unmatched_count"] == 1
+    assert d["filing_obligations"]["next_filing_due"] == "2026-07-31"
+    assert d["filing_obligations"]["estimated_tax_paid_ytd"] == 100.0

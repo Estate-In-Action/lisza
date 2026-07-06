@@ -151,6 +151,7 @@ def test_next_filing_due_quarterly_monthly_annual():
 
 import client_profiles
 import seed_client
+import seed_payroll
 
 
 def test_refresh_summary_caches_entity_count_and_filing_due(tmp_path, monkeypatch):
@@ -267,3 +268,45 @@ def test_house_config_default_then_override(tmp_path, monkeypatch):
     tenancy.set_house_config(new_cfg)
     again = tenancy.get_house_config()
     assert any(t["key"] == "custom_x" for t in again["tiles"])
+
+
+def test_automation_profile_defaults_from_client_book(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    tenancy.register_client(slug="jb-design", display_name="J.B. Design",
+                            filing_cadence="annual", active_window="2y")
+
+    profile = tenancy.get_automation_profile("jb-design")
+
+    assert profile["filing_cadence"] == "annual"
+    assert profile["active_window"] == "2y"
+    assert profile["payroll_schedule"] == "none"
+    assert profile["reports"]["weekly_digest"] is True
+    assert profile["delivery"] == "dashboard"
+
+
+def test_automation_profile_detects_payroll_books(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    tenancy.register_client(slug="guitar-works", display_name="Guitar Works",
+                            filing_cadence="quarterly")
+    seed_payroll.seed_payroll(slug="guitar-works")
+
+    profile = tenancy.get_automation_profile("guitar-works")
+
+    assert profile["payroll_schedule"] == "biweekly"
+
+
+def test_automation_profile_override_is_client_scoped(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    tenancy.register_client(slug="a-co", display_name="A Co",
+                            filing_cadence="monthly")
+    tenancy.register_client(slug="b-co", display_name="B Co",
+                            filing_cadence="quarterly")
+    custom = tenancy.get_automation_profile("a-co")
+    custom["delivery"] = "email"
+    custom["sales_tax_jurisdictions"] = ["DE", "VA"]
+
+    tenancy.set_automation_profile("a-co", custom)
+
+    assert tenancy.get_automation_profile("a-co")["delivery"] == "email"
+    assert tenancy.get_automation_profile("a-co")["sales_tax_jurisdictions"] == ["DE", "VA"]
+    assert tenancy.get_automation_profile("b-co")["delivery"] == "dashboard"

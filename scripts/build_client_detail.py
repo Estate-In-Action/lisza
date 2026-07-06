@@ -188,6 +188,144 @@ def spreadsheet_periods(con: sqlite3.Connection, as_of: str | None) -> dict:
         }
     return periods
 
+def _posted_filter(start: str | None = None, end: str | None = None) -> tuple[str, list]:
+    clauses = ["e.status='posted'"]
+    params = []
+    if start:
+        clauses.append("e.entry_date >= ?")
+        params.append(start)
+    if end:
+        clauses.append("e.entry_date <= ?")
+        params.append(end)
+    return " AND ".join(clauses), params
+
+
+def cash_flow_summary(con: sqlite3.Connection, as_of: str | None, start: str | None) -> dict:
+    cash_accounts = ("101", "102", "103", "106")
+    qmarks = ",".join("?" * len(cash_accounts))
+    if not as_of:
+        return {"status": "no_posted_activity", "start": start, "end": as_of,
+                "inflow": 0.0, "outflow": 0.0, "net": 0.0,
+                "starting_cash": 0.0, "ending_cash": 0.0}
+    where, params = _posted_filter(start, as_of)
+    row = con.execute(
+        f"""SELECT ROUND(COALESCE(SUM(CASE WHEN s.dr>s.cr THEN s.dr-s.cr ELSE 0 END),0),2),
+                   ROUND(COALESCE(SUM(CASE WHEN s.cr>s.dr THEN s.cr-s.dr ELSE 0 END),0),2)
+            FROM splits s JOIN entries e ON e.id=s.entry_id
+            WHERE {where} AND s.account IN ({qmarks})""",
+        (*params, *cash_accounts),
+    ).fetchone()
+    inflow, outflow = float(row[0] or 0), float(row[1] or 0)
+    ending = con.execute(
+        f"""SELECT ROUND(COALESCE(SUM(s.dr-s.cr),0),2)
+            FROM splits s JOIN entries e ON e.id=s.entry_id
+            WHERE e.status='posted' AND e.entry_date <= ? AND s.account IN ({qmarks})""",
+        (as_of, *cash_accounts),
+    ).fetchone()[0]
+    net = round(inflow - outflow, 2)
+    return {"status": "active", "start": start, "end": as_of,
+            "inflow": round(inflow, 2), "outflow": round(outflow, 2),
+            "net": net, "starting_cash": round(float(ending or 0) - net, 2),
+            "ending_cash": round(float(ending or 0), 2)}
+
+
+def pnl_balance_summary(con: sqlite3.Connection, as_of: str | None, start: str | None) -> dict:
+    if not as_of:
+        return {"status": "no_posted_activity", "period": {"start": start, "end": as_of}}
+    period_where, period_params = _posted_filter(start, as_of)
+    period = con.execute(
+        f"""SELECT
+              ROUND(COALESCE(SUM(CASE WHEN a.type='income' THEN s.cr-s.dr ELSE 0 END),0),2),
+              ROUND(COALESCE(SUM(CASE WHEN a.type='expense' THEN s.dr-s.cr ELSE 0 END),0),2)
+            FROM splits s JOIN entries e ON e.id=s.entry_id JOIN accounts a ON a.code=s.account
+            WHERE {period_where}""",
+        period_params,
+    ).fetchone()
+    income, expense = float(period[0] or 0), float(period[1] or 0)
+    life = con.execute(
+        """SELECT a.type,
+                  ROUND(COALESCE(SUM(
+                    CASE WHEN e.id IS NULL THEN 0
+                         WHEN a.sign_normal='debit' THEN s.dr-s.cr
+                         ELSE s.cr-s.dr END),0),2)
+           FROM accounts a
+           LEFT JOIN splits s ON s.account=a.code
+           LEFT JOIN entries e ON e.id=s.entry_id AND e.status='posted' AND e.entry_date <= ?
+           GROUP BY a.type""",
+        (as_of,),
+    ).fetchall()
+    by_type = {r[0]: float(r[1] or 0) for r in life}
+    retained = round(by_type.get("income", 0.0) - by_type.get("expense", 0.0), 2)
+    equity_total = round(by_type.get("equity", 0.0) + retained, 2)
+    return {
+        "status": "active",
+        "period": {"start": start, "end": as_of, "income": round(income, 2),
+                   "expense": round(expense, 2), "net_income": round(income - expense, 2)},
+        "balance_sheet": {"as_of": as_of, "assets": round(by_type.get("asset", 0.0), 2),
+                          "liabilities": round(by_type.get("liability", 0.0), 2),
+                          "equity_accounts": round(by_type.get("equity", 0.0), 2),
+                          "retained_earnings": retained, "equity_total": equity_total},
+    }
+
+
+def _table_exists(con: sqlite3.Connection, name: str) -> bool:
+    return con.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name=?",
+        (name,),
+    ).fetchone() is not None
+
+
+def reconciliation_status(con: sqlite3.Connection) -> dict:
+    if not _table_exists(con, "statement_lines"):
+        return {"status": "not_started", "statement_count": 0, "matched_count": 0,
+                "unmatched_count": 0, "ignored_count": 0, "latest_statement_date": None}
+    rows = con.execute(
+        "SELECT status, COUNT(*), ROUND(COALESCE(SUM(amount),0),2) FROM statement_lines GROUP BY status"
+    ).fetchall()
+    counts = {r[0]: int(r[1]) for r in rows}
+    amounts = {r[0]: float(r[2] or 0) for r in rows}
+    latest = con.execute("SELECT MAX(statement_date) FROM statement_lines").fetchone()[0]
+    total = sum(counts.values())
+    unmatched = counts.get("unmatched", 0)
+    return {"status": "needs_review" if unmatched else ("clear" if total else "not_started"),
+            "statement_count": total, "matched_count": counts.get("matched", 0),
+            "unmatched_count": unmatched, "ignored_count": counts.get("ignored", 0),
+            "status_amounts": amounts, "latest_statement_date": latest}
+
+
+def filing_obligations(con: sqlite3.Connection, prof: sqlite3.Row, as_of: str | None, next_due: str | None) -> dict:
+    ref = date.fromisoformat(as_of) if as_of else date.today()
+    year_start = f"{ref.year}-01-01"
+    estimated_tax_paid = con.execute(
+        """SELECT ROUND(COALESCE(SUM(s.dr-s.cr),0),2)
+           FROM splits s JOIN entries e ON e.id=s.entry_id
+           WHERE e.status='posted' AND e.entry_date >= ? AND e.entry_date <= ? AND s.account='592'""",
+        (year_start, ref.isoformat()),
+    ).fetchone()[0]
+    liability_accounts = ("245", "246", "247", "248", "249")
+    qmarks = ",".join("?" * len(liability_accounts))
+    payroll_tax_liability = con.execute(
+        f"""SELECT ROUND(COALESCE(SUM(s.cr-s.dr),0),2)
+            FROM splits s JOIN entries e ON e.id=s.entry_id
+            WHERE e.status='posted' AND e.entry_date <= ? AND s.account IN ({qmarks})""",
+        (ref.isoformat(), *liability_accounts),
+    ).fetchone()[0]
+    days_until_due = (date.fromisoformat(next_due) - ref).days if next_due else None
+    if days_until_due is None:
+        status = "not_scheduled"
+    elif days_until_due < 0:
+        status = "overdue"
+    elif days_until_due <= 30:
+        status = "due_soon"
+    else:
+        status = "scheduled"
+    return {
+        "status": status, "filing_cadence": prof["filing_cadence"],
+        "fiscal_year_end": prof["fiscal_year_end"], "next_filing_due": next_due,
+        "days_until_due": days_until_due,
+        "estimated_tax_paid_ytd": round(float(estimated_tax_paid or 0), 2),
+        "payroll_tax_liability": round(float(payroll_tax_liability or 0), 2),
+    }
 
 def build_client_detail(slug: str) -> dict:
     db = tenancy.resolve_db(slug)
@@ -212,18 +350,21 @@ def build_client_detail(slug: str) -> dict:
         window = active_window_bounds(as_of, prof["active_window"])
         window_counts = active_window_entry_counts(con, window["start"])
         inspection = spreadsheet_periods(con, as_of)
+        cash_flow = cash_flow_summary(con, as_of, window["start"])
+        pnl_balance = pnl_balance_summary(con, as_of, window["start"])
+        reconciliation = reconciliation_status(con)
+        next_due = None
+        if as_of:
+            next_due = tenancy.compute_next_filing_due(
+                (prof["filing_cadence"] or "quarterly"),
+                date.fromisoformat(as_of),
+                (prof["fiscal_year_end"] or "12-31")).isoformat()
+        filing = filing_obligations(con, prof, as_of, next_due)
     finally:
         con.close()
 
+
     ref_date = as_of or date.today().isoformat()
-
-    next_due = None
-    if as_of:
-        next_due = tenancy.compute_next_filing_due(
-            (prof["filing_cadence"] or "quarterly"),
-            date.fromisoformat(as_of),
-            (prof["fiscal_year_end"] or "12-31")).isoformat()
-
     return {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "slug": prof["slug"],
@@ -256,6 +397,10 @@ def build_client_detail(slug: str) -> dict:
             "views": ["month", "quarter", "year"],
             "periods": inspection,
         },
+        "cash_flow": cash_flow,
+        "pnl_balance": pnl_balance,
+        "reconciliation": reconciliation,
+        "filing_obligations": filing,
         "payroll": payroll,
     }
 

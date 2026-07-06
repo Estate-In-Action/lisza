@@ -244,6 +244,64 @@ function inspectionTile(i) {
     `</div>`;
 }
 
+
+function cashFlowTile(c) {
+  if (!c || c.status !== "active") {
+    return `<div class="card"><h3>Cash Flow</h3><div class="muted">No posted activity</div></div>`;
+  }
+  return `<div class="card"><h3>Cash Flow</h3>` +
+    kv("Inflow", money(c.inflow)) +
+    kv("Outflow", money(c.outflow)) +
+    kv("Net", money(c.net)) +
+    kv("Ending cash", money(c.ending_cash)) +
+    `<div class="muted">${esc(c.start || "—")} → ${esc(c.end || "—")}</div></div>`;
+}
+
+function pnlBalanceTile(p) {
+  if (!p || p.status !== "active") {
+    return `<div class="card"><h3>P&L / Balance Sheet</h3><div class="muted">No posted activity</div></div>`;
+  }
+  const period = p.period || {};
+  const bs = p.balance_sheet || {};
+  return `<div class="card"><h3>P&L / Balance Sheet</h3>` +
+    kv("Income", money(period.income)) +
+    kv("Expense", money(period.expense)) +
+    kv("Net income", money(period.net_income)) +
+    `<h4>Balance sheet</h4>` +
+    kv("Assets", money(bs.assets)) +
+    kv("Liabilities", money(bs.liabilities)) +
+    kv("Equity", money(bs.equity_total)) +
+    `</div>`;
+}
+
+function reconciliationTile(r) {
+  if (!r) {
+    return `<div class="card"><h3>Reconciliation</h3><div class="muted">No statement data</div></div>`;
+  }
+  return `<div class="card"><h3>Reconciliation</h3>` +
+    kv("Status", r.status || "—") +
+    kv("Statements", r.statement_count ?? 0) +
+    kv("Matched", r.matched_count ?? 0) +
+    kv("Unmatched", r.unmatched_count ?? 0) +
+    kv("Latest", r.latest_statement_date || "—") +
+    `</div>`;
+}
+
+function filingTile(f) {
+  if (!f) {
+    return `<div class="card"><h3>Filing / Tax</h3><div class="muted">No filing profile</div></div>`;
+  }
+  return `<div class="card"><h3>Filing / Tax</h3>` +
+    kv("Status", f.status || "—") +
+    kv("Cadence", f.filing_cadence || "—") +
+    kv("Next due", f.next_filing_due || "—") +
+    kv("Days", f.days_until_due ?? "—") +
+    kv("Est. tax paid YTD", money(f.estimated_tax_paid_ytd || 0)) +
+    kv("Payroll tax liability", money(f.payroll_tax_liability || 0)) +
+    `</div>`;
+}
+
+
 function renderClientDetail(d) {
   const ents = (d.admin.entities || []);
   const entRows = ents.length > 1
@@ -280,6 +338,10 @@ function renderClientDetail(d) {
           ${kv("Posted entries", d.historical.entry_count)}
           <h4>Recent months</h4>${trendRows(d.historical.monthly)}
         </div>
+        ${cashFlowTile(d.cash_flow)}
+        ${pnlBalanceTile(d.pnl_balance)}
+        ${reconciliationTile(d.reconciliation)}
+        ${filingTile(d.filing_obligations)}
         ${inspectionTile(d.inspection)}
         ${payrollTile(d.payroll)}
       </div>
@@ -330,6 +392,6 @@ if (typeof document !== "undefined" && document.getElementById) {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     esc, money, kv, renderClientDetail, renderTiles, parseHash, payrollTile,
-    inspectionTile, inspectionRows
+    inspectionTile, inspectionRows, cashFlowTile, pnlBalanceTile, reconciliationTile, filingTile
   };
 }

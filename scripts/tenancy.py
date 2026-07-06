@@ -7,6 +7,7 @@ registry indexes and caches but never owns truth.
 from __future__ import annotations
 
 import csv
+import json
 import os
 import sqlite3
 import uuid
@@ -27,6 +28,19 @@ HOUSE_CONFIG_DEFAULT = {
         {"key": "my_ar", "label": "Fees receivable", "hint": "what clients owe me"},
         {"key": "my_payroll", "label": "Staff payroll", "hint": "Payroll tab"},
     ]
+}
+
+DEFAULT_AUTOMATION_PROFILE = {
+    "reports": {
+        "weekly_digest": True,
+        "monthly_close": True,
+        "quarterly_packet": True,
+    },
+    "filing_cadence": "quarterly",
+    "sales_tax_jurisdictions": [],
+    "active_window": "1y",
+    "payroll_schedule": "none",
+    "delivery": "dashboard",
 }
 
 
@@ -64,6 +78,11 @@ CREATE TABLE IF NOT EXISTS bookkeeper_prefs (
     card_fields_json TEXT,
     default_client TEXT,
     updated_at     TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE TABLE IF NOT EXISTS client_automation_profiles (
+    client_id    TEXT PRIMARY KEY REFERENCES clients(client_id),
+    profile_json TEXT NOT NULL,
+    updated_at   TEXT NOT NULL DEFAULT (datetime('now'))
 );
 """
 
@@ -198,6 +217,66 @@ def register_client(*, slug: str, display_name: str, legal_name: str | None = No
     reg.commit()
     reg.close()
     return client_id
+
+
+def _client_id_for_slug(con: sqlite3.Connection, slug: str) -> str:
+    row = con.execute("SELECT client_id FROM clients WHERE slug=?", (slug,)).fetchone()
+    if not row:
+        raise ValueError(f"unknown client: {slug}")
+    return row[0]
+
+
+def default_automation_profile(*, filing_cadence: str = "quarterly",
+                               active_window: str = "1y",
+                               payroll_schedule: str = "none") -> dict:
+    profile = json.loads(json.dumps(DEFAULT_AUTOMATION_PROFILE))
+    profile["filing_cadence"] = filing_cadence or "quarterly"
+    profile["active_window"] = active_window or "1y"
+    profile["payroll_schedule"] = payroll_schedule or "none"
+    return profile
+
+
+def get_automation_profile(slug: str) -> dict:
+    registry_db()
+    reg = sqlite3.connect(registry_path())
+    reg.row_factory = sqlite3.Row
+    client_id = _client_id_for_slug(reg, slug)
+    row = reg.execute(
+        "SELECT profile_json FROM client_automation_profiles WHERE client_id=?",
+        (client_id,)).fetchone()
+    reg.close()
+    if row and row["profile_json"]:
+        try:
+            return json.loads(row["profile_json"])
+        except (TypeError, ValueError):
+            pass
+
+    book = sqlite3.connect(resolve_db(slug))
+    book.row_factory = sqlite3.Row
+    prof = book.execute(
+        "SELECT filing_cadence, active_window FROM client_profile").fetchone()
+    payroll_schedule = "none"
+    if book.execute("SELECT COUNT(*) FROM employees").fetchone()[0] > 0:
+        payroll_schedule = "biweekly"
+    book.close()
+    return default_automation_profile(
+        filing_cadence=prof["filing_cadence"] if prof else "quarterly",
+        active_window=prof["active_window"] if prof else "1y",
+        payroll_schedule=payroll_schedule,
+    )
+
+
+def set_automation_profile(slug: str, profile: dict) -> None:
+    registry_db()
+    reg = sqlite3.connect(registry_path())
+    client_id = _client_id_for_slug(reg, slug)
+    reg.execute(
+        """INSERT OR REPLACE INTO client_automation_profiles
+           (client_id, profile_json, updated_at)
+           VALUES (?, ?, datetime('now'))""",
+        (client_id, json.dumps(profile, sort_keys=True)))
+    reg.commit()
+    reg.close()
 
 
 def ensure_house() -> str:
