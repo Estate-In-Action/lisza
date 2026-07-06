@@ -27,7 +27,7 @@ from ingest_txns import (
     connect_db,
     dedupe_ref,
     find_account_code,
-    infer_account_code,
+    infer_categorization,
     infer_entry_accounts,
     infer_payment_account_code,
     insert_pending,
@@ -223,21 +223,25 @@ def import_pdfs(paths: list[Path], dry_run: bool = False) -> int:
             inserted = 0
             skipped = 0
             for row in rows:
-                suggested_account = infer_account_code(
+                categorization = infer_categorization(
                     accounts,
                     payee_rules,
                     row["description"],
                     row["raw_category"],
                     row["is_debit"],
                 )
+                suggested_account = categorization.get("account_code")
                 payment_account = infer_payment_account_code(accounts, row["account"], row["description"])
                 if row["raw_category"] == "payment":
                     suggested_account = find_account_code(accounts, "Business Credit Card")
                     payment_account = find_account_code(accounts, "Business Checking")
+                    categorization = {"account_code": suggested_account, "source": "statement_section", "confidence": 0.9, "raw_category": row["raw_category"]}
                 elif row["raw_category"] == "bank fee":
                     suggested_account = find_account_code(accounts, "Bank & Merchant Fees")
+                    categorization = {"account_code": suggested_account, "source": "statement_section", "confidence": 0.9, "raw_category": row["raw_category"]}
                 elif row["raw_category"] == "interest":
                     suggested_account = find_account_code(accounts, "Interest Income") if not row["is_debit"] else find_account_code(accounts, "Bank & Merchant Fees")
+                    categorization = {"account_code": suggested_account, "source": "statement_section", "confidence": 0.9, "raw_category": row["raw_category"]}
                 suggested_debit, suggested_credit = infer_entry_accounts(accounts, row, suggested_account, payment_account)
 
                 ref = dedupe_ref(path, row["row_hash"])
@@ -270,6 +274,7 @@ def import_pdfs(paths: list[Path], dry_run: bool = False) -> int:
                     suggested_debit,
                     suggested_credit,
                     import_kind="statement_pdf",
+                    categorization=categorization,
                 ):
                     inserted += 1
                 else:

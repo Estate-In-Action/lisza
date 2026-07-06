@@ -1,4 +1,5 @@
 import sqlite3
+import json
 
 import pytest
 
@@ -95,3 +96,55 @@ def test_ingest_text_is_idempotent(client_db):
     n = con.execute("SELECT COUNT(*) FROM pending_inbox").fetchone()[0]
     con.close()
     assert n == 2
+
+
+def test_ingest_text_carries_rule_categorization_metadata(client_db):
+    con = sqlite3.connect(client_db)
+    ingest_txns.ensure_categorization_schema(con)
+    con.execute(
+        """INSERT INTO payee_rules(pattern, account_code, tax_code, confidence, priority)
+           VALUES('COFFEE SHOP', '525', 'meals_50', 0.91, 1)"""
+    )
+    con.commit()
+    con.close()
+
+    result = ingest_txns.ingest_text(CC_CSV, db_path=client_db, source_file="cc.csv")
+    assert result["inserted"] == 2
+
+    con = sqlite3.connect(client_db)
+    con.row_factory = sqlite3.Row
+    row = con.execute(
+        "SELECT parsed_json, suggested_account FROM pending_inbox WHERE parsed_json LIKE '%COFFEE SHOP%'"
+    ).fetchone()
+    rule = con.execute("SELECT match_count, last_matched_at FROM payee_rules WHERE pattern='COFFEE SHOP'").fetchone()
+    con.close()
+
+    payload = json.loads(row["parsed_json"])
+    assert row["suggested_account"] == "525"
+    assert payload["categorization"]["source"] == "payee_rule"
+    assert payload["categorization"]["tax_code"] == "meals_50"
+    assert payload["categorization"]["confidence"] == 0.91
+    assert rule["match_count"] == 1
+    assert rule["last_matched_at"] is not None
+
+
+def test_ensure_categorization_schema_migrates_older_payee_rules(tmp_path):
+    db = tmp_path / "older.db"
+    con = sqlite3.connect(db)
+    con.executescript(
+        """
+        CREATE TABLE accounts(code TEXT PRIMARY KEY);
+        CREATE TABLE payee_rules(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            pattern TEXT NOT NULL,
+            account_code TEXT NOT NULL REFERENCES accounts(code),
+            priority INTEGER NOT NULL DEFAULT 100,
+            active INTEGER NOT NULL DEFAULT 1,
+            created_at TEXT NOT NULL DEFAULT (datetime('now'))
+        );
+        """
+    )
+    ingest_txns.ensure_categorization_schema(con)
+    cols = {r[1] for r in con.execute("PRAGMA table_info(payee_rules)")}
+    con.close()
+    assert {"match_kind", "tax_code", "confidence", "match_count", "last_matched_at"} <= cols

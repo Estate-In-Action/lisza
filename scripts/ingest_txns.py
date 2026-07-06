@@ -32,6 +32,7 @@ import sqlite3
 import sys
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 from tenancy import resolve_db_path
 
@@ -42,6 +43,13 @@ COA_PATH = ROOT / "coa.csv"
 
 SOURCE_NAME = "bank_import"
 NEW_STATUS = "new"
+PAYEE_RULE_EXTRA_COLUMNS = {
+    "match_kind": "TEXT NOT NULL DEFAULT 'contains'",
+    "tax_code": "TEXT",
+    "confidence": "REAL NOT NULL DEFAULT 0.95",
+    "match_count": "INTEGER NOT NULL DEFAULT 0",
+    "last_matched_at": "TEXT",
+}
 
 # Raw category/value heuristics -> LISZA account names
 CATEGORY_ACCOUNT_MAP = {
@@ -242,6 +250,23 @@ def connect_db() -> sqlite3.Connection:
     return con
 
 
+def ensure_categorization_schema(con: sqlite3.Connection) -> None:
+    con.execute(
+        """CREATE TABLE IF NOT EXISTS payee_rules (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            pattern TEXT NOT NULL,
+            account_code TEXT NOT NULL REFERENCES accounts(code),
+            priority INTEGER NOT NULL DEFAULT 100,
+            active INTEGER NOT NULL DEFAULT 1,
+            created_at TEXT NOT NULL DEFAULT (datetime('now'))
+        )"""
+    )
+    existing = {row[1] for row in con.execute("PRAGMA table_info(payee_rules)")}
+    for column, ddl in PAYEE_RULE_EXTRA_COLUMNS.items():
+        if column not in existing:
+            con.execute(f"ALTER TABLE payee_rules ADD COLUMN {column} {ddl}")
+
+
 def load_accounts() -> list[dict]:
     with COA_PATH.open() as f:
         return list(csv.DictReader(f))
@@ -308,12 +333,71 @@ def infer_entry_accounts(
 
 
 def load_payee_rules(con: sqlite3.Connection) -> list[sqlite3.Row]:
+    ensure_categorization_schema(con)
     return con.execute(
-        """SELECT pattern, account_code
+        """SELECT id, pattern, account_code, match_kind, tax_code, confidence
            FROM payee_rules
            WHERE active = 1
            ORDER BY priority ASC, id ASC"""
     ).fetchall()
+
+
+def rule_matches(rule: sqlite3.Row, description: str) -> bool:
+    pattern = (rule["pattern"] or "").strip().lower()
+    if not pattern:
+        return False
+    desc = description.lower()
+    kind = (rule["match_kind"] or "contains").lower()
+    if kind == "exact":
+        return desc == pattern
+    if kind == "startswith":
+        return desc.startswith(pattern)
+    return pattern in desc
+
+
+def infer_categorization(
+    accounts: list[dict],
+    payee_rules: list[sqlite3.Row],
+    description: str,
+    raw_category: str,
+    is_debit: bool,
+) -> dict[str, Any]:
+    for rule in payee_rules:
+        if rule_matches(rule, description):
+            return {
+                "account_code": rule["account_code"],
+                "source": "payee_rule",
+                "confidence": float(rule["confidence"] or 0.95),
+                "rule_id": int(rule["id"]),
+                "pattern": rule["pattern"],
+                "match_kind": rule["match_kind"] or "contains",
+                "tax_code": rule["tax_code"],
+            }
+
+    normalized_name = normalize_category(raw_category)
+    exact = find_account_code(accounts, normalized_name)
+    if exact:
+        return {
+            "account_code": exact,
+            "source": "bank_category",
+            "confidence": 0.75,
+            "raw_category": raw_category,
+            "normalized_category": normalized_name,
+        }
+
+    desc = description.lower()
+    if is_debit:
+        if any(token in desc for token in ("fee", "service charge", "merchant fee", "overdraft")):
+            return {"account_code": find_account_code(accounts, "Bank & Merchant Fees"), "source": "keyword", "confidence": 0.7}
+        if any(token in desc for token in ("subscription", "aws", "google", "microsoft", "adobe", "zoom", "slack")):
+            return {"account_code": find_account_code(accounts, "Software & Subscriptions"), "source": "keyword", "confidence": 0.7}
+        if any(token in desc for token in ("airbnb", "hotel", "uber", "lyft", "flight", "airlines")):
+            return {"account_code": find_account_code(accounts, "Travel"), "source": "keyword", "confidence": 0.7}
+        return {"account_code": find_account_code(accounts, "Miscellaneous Expense"), "source": "fallback", "confidence": 0.35}
+
+    if any(token in desc for token in ("interest", "apy")):
+        return {"account_code": find_account_code(accounts, "Interest Income"), "source": "keyword", "confidence": 0.7}
+    return {"account_code": find_account_code(accounts, "Other Income"), "source": "fallback", "confidence": 0.35}
 
 
 def infer_account_code(
@@ -323,28 +407,9 @@ def infer_account_code(
     raw_category: str,
     is_debit: bool,
 ) -> str | None:
-    desc = description.lower()
-    for rule in payee_rules:
-        if rule["pattern"] and rule["pattern"].lower() in desc:
-            return rule["account_code"]
-
-    normalized_name = normalize_category(raw_category)
-    exact = find_account_code(accounts, normalized_name)
-    if exact:
-        return exact
-
-    if is_debit:
-        if any(token in desc for token in ("fee", "service charge", "merchant fee", "overdraft")):
-            return find_account_code(accounts, "Bank & Merchant Fees")
-        if any(token in desc for token in ("subscription", "aws", "google", "microsoft", "adobe", "zoom", "slack")):
-            return find_account_code(accounts, "Software & Subscriptions")
-        if any(token in desc for token in ("airbnb", "hotel", "uber", "lyft", "flight", "airlines")):
-            return find_account_code(accounts, "Travel")
-        return find_account_code(accounts, "Miscellaneous Expense")
-
-    if any(token in desc for token in ("interest", "apy")):
-        return find_account_code(accounts, "Interest Income")
-    return find_account_code(accounts, "Other Income")
+    return infer_categorization(
+        accounts, payee_rules, description, raw_category, is_debit
+    ).get("account_code")
 
 
 def dedupe_ref(source_file: Path, txn_hash: str) -> str:
@@ -358,6 +423,7 @@ def pending_payload(
     suggested_debit: str | None,
     suggested_credit: str | None,
     import_kind: str = "bank_csv",
+    categorization: dict[str, Any] | None = None,
 ) -> dict:
     return {
         "import_kind": import_kind,
@@ -378,7 +444,21 @@ def pending_payload(
         "suggested_payment_account_code": payment_account,
         "suggested_debit_account_code": suggested_debit,
         "suggested_credit_account_code": suggested_credit,
+        "categorization": categorization or {},
     }
+
+
+def record_rule_match(con: sqlite3.Connection, categorization: dict[str, Any] | None) -> None:
+    rule_id = (categorization or {}).get("rule_id")
+    if not rule_id:
+        return
+    con.execute(
+        """UPDATE payee_rules
+           SET match_count = COALESCE(match_count, 0) + 1,
+               last_matched_at = datetime('now')
+           WHERE id = ?""",
+        (rule_id,),
+    )
 
 
 def insert_pending(
@@ -390,6 +470,7 @@ def insert_pending(
     suggested_debit: str | None,
     suggested_credit: str | None,
     import_kind: str = "bank_csv",
+    categorization: dict[str, Any] | None = None,
 ) -> bool:
     ref = dedupe_ref(source_path, row["row_hash"])
     existing = con.execute(
@@ -406,6 +487,7 @@ def insert_pending(
         suggested_debit,
         suggested_credit,
         import_kind=import_kind,
+        categorization=categorization,
     )
     notes = (
         f"{row['direction']} import · payment {payment_account or '-'}"
@@ -425,6 +507,7 @@ def insert_pending(
             notes,
         ),
     )
+    record_rule_match(con, categorization)
     return True
 
 
@@ -468,10 +551,12 @@ def _insert_pending_row(
     suggested_debit: str | None,
     suggested_credit: str | None,
     import_kind: str = "bank_csv",
+    categorization: dict[str, Any] | None = None,
 ) -> None:
     payload = pending_payload(
         row, suggested_account, payment_account,
         suggested_debit, suggested_credit, import_kind=import_kind,
+        categorization=categorization,
     )
     notes = (
         f"{row['direction']} import · payment {payment_account or '-'}"
@@ -487,6 +572,7 @@ def _insert_pending_row(
             suggested_account, row["amount"], NEW_STATUS, notes,
         ),
     )
+    record_rule_match(con, categorization)
 
 
 def ingest_text(
@@ -508,16 +594,18 @@ def ingest_text(
     con.execute("PRAGMA journal_mode = WAL")
     try:
         ensure_inbox_schema(con)
+        ensure_categorization_schema(con)
         accounts = load_accounts()
         payee_rules = load_payee_rules(con)
 
         inserted = 0
         skipped = 0
         for row in rows:
-            suggested_account = infer_account_code(
+            categorization = infer_categorization(
                 accounts, payee_rules, row["description"],
                 row["raw_category"], row["is_debit"],
             )
+            suggested_account = categorization.get("account_code")
             payment_account = infer_payment_account_code(
                 accounts, row["account"], row["description"])
             suggested_debit, suggested_credit = infer_entry_accounts(
@@ -535,6 +623,7 @@ def ingest_text(
                 _insert_pending_row(
                     con, ref, row, suggested_account, payment_account,
                     suggested_debit, suggested_credit,
+                    categorization=categorization,
                 )
             inserted += 1
 
@@ -552,6 +641,7 @@ def ingest(paths: list[Path], dry_run: bool = False) -> int:
         return 1
 
     con = connect_db()
+    ensure_categorization_schema(con)
     accounts = load_accounts()
     payee_rules = load_payee_rules(con)
 
@@ -571,13 +661,14 @@ def ingest(paths: list[Path], dry_run: bool = False) -> int:
             skipped = 0
 
             for row in rows:
-                suggested_account = infer_account_code(
+                categorization = infer_categorization(
                     accounts,
                     payee_rules,
                     row["description"],
                     row["raw_category"],
                     row["is_debit"],
                 )
+                suggested_account = categorization.get("account_code")
                 payment_account = infer_payment_account_code(accounts, row["account"], row["description"])
                 suggested_debit, suggested_credit = infer_entry_accounts(
                     accounts,
@@ -616,6 +707,7 @@ def ingest(paths: list[Path], dry_run: bool = False) -> int:
                     payment_account,
                     suggested_debit,
                     suggested_credit,
+                    categorization=categorization,
                 ):
                     inserted += 1
                 else:

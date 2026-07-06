@@ -164,6 +164,14 @@ def cmd_show(inbox_id):
         for key in keys:
             if key in payload:
                 print(f"  {key}: {payload[key]}")
+        categorization = payload.get("categorization") or {}
+        if categorization:
+            print(
+                "  categorization: "
+                f"{categorization.get('source', '-')}"
+                f" confidence={categorization.get('confidence', '-')}"
+                f" tax_code={categorization.get('tax_code') or '-'}"
+            )
     con.close()
     print()
 

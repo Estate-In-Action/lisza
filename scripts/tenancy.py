@@ -229,6 +229,9 @@ def _ledger_core_schema(con: sqlite3.Connection) -> None:
             entry_id INTEGER REFERENCES entries(id), memo TEXT);
         CREATE TABLE IF NOT EXISTS payee_rules(id INTEGER PRIMARY KEY AUTOINCREMENT,
             pattern TEXT NOT NULL, account_code TEXT NOT NULL REFERENCES accounts(code),
+            match_kind TEXT NOT NULL DEFAULT 'contains', tax_code TEXT,
+            confidence REAL NOT NULL DEFAULT 0.95,
+            match_count INTEGER NOT NULL DEFAULT 0, last_matched_at TEXT,
             priority INTEGER NOT NULL DEFAULT 100, active INTEGER NOT NULL DEFAULT 1,
             created_at TEXT NOT NULL DEFAULT (datetime('now')));
         """

@@ -92,6 +92,8 @@ def test_register_client_creates_isolated_book(tmp_path, monkeypatch):
     prof = book.execute("SELECT display_name, slug FROM client_profile").fetchone()
     assert prof == ("Acme Co", "acme-co")
     assert book.execute("SELECT COUNT(*) FROM entities WHERE is_default=1").fetchone()[0] == 1
+    payee_cols = {r[1] for r in book.execute("PRAGMA table_info(payee_rules)")}
+    assert {"match_kind", "tax_code", "confidence", "match_count", "last_matched_at"} <= payee_cols
     book.close()
 
 
