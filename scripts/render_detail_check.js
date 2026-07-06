@@ -32,7 +32,14 @@ if (!detail.pnl_balance) {
   detail.pnl_balance = { status: "active", period: { income: 1000, expense: 400, net_income: 600 }, balance_sheet: { assets: 600, liabilities: 0, equity_total: 600 } };
 }
 if (!detail.reconciliation) {
-  detail.reconciliation = { status: "needs_review", statement_count: 2, matched_count: 1, unmatched_count: 1, latest_statement_date: "2026-06-30" };
+  detail.reconciliation = {
+    status: "needs_review", statement_count: 2, matched_count: 1,
+    unmatched_count: 1, latest_statement_date: "2026-06-30",
+    lines: [
+      { statement_date: "2026-06-30", description: "Bank fee", amount: -12, status: "unmatched" },
+      { statement_date: "2026-06-29", description: "Deposit", amount: 1000, status: "matched" },
+    ],
+  };
 }
 if (!detail.filing_obligations) {
   detail.filing_obligations = { status: "due_soon", filing_cadence: "quarterly", next_filing_due: "2026-07-31", days_until_due: 22, estimated_tax_paid_ytd: 100, payroll_tax_liability: 25 };

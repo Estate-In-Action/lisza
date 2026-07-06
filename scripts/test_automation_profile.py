@@ -72,3 +72,21 @@ def test_cli_set_get_and_plan(tmp_path, monkeypatch):
 
     assert profile["delivery"] == "email"
     assert profile["sales_tax_jurisdictions"] == ["DE", "VA"]
+
+
+def test_set_json_and_workflow_queue(tmp_path, monkeypatch):
+    _client(tmp_path, monkeypatch)
+
+    profile = automation_profile.set_profile_from_json("acme", {
+        "delivery": "telegram",
+        "sales_tax_jurisdictions": ["DE"],
+        "reports": {"weekly_digest": True, "monthly_close": False, "quarterly_packet": True},
+    })
+    queue = automation_profile.workflow_queue(as_of=date(2026, 7, 6))
+
+    assert profile["delivery"] == "telegram"
+    assert profile["reports"]["monthly_close"] is False
+    assert queue["mode"] == "dry_run"
+    assert queue["execution"] == "disabled"
+    assert queue["summary"]["approval_required"] >= 1
+    assert any(j["key"] == "sales_tax_review" for j in queue["queue"])

@@ -16,6 +16,7 @@ let DATA = null;
 let layout = "tile";
 let cardFields = [];
 let roloIndex = 0;
+let workflowFilter = "due_now";
 
 function esc(s) {
   return String(s ?? "")
@@ -95,7 +96,7 @@ function renderTiles() {
       ${optionalRows(c)}
       <div class="muted" style="margin-top:6px">Last entry ${esc(c.last_entry || "—")}</div>
     </div>`).join("");
-  return `<div class="tiles">${cards}</div>`;
+  return renderWorkflowQueue() + `<div class="tiles">${cards}</div>`;
 }
 
 function renderList() {
@@ -105,14 +106,14 @@ function renderList() {
     <tr class="clickable" data-slug="${esc(c.slug)}"><td><a class="clink" href="#client/${esc(c.slug)}">${esc(c.display_name)}</a>${badge(c)}</td><td style="text-align:left">${esc(c.entity_type || "")}</td>
     <td class="money">${money(c.cash)}</td><td class="money">${money(c.open_ar)}</td>
     <td class="money">${money(c.open_ap)}</td><td>${esc(c.last_entry || "—")}</td></tr>`).join("");
-  return `<table>${head}${body}</table>`;
+  return renderWorkflowQueue() + `<table>${head}${body}</table>`;
 }
 
 function renderRolodex() {
   if (DATA.clients.length === 0) return "";
   if (roloIndex >= DATA.clients.length) roloIndex = 0;
   const c = DATA.clients[roloIndex];
-  return `
+  return renderWorkflowQueue() + `
     <div class="rolo">
       <div class="rolo-nav">
         <button id="rolo-prev" aria-label="Previous client">‹ prev</button>
@@ -127,6 +128,36 @@ function renderRolodex() {
       ${optionalRows(c)}
       <div class="muted" style="margin-top:6px">Last entry ${esc(c.last_entry || "—")}</div>
     </div>`;
+}
+
+function allDueJobs() {
+  return (DATA.clients || []).flatMap(c => (c.due_jobs || []).map(j => ({
+    ...j,
+    client_slug: c.slug,
+    client_name: c.display_name,
+  })));
+}
+
+function renderWorkflowQueue() {
+  const jobs = allDueJobs();
+  const visible = jobs.filter(j => workflowFilter === "all" || j.status === workflowFilter);
+  const counts = {
+    due_now: jobs.filter(j => j.status === "due_now").length,
+    upcoming: jobs.filter(j => j.status === "upcoming").length,
+    blocked: jobs.filter(j => j.status === "blocked").length,
+    all: jobs.length,
+  };
+  const buttons = ["due_now", "upcoming", "blocked", "all"].map(k =>
+    `<button data-workflow-filter="${k}" class="${workflowFilter === k ? "active" : ""}">` +
+    `${esc(k.replace("_", " "))} ${counts[k] || 0}</button>`).join("");
+  const rows = visible.length ? visible.map(j =>
+    `<div class="workflow-row" data-slug="${esc(j.client_slug)}">` +
+    `<span><strong>${esc(j.client_name)}</strong> ${esc(j.label || j.key)} ` +
+    `<span class="muted">${esc(j.source || "profile")}</span></span>` +
+    `<span class="money">${esc(j.status)} · ${esc(j.due_date || "—")}</span></div>`
+  ).join("") : `<div class="muted">No workflow items in this filter.</div>`;
+  return `<div class="card workflow-queue"><h3>Due Work</h3>` +
+    `<div class="queue-tabs">${buttons}</div>${rows}</div>`;
 }
 
 function render() {
@@ -144,6 +175,9 @@ function render() {
       if (ev.target.closest("a")) return;
       location.hash = "client/" + el.dataset.slug;
     };
+  });
+  board.querySelectorAll("[data-workflow-filter]").forEach(btn => {
+    btn.onclick = () => { workflowFilter = btn.dataset.workflowFilter || "due_now"; render(); };
   });
 
   if (layout === "rolodex") {
@@ -298,12 +332,17 @@ function reconciliationTile(r) {
   if (!r) {
     return `<div class="card"><h3>Reconciliation</h3><div class="muted">No statement data</div></div>`;
   }
+  const lines = (r.lines || []).slice(0, 8).map(l =>
+    `<div class="kv"><span>${esc(l.description || "Statement line")} ` +
+    `<span class="muted">${esc(l.statement_date || "—")} · ${esc(l.status || "—")}</span></span>` +
+    `<span class="money">${money(l.amount)}</span></div>`).join("");
   return `<div class="card"><h3>Reconciliation</h3>` +
     kv("Status", r.status || "—") +
     kv("Statements", r.statement_count ?? 0) +
     kv("Matched", r.matched_count ?? 0) +
     kv("Unmatched", r.unmatched_count ?? 0) +
     kv("Latest", r.latest_statement_date || "—") +
+    `<h4>Recent lines</h4>${lines || `<div class="muted">No statement lines</div>`}` +
     `</div>`;
 }
 
@@ -357,8 +396,9 @@ function automationWorkflowTile(d) {
       `<label><input type="checkbox" data-profile-report="quarterly_packet" ${reports.quarterly_packet !== false ? "checked" : ""}> Quarterly packet</label>` +
     `</div>` +
     `<div class="actions"><button data-profile-save="${esc(d.slug)}">Save draft</button>` +
+    `<button data-profile-persist="${esc(d.slug)}">Persist profile</button>` +
     `<button data-profile-clear="${esc(d.slug)}">Clear draft</button></div>` +
-    `<div class="muted" data-profile-status>Drafts stay in this browser until written through the CLI/API profile writer.</div>` +
+    `<div class="muted" data-profile-status>Save a draft locally, or persist through the API profile writer.</div>` +
     `</div>`;
 }
 
@@ -411,24 +451,49 @@ function renderClientDetail(d) {
 }
 
 function bindWorkflowDrafts(host, d) {
+  const collectProfile = (card) => {
+    const profile = JSON.parse(JSON.stringify(effectiveProfile(d)));
+    profile.reports = profile.reports || {};
+    card.querySelectorAll("[data-profile-field]").forEach(inp => {
+      const key = inp.dataset.profileField;
+      if (key === "sales_tax_jurisdictions") {
+        profile[key] = inp.value.split(",").map(x => x.trim()).filter(Boolean);
+      } else {
+        profile[key] = inp.value;
+      }
+    });
+    card.querySelectorAll("[data-profile-report]").forEach(inp => {
+      profile.reports[inp.dataset.profileReport] = inp.checked;
+    });
+    return profile;
+  };
   host.querySelectorAll("[data-profile-save]").forEach(btn => {
     btn.onclick = () => {
       const card = btn.closest("[data-workflow-slug]");
-      const profile = JSON.parse(JSON.stringify(effectiveProfile(d)));
-      profile.reports = profile.reports || {};
-      card.querySelectorAll("[data-profile-field]").forEach(inp => {
-        const key = inp.dataset.profileField;
-        if (key === "sales_tax_jurisdictions") {
-          profile[key] = inp.value.split(",").map(x => x.trim()).filter(Boolean);
-        } else {
-          profile[key] = inp.value;
-        }
-      });
-      card.querySelectorAll("[data-profile-report]").forEach(inp => {
-        profile.reports[inp.dataset.profileReport] = inp.checked;
-      });
+      const profile = collectProfile(card);
       localStorage.setItem(profileDraftKey(d.slug), JSON.stringify(profile));
       card.querySelector("[data-profile-status]").textContent = "Draft saved in this browser.";
+    };
+  });
+  host.querySelectorAll("[data-profile-persist]").forEach(btn => {
+    btn.onclick = () => {
+      const card = btn.closest("[data-workflow-slug]");
+      const profile = collectProfile(card);
+      card.querySelector("[data-profile-status]").textContent = "Persisting profile...";
+      fetch(`/api/lisza?mode=automation_profile&client=${encodeURIComponent(d.slug)}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profile),
+      }).then(r => r.json()).then(j => {
+        if (j.error) throw new Error(j.error);
+        localStorage.removeItem(profileDraftKey(d.slug));
+        d.automation_profile = j.profile || profile;
+        d.due_jobs = j.due_jobs || d.due_jobs || [];
+        host.innerHTML = renderClientDetail(d);
+        bindWorkflowDrafts(host, d);
+      }).catch(e => {
+        card.querySelector("[data-profile-status]").textContent = `Profile write failed: ${e.message || e}`;
+      });
     };
   });
   host.querySelectorAll("[data-profile-clear]").forEach(btn => {

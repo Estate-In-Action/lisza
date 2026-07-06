@@ -1,0 +1,125 @@
+{
+  "generated_at": "2026-07-06",
+  "as_of": "2026-07-06",
+  "mode": "dry_run",
+  "execution": "disabled",
+  "queue": [
+    {
+      "client_slug": "guitar-works",
+      "client_name": "Guitar Works",
+      "key": "monthly_close",
+      "label": "Monthly close review",
+      "due_date": "2026-07-05",
+      "status": "due_now",
+      "source": "last_entry_date",
+      "approval_required": true
+    },
+    {
+      "client_slug": "harborside-group",
+      "client_name": "Harborside Restaurant Group",
+      "key": "monthly_close",
+      "label": "Monthly close review",
+      "due_date": "2026-07-05",
+      "status": "due_now",
+      "source": "last_entry_date",
+      "approval_required": true
+    },
+    {
+      "client_slug": "jb-design",
+      "client_name": "J.B. Design",
+      "key": "monthly_close",
+      "label": "Monthly close review",
+      "due_date": "2026-07-05",
+      "status": "due_now",
+      "source": "last_entry_date",
+      "approval_required": true
+    },
+    {
+      "client_slug": "guitar-works",
+      "client_name": "Guitar Works",
+      "key": "payroll_review",
+      "label": "Payroll liability review",
+      "due_date": "2026-07-06",
+      "status": "due_now",
+      "source": "profile.payroll_schedule",
+      "approval_required": true
+    },
+    {
+      "client_slug": "guitar-works",
+      "client_name": "Guitar Works",
+      "key": "weekly_digest",
+      "label": "Weekly digest",
+      "due_date": "2026-07-06",
+      "status": "due_now",
+      "source": "profile.reports",
+      "approval_required": true
+    },
+    {
+      "client_slug": "harborside-group",
+      "client_name": "Harborside Restaurant Group",
+      "key": "payroll_review",
+      "label": "Payroll liability review",
+      "due_date": "2026-07-06",
+      "status": "due_now",
+      "source": "profile.payroll_schedule",
+      "approval_required": true
+    },
+    {
+      "client_slug": "harborside-group",
+      "client_name": "Harborside Restaurant Group",
+      "key": "weekly_digest",
+      "label": "Weekly digest",
+      "due_date": "2026-07-06",
+      "status": "due_now",
+      "source": "profile.reports",
+      "approval_required": true
+    },
+    {
+      "client_slug": "jb-design",
+      "client_name": "J.B. Design",
+      "key": "weekly_digest",
+      "label": "Weekly digest",
+      "due_date": "2026-07-06",
+      "status": "due_now",
+      "source": "profile.reports",
+      "approval_required": true
+    },
+    {
+      "client_slug": "lakeside-bakery",
+      "client_name": "Lakeside Bakery",
+      "key": "weekly_digest",
+      "label": "Weekly digest",
+      "due_date": "2026-07-06",
+      "status": "due_now",
+      "source": "profile.reports",
+      "approval_required": true
+    },
+    {
+      "client_slug": "guitar-works",
+      "client_name": "Guitar Works",
+      "key": "quarterly_packet",
+      "label": "Quarterly packet",
+      "due_date": "2026-07-17",
+      "status": "upcoming",
+      "source": "next_filing_due",
+      "approval_required": true
+    },
+    {
+      "client_slug": "harborside-group",
+      "client_name": "Harborside Restaurant Group",
+      "key": "quarterly_packet",
+      "label": "Quarterly packet",
+      "due_date": "2026-07-17",
+      "status": "upcoming",
+      "source": "next_filing_due",
+      "approval_required": true
+    }
+  ],
+  "summary": {
+    "due_now": 9,
+    "upcoming": 2,
+    "scheduled": 0,
+    "blocked": 0,
+    "approval_required": 11
+  }
+}

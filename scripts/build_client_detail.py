@@ -279,7 +279,8 @@ def _table_exists(con: sqlite3.Connection, name: str) -> bool:
 def reconciliation_status(con: sqlite3.Connection) -> dict:
     if not _table_exists(con, "statement_lines"):
         return {"status": "not_started", "statement_count": 0, "matched_count": 0,
-                "unmatched_count": 0, "ignored_count": 0, "latest_statement_date": None}
+                "unmatched_count": 0, "ignored_count": 0, "latest_statement_date": None,
+                "lines": []}
     rows = con.execute(
         "SELECT status, COUNT(*), ROUND(COALESCE(SUM(amount),0),2) FROM statement_lines GROUP BY status"
     ).fetchall()
@@ -288,10 +289,20 @@ def reconciliation_status(con: sqlite3.Connection) -> dict:
     latest = con.execute("SELECT MAX(statement_date) FROM statement_lines").fetchone()[0]
     total = sum(counts.values())
     unmatched = counts.get("unmatched", 0)
-    return {"status": "needs_review" if unmatched else ("clear" if total else "not_started"),
-            "statement_count": total, "matched_count": counts.get("matched", 0),
-            "unmatched_count": unmatched, "ignored_count": counts.get("ignored", 0),
-            "status_amounts": amounts, "latest_statement_date": latest}
+    lines = [dict(r) for r in con.execute(
+        """SELECT statement_account, statement_date, description,
+                  ROUND(amount, 2) AS amount, external_ref, status
+           FROM statement_lines
+           ORDER BY status='unmatched' DESC, statement_date DESC, id DESC
+           LIMIT 25"""
+    )]
+    return {
+        "status": "needs_review" if unmatched else ("clear" if total else "not_started"),
+        "statement_count": total, "matched_count": counts.get("matched", 0),
+        "unmatched_count": unmatched, "ignored_count": counts.get("ignored", 0),
+        "status_amounts": amounts, "latest_statement_date": latest,
+        "lines": lines,
+    }
 
 
 def filing_obligations(con: sqlite3.Connection, prof: sqlite3.Row, as_of: str | None, next_due: str | None) -> dict:
