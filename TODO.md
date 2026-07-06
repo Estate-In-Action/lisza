@@ -77,7 +77,7 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 - [x] **Client portals & document requests** — secure hub to gather W-9s / onboarding docs and send persistent automated follow-ups for missing records. *(First slice shipped as registry-backed document requests, client-detail portal tile, API modes, and workflow follow-up jobs; actual file upload/auth hardening remains a later production step.)*
 
 ### 3. Integrations & scalability
-- [ ] **Ecosystem compatibility** — two-way sync with core ledgers (QuickBooks Online, Xero) plus e-commerce platforms and payment processors.
+- [x] **Ecosystem compatibility** — two-way sync with core ledgers (QuickBooks Online, Xero) plus e-commerce platforms and payment processors. *(First slice shipped: read-only QBO/Xero-friendly export contract for accounts, journal lines, invoices, and bills with manifest field maps; live OAuth/API two-way sync remains later integration work.)*
 - [ ] **Customized reporting** — automated real-time financial statements + variance reports, easily shared with clients. *(Spec 2 dashboard is the first slice; per-client P&L/BS lands in Step 3.)*
 
 ### Competitive benchmark (reference — incumbents to learn from / interoperate with)
