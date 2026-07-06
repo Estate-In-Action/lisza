@@ -44,13 +44,15 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
   - **Why:** Xero's accounting dashboard centers bank balances, invoices, bills, fixed assets, and reconciliation prompts; QuickBooks centers cash flow, bills, reconciliation, P&L/cash-flow reporting, and tax organization; FreshBooks centers invoices, expenses/receipts, time tracking, clients, payments, and financial reports. LISZA's default should therefore bias toward bookkeeper operating risk first: unreconciled cash, money owed/owing, payroll/tax obligations, and statement readiness.
 
 ### Step 4 — Per-client automation + config
-> Started 2026-07-06 — registry now has `client_automation_profiles` plus tested helpers for default/override profiles. Cron execution and UI config are still open.
+> Progress 2026-07-06 — registry now has `client_automation_profiles`, CLI profile get/set, an advisory due-job planner, generated workflow payloads, and a browser-side profile draft panel. Cron execution remains intentionally read-only/not wired.
 - [ ] **Per-client cron jobs** — reports generated on that client's cadence/need; **tax prep + filing on the client's schedule** (monthly / quarterly / annual depending on the client).
 - [ ] **Per-client config flow** — a guided setup that **asks the bookkeeper what to configure for each client**: which reports, filing cadence, sales-tax jurisdictions, active-window length, payroll schedule, etc. Stored as the client's automation profile and consumed by the cron layer.
   - [x] Registry-level automation profile scaffold: reports enabled, filing cadence, sales-tax jurisdictions, active window, payroll schedule, delivery channel.
-  - [ ] CLI/API config writer for bookkeeper setup.
-  - [ ] Dashboard/Admin UI for editing a client's automation profile.
-  - [ ] Cron planner that turns profiles into due jobs without running tax/payment actions automatically.
+  - [x] CLI config writer for bookkeeper setup (`scripts/automation_profile.py get|set`).
+  - [x] Advisory planner that turns profiles into due/upcoming jobs without running tax/payment actions automatically (`scripts/automation_profile.py plan`).
+  - [x] Dashboard client-detail workflow panel with local profile drafts and due-job queue.
+  - [ ] API write-back endpoint for browser profile drafts.
+  - [ ] Real scheduler/cron runner that consumes due jobs after operator approval.
 
 ## Competitive feature backlog (market-parity targets, 2026-06-29)
 

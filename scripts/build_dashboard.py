@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import tenancy
+import automation_profile
 
 PUBLIC_DIR = Path(__file__).resolve().parent.parent / "public"
 DEFAULT_CARD_FIELDS = ["cash", "open_ar", "open_ap", "last_entry"]
@@ -60,6 +61,8 @@ def build_dashboard() -> dict:
             "consolidates": ec > 1,
             "last_entry": r["last_entry_date"],
             "next_filing_due": r["next_filing_due"],
+            "automation_profile": tenancy.get_automation_profile(r["slug"]),
+            "due_jobs": automation_profile.plan_due_jobs(r["slug"]),
         })
 
     return {

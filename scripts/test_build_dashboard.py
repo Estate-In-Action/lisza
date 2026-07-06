@@ -35,6 +35,8 @@ def test_build_dashboard_shape_and_figures(tmp_path, monkeypatch):
     assert by_slug["jb-design"]["entity_count"] == 1
     # filing due carried through
     assert by_slug["harborside-group"]["next_filing_due"] is not None
+    assert by_slug["harborside-group"]["automation_profile"]["filing_cadence"] == "quarterly"
+    assert isinstance(by_slug["harborside-group"]["due_jobs"], list)
 
 
 def test_build_dashboard_excludes_archived(tmp_path, monkeypatch):

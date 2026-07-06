@@ -37,12 +37,26 @@ if (!detail.reconciliation) {
 if (!detail.filing_obligations) {
   detail.filing_obligations = { status: "due_soon", filing_cadence: "quarterly", next_filing_due: "2026-07-31", days_until_due: 22, estimated_tax_paid_ytd: 100, payroll_tax_liability: 25 };
 }
+if (!detail.automation_profile) {
+  detail.automation_profile = {
+    reports: { weekly_digest: true, monthly_close: true, quarterly_packet: true },
+    filing_cadence: "quarterly",
+    sales_tax_jurisdictions: ["DE"],
+    active_window: "1y",
+    payroll_schedule: "biweekly",
+    delivery: "dashboard",
+  };
+}
+if (!detail.due_jobs) {
+  detail.due_jobs = [{ key: "monthly_close", label: "Monthly close review", due_date: "2026-07-05", status: "due_now", source: "last_entry_date" }];
+}
 
 const html = renderClientDetail(detail);
 
 for (const tile of ["Accounts Receivable", "Accounts Payable", "Admin",
                     "Historical", "Cash Flow", "P&L / Balance Sheet",
-                    "Reconciliation", "Filing / Tax", "Inspection", "Payroll"]) {
+                    "Reconciliation", "Filing / Tax", "Automation Workflow",
+                    "Inspection", "Payroll"]) {
   assert(html.includes(tile), `${tile} tile present`);
 }
 assert(html.includes("‹ all clients"), "back link present");
@@ -67,4 +81,4 @@ if (p.status === "active") {
 } else {
   assert(html.includes("No payroll runs on file"), "empty payroll state renders");
 }
-console.log(`OK ${slug}: all 10 tiles render (${html.length} bytes)`);
+console.log(`OK ${slug}: all 11 tiles render (${html.length} bytes)`);

@@ -129,6 +129,8 @@ def test_build_detail_end_to_end(tmp_path, monkeypatch):
     assert d["admin"]["ein_masked"].endswith("1234")
     assert d["admin"]["next_filing_due"] is not None
     assert d["historical"]["entry_count"] == 1
+    assert d["automation_profile"]["filing_cadence"] == "quarterly"
+    assert isinstance(d["due_jobs"], list)
     assert d["payroll"]["status"] == "none"
     assert len(d["historical"]["monthly"]) == 12
 

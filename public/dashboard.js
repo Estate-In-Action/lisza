@@ -10,6 +10,7 @@ const OPTIONAL_FIELDS = [
 
 const LS_LAYOUT = "lisza_layout";
 const LS_FIELDS = "lisza_card_fields";
+const LS_PROFILE_DRAFT_PREFIX = "lisza_profile_draft_";
 
 let DATA = null;
 let layout = "tile";
@@ -25,6 +26,25 @@ function esc(s) {
 function money(n) {
   if (n === null || n === undefined) return "—";
   return "$" + Number(n).toLocaleString("en-US", { maximumFractionDigits: 0 });
+}
+
+function profileDraftKey(slug) {
+  return LS_PROFILE_DRAFT_PREFIX + slug;
+}
+
+function readProfileDraft(slug) {
+  if (typeof localStorage === "undefined") return null;
+  try {
+    const raw = localStorage.getItem(profileDraftKey(slug));
+    return raw ? JSON.parse(raw) : null;
+  } catch (_e) {
+    localStorage.removeItem(profileDraftKey(slug));
+    return null;
+  }
+}
+
+function effectiveProfile(d) {
+  return readProfileDraft(d.slug) || d.automation_profile || {};
 }
 
 function loadPrefs() {
@@ -301,6 +321,47 @@ function filingTile(f) {
     `</div>`;
 }
 
+function dueJobRows(jobs) {
+  if (!jobs || !jobs.length) return `<div class="muted">No due jobs in the current window</div>`;
+  return jobs.map(j =>
+    `<div class="kv"><span>${esc(j.label || j.key)} ` +
+    `<span class="muted">${esc(j.source || "profile")}</span></span>` +
+    `<span class="money">${esc(j.status || "—")} · ${esc(j.due_date || "—")}</span></div>`
+  ).join("");
+}
+
+function automationWorkflowTile(d) {
+  const p = effectiveProfile(d);
+  const reports = p.reports || {};
+  const jurisdictions = (p.sales_tax_jurisdictions || []).join(", ");
+  return `<div class="card workflow-card" data-workflow-slug="${esc(d.slug)}"><h3>Automation Workflow</h3>` +
+    kv("Delivery", p.delivery || "dashboard") +
+    kv("Filing cadence", p.filing_cadence || "quarterly") +
+    kv("Active window", p.active_window || "1y") +
+    kv("Payroll", p.payroll_schedule || "none") +
+    kv("Sales tax", jurisdictions || "—") +
+    `<h4>Due jobs</h4>${dueJobRows(d.due_jobs)}` +
+    `<h4>Profile draft</h4>` +
+    `<div class="form-grid">` +
+      `<label>Delivery<select data-profile-field="delivery">` +
+        `${["dashboard", "email", "telegram"].map(v => `<option value="${v}" ${p.delivery === v ? "selected" : ""}>${v}</option>`).join("")}` +
+      `</select></label>` +
+      `<label>Filing<select data-profile-field="filing_cadence">` +
+        `${["monthly", "quarterly", "annual"].map(v => `<option value="${v}" ${p.filing_cadence === v ? "selected" : ""}>${v}</option>`).join("")}` +
+      `</select></label>` +
+      `<label>Active window<input data-profile-field="active_window" value="${esc(p.active_window || "1y")}"></label>` +
+      `<label>Payroll<input data-profile-field="payroll_schedule" value="${esc(p.payroll_schedule || "none")}"></label>` +
+      `<label class="wide">Sales tax jurisdictions<input data-profile-field="sales_tax_jurisdictions" value="${esc(jurisdictions)}"></label>` +
+      `<label><input type="checkbox" data-profile-report="weekly_digest" ${reports.weekly_digest !== false ? "checked" : ""}> Weekly digest</label>` +
+      `<label><input type="checkbox" data-profile-report="monthly_close" ${reports.monthly_close !== false ? "checked" : ""}> Monthly close</label>` +
+      `<label><input type="checkbox" data-profile-report="quarterly_packet" ${reports.quarterly_packet !== false ? "checked" : ""}> Quarterly packet</label>` +
+    `</div>` +
+    `<div class="actions"><button data-profile-save="${esc(d.slug)}">Save draft</button>` +
+    `<button data-profile-clear="${esc(d.slug)}">Clear draft</button></div>` +
+    `<div class="muted" data-profile-status>Drafts stay in this browser until written through the CLI/API profile writer.</div>` +
+    `</div>`;
+}
+
 
 function renderClientDetail(d) {
   const ents = (d.admin.entities || []);
@@ -342,10 +403,41 @@ function renderClientDetail(d) {
         ${pnlBalanceTile(d.pnl_balance)}
         ${reconciliationTile(d.reconciliation)}
         ${filingTile(d.filing_obligations)}
+        ${automationWorkflowTile(d)}
         ${inspectionTile(d.inspection)}
         ${payrollTile(d.payroll)}
       </div>
     </div>`;
+}
+
+function bindWorkflowDrafts(host, d) {
+  host.querySelectorAll("[data-profile-save]").forEach(btn => {
+    btn.onclick = () => {
+      const card = btn.closest("[data-workflow-slug]");
+      const profile = JSON.parse(JSON.stringify(effectiveProfile(d)));
+      profile.reports = profile.reports || {};
+      card.querySelectorAll("[data-profile-field]").forEach(inp => {
+        const key = inp.dataset.profileField;
+        if (key === "sales_tax_jurisdictions") {
+          profile[key] = inp.value.split(",").map(x => x.trim()).filter(Boolean);
+        } else {
+          profile[key] = inp.value;
+        }
+      });
+      card.querySelectorAll("[data-profile-report]").forEach(inp => {
+        profile.reports[inp.dataset.profileReport] = inp.checked;
+      });
+      localStorage.setItem(profileDraftKey(d.slug), JSON.stringify(profile));
+      card.querySelector("[data-profile-status]").textContent = "Draft saved in this browser.";
+    };
+  });
+  host.querySelectorAll("[data-profile-clear]").forEach(btn => {
+    btn.onclick = () => {
+      localStorage.removeItem(profileDraftKey(d.slug));
+      host.innerHTML = renderClientDetail(d);
+      bindWorkflowDrafts(host, d);
+    };
+  });
 }
 
 function parseHash() {
@@ -365,7 +457,7 @@ function route() {
     board.innerHTML = `<p class="muted">Loading…</p>`;
     fetch(`clients/${encodeURIComponent(r.slug)}.json`)
       .then(x => x.json())
-      .then(d => { board.innerHTML = renderClientDetail(d); })
+      .then(d => { board.innerHTML = renderClientDetail(d); bindWorkflowDrafts(board, d); })
       .catch(e => { board.innerHTML =
         `<p class="muted">Could not load client (${esc(e)}).</p>`; });
   } else {
@@ -392,6 +484,7 @@ if (typeof document !== "undefined" && document.getElementById) {
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     esc, money, kv, renderClientDetail, renderTiles, parseHash, payrollTile,
-    inspectionTile, inspectionRows, cashFlowTile, pnlBalanceTile, reconciliationTile, filingTile
+    inspectionTile, inspectionRows, cashFlowTile, pnlBalanceTile, reconciliationTile,
+    filingTile, dueJobRows, automationWorkflowTile
   };
 }
