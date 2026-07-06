@@ -23,7 +23,8 @@ LISZA/
 ├── scripts/
 │   ├── init_ledger.py       # schema + load chart of accounts
 │   ├── seed_synthetic.py    # generate the synthetic demo book
-│   ├── post_entry.py        # post a balanced entry
+│   ├── post_entry.py        # manual journal CLI + interactive inbox approval
+│   ├── post_pending.py      # non-interactive pending_inbox approve/edit/reject backend
 │   ├── telegram_intake.py   # Telegram receipt intake → pending_inbox
 │   ├── code_receipt.py      # vision parse a receipt → suggested coding
 │   ├── receipt_scanner.py   # PDF/text receipt line-item extraction
@@ -38,8 +39,9 @@ LISZA/
 
 - **Phase 1 — Ledger core** ✅ double-entry schema, chart of accounts, posting + balance trigger.
 - **Phase 2 — Intake** ✅ Telegram receipt intake; vision coding into `pending_inbox`.
-- **Phase 3 — Review/approve UI** — turn `pending_inbox` into a one-tap approve/edit/reject
-  flow (see `docs/specs/2026-05-18-receipt-classifier-ui-design.md`).
+- **Phase 3 — Review/approve UI** ✅ `post_pending.py` backend + `_Pending`
+  Sheet action cells can approve/edit/reject reviewed intake rows. Telegram
+  inline callbacks remain a later delivery surface (see `docs/specs/2026-05-18-receipt-classifier-ui-design.md`).
 - **Phase 4 — Reporting** — weekly digest, quarterly close, Sheets mirror.
 - **Phase 5 — Bank-statement automation** — scheduled CSV/PDF import → `pending_inbox`.
 

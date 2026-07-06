@@ -25,8 +25,9 @@ Outputs JSON like:
 
 The structured JSON is stored in pending_inbox.parsed_json (merged with
 the raw telegram metadata), and suggested_account / suggested_amount are
-populated.  Status moves new -> reviewed.  Posting is a separate step
-(see post_pending.py — TODO).
+populated. Status moves new -> reviewed. Posting is handled by the
+non-interactive post_pending.py approval backend or the older interactive
+post_entry.py approve command.
 """
 from __future__ import annotations
 

@@ -16,14 +16,17 @@ Auth: Google Service Account JSON stored in the LISZA_SHEETS_SA_JSON
       One-time setup — see SETUP at the bottom of this file.
 
 Usage:
-  python3 LISZA/scripts/sheet_sync.py [--dry-run]
+  python3 LISZA/scripts/sheet_sync.py [--dry-run] [--bidirectional]
 """
 
+import argparse
 import json
 import os
 import sqlite3
 import sys
 from datetime import datetime, timezone
+
+import post_pending
 
 SPREADSHEET_ID = "YOUR_SPREADSHEET_ID"
 DB_PATH = os.path.join(os.path.dirname(__file__), "..", "ledger.db")
@@ -33,9 +36,6 @@ TAB_PENDING = "_Pending"
 TAB_LEDGER  = "_Ledger_Live"
 TAB_STATUS  = "_Sync_Status"
 
-DRY_RUN = "--dry-run" in sys.argv
-
-
 # ---------------------------------------------------------------------------
 # Database helpers
 # ---------------------------------------------------------------------------
@@ -43,6 +43,7 @@ DRY_RUN = "--dry-run" in sys.argv
 def get_db():
     conn = sqlite3.connect(os.path.abspath(DB_PATH))
     conn.row_factory = sqlite3.Row
+    post_pending.ensure_pending_inbox(conn)
     return conn
 
 
@@ -61,7 +62,8 @@ def fetch_pending(conn):
         ORDER BY received_at DESC
     """).fetchall()
     headers = ["ID", "Received At", "Source", "Status",
-               "Suggested Account", "Suggested Amount", "Notes", "Raw Path"]
+               "Suggested Account", "Suggested Amount", "Notes", "Raw Path",
+               "Action", "Action Result"]
     data = [list(headers)]
     for r in rows:
         data.append([
@@ -73,6 +75,8 @@ def fetch_pending(conn):
             r["suggested_amount"] or "",
             r["notes"] or "",
             r["raw_path"] or "",
+            "",
+            "",
         ])
     return data
 
@@ -195,16 +199,162 @@ def push_tab(ws, data, label):
     print(f"  {label}: {len(data)-1} data rows written.")
 
 
+def parse_action(text):
+    text = (text or "").strip()
+    if not text:
+        return None, {}
+    verb, _, rest = text.partition(":")
+    verb = verb.strip().lower()
+    fields = {}
+    rest = rest.strip()
+    if rest:
+        if verb == "reject" and "=" not in rest:
+            fields["reason"] = rest
+        else:
+            for part in rest.split(","):
+                key, sep, value = part.partition("=")
+                if not sep:
+                    raise ValueError(f"malformed action part '{part.strip()}'")
+                fields[key.strip().lower()] = value.strip()
+    return verb, fields
+
+
+def _header_map(headers):
+    return {str(h).strip().lower().replace("_", " "): i for i, h in enumerate(headers)}
+
+
+def _action_result(ws, row_num, action_col, result_col, message, *, clear_action):
+    ws.update_cell(row_num, result_col + 1, message)
+    if clear_action:
+        ws.update_cell(row_num, action_col + 1, "")
+
+
+def process_sheet_actions(ws, conn) -> dict[str, int]:
+    """Read _Pending action cells and dispatch approved review actions."""
+    values = ws.get_all_values()
+    counters = {"approved": 0, "rejected": 0, "edited": 0, "errors": 0, "skipped": 0}
+    if not values:
+        return counters
+
+    headers = _header_map(values[0])
+    required = ["id", "action", "action result"]
+    missing = [h for h in required if h not in headers]
+    if missing:
+        counters["errors"] += 1
+        print(f"  _Pending headers missing: {', '.join(missing)}")
+        return counters
+
+    db_path = conn.execute("PRAGMA database_list").fetchone()[2]
+    id_col = headers["id"]
+    action_col = headers["action"]
+    result_col = headers["action result"]
+
+    for row_num, row in enumerate(values[1:], start=2):
+        action = row[action_col].strip() if len(row) > action_col else ""
+        existing_result = row[result_col].strip() if len(row) > result_col else ""
+        if not action or existing_result:
+            counters["skipped"] += 1
+            continue
+        try:
+            row_id = int(row[id_col])
+            verb, fields = parse_action(action)
+            if verb == "approve":
+                account = fields.pop("account", None)
+                amount = fields.pop("amount", None)
+                payment_account = fields.pop("payment_account", fields.pop("payment-account", None))
+                if fields:
+                    raise ValueError(f"unknown field(s): {', '.join(sorted(fields))}")
+                entry_id = post_pending.approve_row(
+                    row_id,
+                    db_path=db_path,
+                    account_override=account,
+                    amount_override=float(amount) if amount else None,
+                    payment_account=payment_account,
+                    actor="sheet",
+                )
+                if entry_id:
+                    counters["approved"] += 1
+                    _action_result(
+                        ws, row_num, action_col, result_col,
+                        f"POSTED as #{entry_id} at {datetime.now(timezone.utc).strftime('%H:%M UTC')}",
+                        clear_action=True,
+                    )
+                else:
+                    counters["skipped"] += 1
+                    _action_result(
+                        ws, row_num, action_col, result_col,
+                        "Already actioned or not reviewed",
+                        clear_action=True,
+                    )
+            elif verb == "reject":
+                reason = fields.pop("reason", "")
+                if fields:
+                    raise ValueError(f"unknown field(s): {', '.join(sorted(fields))}")
+                rejected = post_pending.reject_row(row_id, db_path=db_path, reason=reason, actor="sheet")
+                if rejected:
+                    counters["rejected"] += 1
+                    _action_result(ws, row_num, action_col, result_col, "REJECTED", clear_action=True)
+                else:
+                    counters["skipped"] += 1
+                    _action_result(
+                        ws, row_num, action_col, result_col,
+                        "Already actioned or not reviewed",
+                        clear_action=True,
+                    )
+            elif verb == "edit":
+                if len(fields) != 1:
+                    raise ValueError("edit expects exactly one field=value pair")
+                field, value = next(iter(fields.items()))
+                edited = post_pending.edit_row(row_id, db_path=db_path, field=field, value=value, actor="sheet")
+                if edited:
+                    counters["edited"] += 1
+                    _action_result(ws, row_num, action_col, result_col, f"EDITED {field}={value}", clear_action=True)
+                else:
+                    counters["skipped"] += 1
+                    _action_result(
+                        ws, row_num, action_col, result_col,
+                        "Already actioned or not reviewed",
+                        clear_action=True,
+                    )
+            else:
+                raise ValueError(f"unknown action '{verb}'")
+        except Exception as exc:
+            counters["errors"] += 1
+            _action_result(ws, row_num, action_col, result_col, f"ERROR: {exc}", clear_action=False)
+    return counters
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
 def main():
+    parser = argparse.ArgumentParser(description="Sync LISZA ledger tabs to Google Sheets.")
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--bidirectional", action="store_true",
+                        help="process _Pending action cells before pushing the refreshed mirror")
+    args = parser.parse_args()
+
     print("=== LISZA sheet_sync.py ===")
-    if DRY_RUN:
+    if args.dry_run:
         print("  [DRY RUN — no writes to Google Sheets]")
 
+    gc = sheet = ws_pending = None
+    if not args.dry_run:
+        print("\nConnecting to Google Sheets …")
+        gc = get_client()
+        sheet = gc.open_by_key(SPREADSHEET_ID)
+        try:
+            ws_pending = sheet.worksheet(TAB_PENDING)
+        except Exception:
+            ws_pending = None
+
     conn = get_db()
+    if args.bidirectional and not args.dry_run and ws_pending is not None:
+        print("Processing _Pending actions …")
+        action_counts = process_sheet_actions(ws_pending, conn)
+        print(f"  Actions: {action_counts}")
+
     print("Querying ledger.db …")
     pending_data = fetch_pending(conn)
     ledger_data  = fetch_ledger(conn)
@@ -214,13 +364,9 @@ def main():
     print(f"  Pending rows   : {len(pending_data)-1}")
     print(f"  Ledger rows    : {len(ledger_data)-1}")
 
-    if DRY_RUN:
+    if args.dry_run:
         print("\nDry run complete — exiting without writing to Sheets.")
         return
-
-    print("\nConnecting to Google Sheets …")
-    gc = get_client()
-    sheet = gc.open_by_key(SPREADSHEET_ID)
 
     print("Ensuring system tabs exist …")
     ws_pending = ensure_tab(sheet, TAB_PENDING, pending_data[0])
