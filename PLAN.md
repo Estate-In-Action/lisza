@@ -29,6 +29,7 @@ LISZA/
 │   ├── code_receipt.py      # vision parse a receipt → suggested coding
 │   ├── receipt_scanner.py   # PDF/text receipt line-item extraction
 │   ├── ingest_txns.py       # generic bank-CSV ingest
+│   ├── statement_automation.py # scheduled CSV/PDF statement inbox runner
 │   ├── weekly_report.py     # trial balance + spend-by-category
 │   ├── quarterly_reports.py # quarter close + Sheets export
 │   └── sheet_sync.py        # bidirectional Google Sheets mirror
@@ -44,7 +45,9 @@ LISZA/
   prompts can approve/reject reviewed receipt rows. Telegram edit-by-reply
   remains a later refinement (see `docs/specs/2026-05-18-receipt-classifier-ui-design.md`).
 - **Phase 4 — Reporting** — weekly digest, quarterly close, Sheets mirror.
-- **Phase 5 — Bank-statement automation** — scheduled CSV/PDF import → `pending_inbox`.
+- **Phase 5 — Bank-statement automation** ✅ `statement_automation.py` scans
+  `data/statement_inbox/`, imports new CSV/PDF statement files into
+  `pending_inbox`, and records a manifest so scheduled runs are idempotent.
 
 ## Config (one-time, per deployment)
 

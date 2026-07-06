@@ -33,6 +33,10 @@ INTAKE                      REVIEW                     LEDGER & REPORTS
   booking for recurring payees.
 - **Reporting** (`weekly_report.py`, `quarterly_reports.py`, `sheet_sync.py`) —
   trial balance, spend by category, and optional Google Sheets mirror.
+- **Statement automation** (`statement_automation.py`) — scans
+  `data/statement_inbox/` for CSV/PDF statements, imports new files into
+  `pending_inbox`, and records `data/statement_import_manifest.json` so
+  scheduled runs are idempotent.
 
 ## Quick start
 
@@ -43,6 +47,11 @@ python3 scripts/seed_synthetic.py        # generates the demo book
 
 # 2. Inspect balances
 python3 scripts/weekly_report.py
+```
+
+```bash
+# Optional: scan the statement inbox without posting anything to the ledger
+python3 scripts/statement_automation.py --dry-run --json
 ```
 
 ## Configuration
