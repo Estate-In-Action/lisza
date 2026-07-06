@@ -30,6 +30,7 @@ LISZA/
 │   ├── receipt_scanner.py   # PDF/text receipt line-item extraction
 │   ├── ingest_txns.py       # generic bank-CSV ingest
 │   ├── statement_automation.py # scheduled CSV/PDF statement inbox runner
+│   ├── config_doctor.py     # runtime setup check, secret-safe
 │   ├── weekly_report.py     # trial balance + spend-by-category
 │   ├── quarterly_reports.py # quarter close + Sheets export
 │   └── sheet_sync.py        # bidirectional Google Sheets mirror
@@ -50,6 +51,9 @@ LISZA/
   `pending_inbox`, and records a manifest so scheduled runs are idempotent.
 
 ## Config (one-time, per deployment)
+
+Run `python3 scripts/config_doctor.py` to check setup without printing secret
+values.
 
 - [ ] `LISZA_SHEETS_SA_JSON` secret (Google service account) for Sheets sync.
 - [ ] Telegram bot bound to the books group (auto-discovers `chat_id` → `config.json`).

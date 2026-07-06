@@ -66,6 +66,11 @@ Secrets are read from the environment (never committed):
 `config.json` holds the (non-secret) Telegram chat binding — shipped as a
 placeholder; it is auto-discovered on first message in a real deployment.
 
+```bash
+# Check runtime setup without printing secret values
+python3 scripts/config_doctor.py
+```
+
 ## Data model
 
 `accounts` (chart of accounts) · `entries` (a transaction) · `splits` (the
