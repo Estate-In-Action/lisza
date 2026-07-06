@@ -96,7 +96,7 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 > they raise LISZA from a bookkeeping console toward a small-business ERP.
 
 - [x] **General Ledger & Journal Entry** — manual journals, adjusting/closing entries, full audit trail of every posting. *(First slice shipped: balanced manual journals, reversing/replacement adjustments, and `journal_audit` events; closing workflows remain a later extension.)*
-- [ ] **Sales** — customers, quotations, sales orders, invoices (quote → order → invoice pipeline). *(Overlaps CRM intake → Client Management contracts and the AR tile.)*
+- [x] **Sales** — customers, quotations, sales orders, invoices (quote → order → invoice pipeline). *(First slice shipped: per-client quote → sales order → open invoice pipeline; payment collection and ledger posting remain later workflow steps.)*
 - [ ] **Purchasing** — vendors, purchase orders, vendor invoices/bills. *(Overlaps the AP tile + Cash Management below.)*
 - [ ] **Multiple currencies** — multi-currency transactions with FX gain/loss handling. *(New engine; Xero/QBO have this — see Competitive benchmark.)*
 - [ ] **Contact Management** — unified people/orgs directory spanning customers, vendors, leads. *(Strong overlap with CRM + Client Management sections; likely the shared substrate under both.)*
