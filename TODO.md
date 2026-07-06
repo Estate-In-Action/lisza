@@ -105,7 +105,7 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 - [x] **Fixed Assets** — asset register, depreciation schedules, disposal accounting. *(First slice shipped: asset register and straight-line depreciation schedules; disposal accounting and auto-posted depreciation entries remain later work.)*
 - [x] **Inventory Management & Light Manufacturing** — stock tracking, assemblies/bills-of-materials, COGS. *(First slice shipped: stock item register, receive/consume/build movement ledger, and on-hand valuation; BOM assemblies and COGS posting remain later work.)*
 - [x] **Reporting** — full statement suite (P&L, Balance Sheet, Trial Balance) over all the above. *(First slice shipped: reusable P&L, balance sheet, and trial-balance statement suite; branded report packs remain later work.)*
-- [ ] **Budgeting** — budgets by project/department with variance reports. *(Overlaps "Customized reporting / variance reports" in the competitive backlog.)*
+- [x] **Budgeting** — budgets by project/department with variance reports. *(First slice shipped: period budget lines by account with actual-vs-budget variance reports; project/department dimensions remain later work.)*
 
 ### Reference: Frappe Books (frappe/books) — patterns worth borrowing (2026-06-29)
 
