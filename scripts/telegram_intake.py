@@ -18,6 +18,8 @@ import urllib.request
 import urllib.parse
 import urllib.error
 
+import post_pending
+
 ROOT = Path("/home/workspace/LISZA")
 DB = ROOT / "ledger.db"
 INBOX = ROOT / "inbox" / "telegram"
@@ -26,12 +28,8 @@ STATE = ROOT / "data" / "telegram_state.json"
 LOG = Path("/dev/shm/fin_telegram_intake.log")
 
 BOT_TOKEN = os.environ.get("FIN_T_B4ME") or os.environ.get("fin_t_b4me")
-if not BOT_TOKEN:
-    sys.stderr.write("FATAL: FIN_T_B4ME secret not set\n")
-    sys.exit(1)
-
-API = f"https://api.telegram.org/bot{BOT_TOKEN}"
-FILE_API = f"https://api.telegram.org/file/bot{BOT_TOKEN}"
+API = f"https://api.telegram.org/bot{BOT_TOKEN}" if BOT_TOKEN else ""
+FILE_API = f"https://api.telegram.org/file/bot{BOT_TOKEN}" if BOT_TOKEN else ""
 
 
 def log(msg: str) -> None:
@@ -46,6 +44,15 @@ def log(msg: str) -> None:
 
 def http_get(url: str, timeout: int = 65) -> dict:
     with urllib.request.urlopen(url, timeout=timeout) as r:
+        return json.loads(r.read().decode())
+
+
+def http_post(method: str, payload: dict, timeout: int = 15) -> dict:
+    if not BOT_TOKEN:
+        raise RuntimeError("FIN_T_B4ME secret not set")
+    data = urllib.parse.urlencode(payload).encode()
+    req = urllib.request.Request(f"{API}/{method}", data=data)
+    with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.loads(r.read().decode())
 
 
@@ -95,12 +102,44 @@ def discover_chat(cfg: dict, msg: dict) -> dict:
 
 def send_message(chat_id: int, text: str) -> None:
     try:
-        data = urllib.parse.urlencode({"chat_id": chat_id, "text": text}).encode()
-        req = urllib.request.Request(f"{API}/sendMessage", data=data)
-        with urllib.request.urlopen(req, timeout=15) as r:
-            r.read()
+        http_post("sendMessage", {"chat_id": chat_id, "text": text})
     except Exception as e:
         log(f"send_message failed: {e}")
+
+
+def send_message_with_keyboard(chat_id: int, text: str, keyboard: list[list[dict]]) -> dict | None:
+    try:
+        payload = {
+            "chat_id": chat_id,
+            "text": text,
+            "reply_markup": json.dumps({"inline_keyboard": keyboard}),
+        }
+        resp = http_post("sendMessage", payload)
+        return resp.get("result") if resp.get("ok") else None
+    except Exception as e:
+        log(f"send_message_with_keyboard failed: {e}")
+        return None
+
+
+def edit_message_text(chat_id: int, message_id: int, text: str,
+                      keyboard: list[list[dict]] | None = None) -> None:
+    try:
+        payload = {"chat_id": chat_id, "message_id": message_id, "text": text}
+        if keyboard is not None:
+            payload["reply_markup"] = json.dumps({"inline_keyboard": keyboard})
+        http_post("editMessageText", payload)
+    except Exception as e:
+        log(f"edit_message_text failed: {e}")
+
+
+def answer_callback_query(callback_query_id: str, text: str = "") -> None:
+    try:
+        payload = {"callback_query_id": callback_query_id}
+        if text:
+            payload["text"] = text
+        http_post("answerCallbackQuery", payload)
+    except Exception as e:
+        log(f"answer_callback_query failed: {e}")
 
 
 def insert_pending(raw_path: str, parsed: dict) -> int:
@@ -116,6 +155,132 @@ def insert_pending(raw_path: str, parsed: dict) -> int:
         return cur.lastrowid
     finally:
         conn.close()
+
+
+def _approve_keyboard(row_id: int) -> list[list[dict]]:
+    return [[
+        {"text": "Approve", "callback_data": f"approve:{row_id}"},
+        {"text": "Reject", "callback_data": f"reject:{row_id}"},
+    ]]
+
+
+def _parse_payload(raw: str | None) -> dict:
+    if not raw:
+        return {}
+    try:
+        parsed = json.loads(raw)
+        return parsed if isinstance(parsed, dict) else {}
+    except json.JSONDecodeError:
+        return {}
+
+
+def _coded(payload: dict) -> dict:
+    coded = payload.get("coded")
+    return coded if isinstance(coded, dict) else payload
+
+
+def _review_text(row: sqlite3.Row) -> str:
+    payload = _parse_payload(row["parsed_json"])
+    coded = _coded(payload)
+    vendor = coded.get("vendor") or payload.get("description") or "unknown"
+    receipt_date = coded.get("date") or payload.get("txn_date") or "-"
+    confidence = coded.get("confidence") or payload.get("confidence") or "-"
+    return (
+        f"Receipt #{row['id']} ready for review\n"
+        f"Payee: {vendor}\n"
+        f"Date: {receipt_date}\n"
+        f"Amount: {row['suggested_amount'] or '-'}\n"
+        f"Account: {row['suggested_account'] or '-'}\n"
+        f"Confidence: {confidence}"
+    )
+
+
+def _has_review_marker(notes: str | None) -> bool:
+    return bool(notes and "tg_review_message_id=" in notes)
+
+
+def _append_note(existing: str | None, note: str) -> str:
+    current = (existing or "").strip()
+    return f"{current}\n{note}".strip() if current else note
+
+
+def notify_reviewed_rows(cfg: dict, *, limit: int = 10) -> int:
+    """Send approve/reject keyboards for reviewed rows that have not been sent."""
+    chat_id = cfg.get("telegram_chat_id")
+    if not chat_id:
+        return 0
+    conn = sqlite3.connect(str(DB))
+    conn.row_factory = sqlite3.Row
+    post_pending.ensure_pending_inbox(conn)
+    try:
+        rows = conn.execute(
+            """SELECT * FROM pending_inbox
+               WHERE status='reviewed'
+               ORDER BY received_at ASC, id ASC
+               LIMIT ?""",
+            (limit,),
+        ).fetchall()
+        sent = 0
+        for row in rows:
+            if _has_review_marker(row["notes"]):
+                continue
+            msg = send_message_with_keyboard(chat_id, _review_text(row), _approve_keyboard(row["id"]))
+            if not msg:
+                continue
+            marker = f"tg_review_message_id={msg.get('message_id')} sent_at={datetime.utcnow().isoformat()}Z"
+            conn.execute(
+                "UPDATE pending_inbox SET notes=? WHERE id=? AND status='reviewed'",
+                (_append_note(row["notes"], marker), row["id"]),
+            )
+            sent += 1
+        conn.commit()
+        return sent
+    finally:
+        conn.close()
+
+
+def handle_callback(cfg: dict, cq: dict) -> None:
+    cq_id = cq.get("id", "")
+    msg = cq.get("message") or {}
+    chat_id = msg.get("chat", {}).get("id")
+    message_id = msg.get("message_id")
+    pinned = cfg.get("telegram_chat_id")
+    if pinned is not None and chat_id != pinned:
+        answer_callback_query(cq_id, "wrong chat")
+        return
+
+    data = cq.get("data") or ""
+    verb, _, raw_id = data.partition(":")
+    try:
+        row_id = int(raw_id)
+    except ValueError:
+        answer_callback_query(cq_id, "bad callback")
+        return
+
+    if verb == "approve":
+        try:
+            entry_id = post_pending.approve_row(row_id, db_path=DB, actor="telegram")
+        except Exception as exc:
+            answer_callback_query(cq_id, "error")
+            if chat_id and message_id:
+                edit_message_text(chat_id, message_id, f"Receipt #{row_id}\nERROR: {exc}", keyboard=[])
+            return
+        if entry_id:
+            answer_callback_query(cq_id, "posted")
+            if chat_id and message_id:
+                edit_message_text(chat_id, message_id, f"Receipt #{row_id} posted as entry #{entry_id}.", keyboard=[])
+        else:
+            answer_callback_query(cq_id, "already actioned")
+            if chat_id and message_id:
+                edit_message_text(chat_id, message_id, f"Receipt #{row_id} was already actioned.", keyboard=[])
+    elif verb == "reject":
+        rejected = post_pending.reject_row(row_id, db_path=DB, reason="telegram reject button", actor="telegram")
+        answer_callback_query(cq_id, "rejected" if rejected else "already actioned")
+        if chat_id and message_id:
+            text = f"Receipt #{row_id} rejected." if rejected else f"Receipt #{row_id} was already actioned."
+            edit_message_text(chat_id, message_id, text, keyboard=[])
+    else:
+        answer_callback_query(cq_id, f"unknown action {verb}")
 
 
 def best_photo(photos: list[dict]) -> dict:
@@ -207,6 +372,9 @@ def handle_message(cfg: dict, msg: dict) -> dict:
 
 
 def poll_loop() -> None:
+    if not BOT_TOKEN:
+        sys.stderr.write("FATAL: FIN_T_B4ME secret not set\n")
+        sys.exit(1)
     state = load_state()
     cfg = load_config()
     log(f"starting; offset={state.get('offset',0)} chat_id={cfg.get('telegram_chat_id')}")
@@ -221,6 +389,12 @@ def poll_loop() -> None:
             updates = data.get("result", [])
             for upd in updates:
                 state["offset"] = upd["update_id"] + 1
+                if "callback_query" in upd:
+                    try:
+                        handle_callback(cfg, upd["callback_query"])
+                    except Exception as e:
+                        log(f"callback handler error: {e}")
+                    continue
                 msg = upd.get("message") or upd.get("channel_post")
                 if not msg:
                     continue
@@ -228,6 +402,12 @@ def poll_loop() -> None:
                     cfg = handle_message(cfg, msg)
                 except Exception as e:
                     log(f"handler error: {e}")
+            try:
+                notified = notify_reviewed_rows(cfg)
+                if notified:
+                    log(f"sent {notified} review prompt(s)")
+            except Exception as e:
+                log(f"review notifier error: {e}")
             if updates:
                 save_state(state)
         except urllib.error.URLError as e:
