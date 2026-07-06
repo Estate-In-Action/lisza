@@ -290,13 +290,32 @@ def reconciliation_status(con: sqlite3.Connection) -> dict:
     latest = con.execute("SELECT MAX(statement_date) FROM statement_lines").fetchone()[0]
     total = sum(counts.values())
     unmatched = counts.get("unmatched", 0)
-    lines = [dict(r) for r in con.execute(
-        """SELECT statement_account, statement_date, description,
-                  ROUND(amount, 2) AS amount, external_ref, status
-           FROM statement_lines
-           ORDER BY status='unmatched' DESC, statement_date DESC, id DESC
-           LIMIT 25"""
-    )]
+    if _table_exists(con, "reconciliation_matches"):
+        line_sql = """
+            SELECT sl.statement_account, sl.statement_date, sl.description,
+                   ROUND(sl.amount, 2) AS amount, sl.external_ref, sl.status,
+                   rm.entry_id AS matched_entry_id, rm.method AS match_method,
+                   rm.matched_at,
+                   CASE rm.method
+                     WHEN 'auto_exact' THEN 'high'
+                     WHEN 'auto_date_window' THEN 'medium'
+                     WHEN 'manual' THEN 'reviewed'
+                     ELSE NULL
+                   END AS match_confidence
+            FROM statement_lines sl
+            LEFT JOIN reconciliation_matches rm ON rm.statement_line_id=sl.id
+            ORDER BY sl.status='unmatched' DESC, sl.statement_date DESC, sl.id DESC
+            LIMIT 25"""
+    else:
+        line_sql = """
+            SELECT statement_account, statement_date, description,
+                   ROUND(amount, 2) AS amount, external_ref, status,
+                   NULL AS matched_entry_id, NULL AS match_method,
+                   NULL AS matched_at, NULL AS match_confidence
+            FROM statement_lines
+            ORDER BY status='unmatched' DESC, statement_date DESC, id DESC
+            LIMIT 25"""
+    lines = [dict(r) for r in con.execute(line_sql)]
     return {
         "status": "needs_review" if unmatched else ("clear" if total else "not_started"),
         "statement_count": total, "matched_count": counts.get("matched", 0),

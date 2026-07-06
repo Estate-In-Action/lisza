@@ -110,4 +110,48 @@ def test_reconcile_imports_and_exact_matches_statement_line(tmp_path, monkeypatc
     assert ledger_tools.auto_match_exact(con, statement_account="102") == 1
     summary = ledger_tools.reconciliation_summary(con, statement_account="102")
     assert summary["status_counts"] == {"matched": 1}
+    method = con.execute("SELECT method FROM reconciliation_matches").fetchone()["method"]
+    assert method == "auto_exact"
+    con.close()
+
+
+def test_reconcile_date_window_matches_unique_candidate(tmp_path, monkeypatch):
+    con = _db(tmp_path, monkeypatch)
+    entry_id = ledger_tools.post_journal(
+        con,
+        entry_date="2026-06-27",
+        description="card settlement",
+        splits=[ledger_tools.Split("540", 25, 0), ledger_tools.Split("102", 0, 25)],
+    )
+    statement = tmp_path / "statement.csv"
+    with statement.open("w", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=["date", "description", "amount", "id"])
+        writer.writeheader()
+        writer.writerow({"date": "2026-06-30", "description": "card settlement", "amount": "-25.00", "id": "bank-2"})
+    assert ledger_tools.import_statement(con, statement, statement_account="102") == 1
+    assert ledger_tools.auto_match_exact(con, statement_account="102", date_tolerance_days=3) == 1
+    row = con.execute("SELECT entry_id, method FROM reconciliation_matches").fetchone()
+    assert row["entry_id"] == entry_id
+    assert row["method"] == "auto_date_window"
+    con.close()
+
+
+def test_reconcile_does_not_reuse_already_matched_entry(tmp_path, monkeypatch):
+    con = _db(tmp_path, monkeypatch)
+    ledger_tools.post_journal(
+        con,
+        entry_date="2026-06-29",
+        description="payment",
+        splits=[ledger_tools.Split("102", 100, 0), ledger_tools.Split("400", 0, 100)],
+    )
+    statement = tmp_path / "statement.csv"
+    with statement.open("w", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=["date", "description", "amount", "id"])
+        writer.writeheader()
+        writer.writerow({"date": "2026-06-29", "description": "payment", "amount": "100.00", "id": "bank-1"})
+        writer.writerow({"date": "2026-06-29", "description": "payment duplicate", "amount": "100.00", "id": "bank-2"})
+    assert ledger_tools.import_statement(con, statement, statement_account="102") == 2
+    assert ledger_tools.auto_match_exact(con, statement_account="102") == 1
+    summary = ledger_tools.reconciliation_summary(con, statement_account="102")
+    assert summary["status_counts"] == {"matched": 1, "unmatched": 1}
     con.close()

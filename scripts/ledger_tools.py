@@ -13,7 +13,7 @@ import json
 import os
 import sqlite3
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Iterable
 
@@ -63,12 +63,35 @@ def ensure_reconciliation_schema(con: sqlite3.Connection) -> None:
             entry_id INTEGER NOT NULL REFERENCES entries(id),
             matched_at TEXT NOT NULL DEFAULT (datetime('now')),
             method TEXT NOT NULL DEFAULT 'manual'
-                CHECK(method IN ('manual','auto_exact')),
+                CHECK(method IN ('manual','auto_exact','auto_date_window')),
             notes TEXT,
             UNIQUE(statement_line_id, entry_id)
         );
         """
     )
+    row = con.execute(
+        "SELECT sql FROM sqlite_master WHERE type='table' AND name='reconciliation_matches'"
+    ).fetchone()
+    if row and "auto_date_window" not in (row[0] or ""):
+        con.executescript(
+            """
+            ALTER TABLE reconciliation_matches RENAME TO reconciliation_matches_old;
+            CREATE TABLE reconciliation_matches (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                statement_line_id INTEGER NOT NULL REFERENCES statement_lines(id),
+                entry_id INTEGER NOT NULL REFERENCES entries(id),
+                matched_at TEXT NOT NULL DEFAULT (datetime('now')),
+                method TEXT NOT NULL DEFAULT 'manual'
+                    CHECK(method IN ('manual','auto_exact','auto_date_window')),
+                notes TEXT,
+                UNIQUE(statement_line_id, entry_id)
+            );
+            INSERT INTO reconciliation_matches(id, statement_line_id, entry_id, matched_at, method, notes)
+                SELECT id, statement_line_id, entry_id, matched_at, method, notes
+                FROM reconciliation_matches_old;
+            DROP TABLE reconciliation_matches_old;
+            """
+        )
     con.commit()
 
 
@@ -215,7 +238,52 @@ def import_statement(con: sqlite3.Connection, csv_path: Path, *, statement_accou
     return inserted
 
 
-def auto_match_exact(con: sqlite3.Connection, *, statement_account: str) -> int:
+def _entry_is_already_matched(con: sqlite3.Connection, entry_id: int, statement_account: str) -> bool:
+    row = con.execute(
+        """SELECT 1
+           FROM reconciliation_matches rm
+           JOIN statement_lines sl ON sl.id=rm.statement_line_id
+           WHERE rm.entry_id=? AND sl.statement_account=?
+           LIMIT 1""",
+        (entry_id, statement_account),
+    ).fetchone()
+    return row is not None
+
+
+def _candidate_entries(
+    con: sqlite3.Connection,
+    *,
+    statement_account: str,
+    amount: float,
+    start_date: str,
+    end_date: str,
+) -> list[int]:
+    rows = con.execute(
+        """SELECT DISTINCT e.id
+           FROM entries e JOIN splits s ON s.entry_id=e.id
+           WHERE e.status='posted'
+             AND e.entry_date >= ? AND e.entry_date <= ?
+             AND s.account=?
+             AND ROUND(s.dr - s.cr, 2)=?
+           ORDER BY e.id""",
+        (start_date, end_date, statement_account, round(float(amount), 2)),
+    ).fetchall()
+    return [
+        int(row["id"])
+        for row in rows
+        if not _entry_is_already_matched(con, int(row["id"]), statement_account)
+    ]
+
+
+def _match_line(con: sqlite3.Connection, *, line_id: int, entry_id: int, method: str) -> None:
+    con.execute(
+        "INSERT OR IGNORE INTO reconciliation_matches(statement_line_id, entry_id, method) VALUES (?, ?, ?)",
+        (line_id, entry_id, method),
+    )
+    con.execute("UPDATE statement_lines SET status='matched' WHERE id=?", (line_id,))
+
+
+def auto_match_exact(con: sqlite3.Connection, *, statement_account: str, date_tolerance_days: int = 3) -> int:
     matched = 0
     statement_rows = con.execute(
         """SELECT * FROM statement_lines
@@ -224,21 +292,30 @@ def auto_match_exact(con: sqlite3.Connection, *, statement_account: str) -> int:
         (statement_account,),
     ).fetchall()
     for line in statement_rows:
-        candidates = con.execute(
-            """SELECT DISTINCT e.id
-               FROM entries e JOIN splits s ON s.entry_id=e.id
-               WHERE e.status='posted' AND e.entry_date=? AND s.account=? AND ROUND(s.dr - s.cr, 2)=?
-               ORDER BY e.id""",
-            (line["statement_date"], statement_account, round(float(line["amount"]), 2)),
-        ).fetchall()
-        if len(candidates) != 1:
-            continue
-        entry_id = int(candidates[0]["id"])
-        con.execute(
-            "INSERT OR IGNORE INTO reconciliation_matches(statement_line_id, entry_id, method) VALUES (?, ?, 'auto_exact')",
-            (line["id"], entry_id),
+        candidates = _candidate_entries(
+            con,
+            statement_account=statement_account,
+            amount=float(line["amount"]),
+            start_date=line["statement_date"],
+            end_date=line["statement_date"],
         )
-        con.execute("UPDATE statement_lines SET status='matched' WHERE id=?", (line["id"],))
+        if len(candidates) != 1:
+            if date_tolerance_days <= 0:
+                continue
+            statement_date = datetime.strptime(line["statement_date"], "%Y-%m-%d").date()
+            candidates = _candidate_entries(
+                con,
+                statement_account=statement_account,
+                amount=float(line["amount"]),
+                start_date=(statement_date - timedelta(days=date_tolerance_days)).isoformat(),
+                end_date=(statement_date + timedelta(days=date_tolerance_days)).isoformat(),
+            )
+            if len(candidates) != 1:
+                continue
+            _match_line(con, line_id=int(line["id"]), entry_id=candidates[0], method="auto_date_window")
+            matched += 1
+            continue
+        _match_line(con, line_id=int(line["id"]), entry_id=candidates[0], method="auto_exact")
         matched += 1
     con.commit()
     return matched
@@ -279,6 +356,7 @@ def main() -> int:
     reconcile.add_argument("--account", required=True)
     reconcile.add_argument("--csv", type=Path)
     reconcile.add_argument("--auto-match", action="store_true")
+    reconcile.add_argument("--date-tolerance-days", type=int, default=3)
 
     args = parser.parse_args()
     con = get_db()
@@ -306,7 +384,11 @@ def main() -> int:
         print(json.dumps({"created_entry_ids": ids}, indent=2))
     elif args.cmd == "reconcile":
         imported = import_statement(con, args.csv, statement_account=args.account) if args.csv else 0
-        matched = auto_match_exact(con, statement_account=args.account) if args.auto_match else 0
+        matched = auto_match_exact(
+            con,
+            statement_account=args.account,
+            date_tolerance_days=max(0, args.date_tolerance_days),
+        ) if args.auto_match else 0
         print(json.dumps({"imported": imported, "matched": matched, "summary": reconciliation_summary(con, statement_account=args.account)}, indent=2, sort_keys=True))
     con.close()
     return 0

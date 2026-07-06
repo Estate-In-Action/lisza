@@ -37,9 +37,20 @@ if (!detail.reconciliation) {
     unmatched_count: 1, latest_statement_date: "2026-06-30",
     lines: [
       { statement_date: "2026-06-30", description: "Bank fee", amount: -12, status: "unmatched" },
-      { statement_date: "2026-06-29", description: "Deposit", amount: 1000, status: "matched" },
+      { statement_date: "2026-06-29", description: "Deposit", amount: 1000, status: "matched", match_method: "auto_exact", matched_entry_id: 12 },
     ],
   };
+}
+if (detail.reconciliation && Array.isArray(detail.reconciliation.lines) &&
+    !detail.reconciliation.lines.some(l => l.match_method)) {
+  detail.reconciliation.lines.push({
+    statement_date: "2026-06-29",
+    description: "Deposit",
+    amount: 1000,
+    status: "matched",
+    match_method: "auto_exact",
+    matched_entry_id: 12,
+  });
 }
 if (!detail.filing_obligations) {
   detail.filing_obligations = { status: "due_soon", filing_cadence: "quarterly", next_filing_due: "2026-07-31", days_until_due: 22, estimated_tax_paid_ytd: 100, payroll_tax_liability: 25 };
@@ -89,6 +100,7 @@ assert(html.includes("Guided setup"), "guided setup section present");
 assert(html.includes("Apply suggested setup"), "suggested setup action present");
 assert(html.includes("‹ all clients"), "back link present");
 assert(html.includes("Read-only ledger slices"), "inspection helper copy present");
+assert(html.includes("auto exact"), "reconciliation match method renders");
 if (detail.inspection && detail.inspection.periods) {
   for (const period of ["month", "quarter", "year"]) {
     assert(html.includes(period), `${period} inspection row present`);

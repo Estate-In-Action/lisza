@@ -67,7 +67,7 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 > this file still applies (build shared capabilities in Finance, port to LISZA).
 
 ### 1. Core automation & data processing
-- [ ] **Bank & credit-card reconciliation** — real-time sync that auto-matches bank/card transactions against the general ledger. *(Extends "Reconcile to statements" above + PLAN Phase 5.)*
+- [x] **Bank & credit-card reconciliation** — real-time sync that auto-matches bank/card transactions against the general ledger. *(First slice shipped: deterministic exact/date-window statement matching, duplicate-entry guard, and review payload metadata; live bank-feed sync remains a later integration.)*
 - [ ] **Transaction categorization** — AI that learns vendor patterns and auto-assigns transactions to the correct GL / tax code. *(Builds on `payee_rules`; AI layer is the new part.)*
 - [ ] **Document & receipt capture (OCR)** — extract line-item data from invoices/receipts to eliminate manual entry. *(Finance inherits `document-parser` / `invoice-extractor` / `taxhacker`; port to LISZA.)*
 - [ ] **Accounts Payable (AP) & Receivable (AR)** — automated bill-approval routing, recurring invoice generation, automated client payment reminders. *(Feeds Step 3 AP/AR tiles.)*

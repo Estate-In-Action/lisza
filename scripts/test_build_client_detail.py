@@ -331,9 +331,19 @@ def test_default_tile_payloads_end_to_end(tmp_path, monkeypatch):
             external_ref TEXT,
             status TEXT NOT NULL DEFAULT 'unmatched'
         );
+        CREATE TABLE reconciliation_matches (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            statement_line_id INTEGER NOT NULL,
+            entry_id INTEGER NOT NULL,
+            matched_at TEXT NOT NULL DEFAULT (datetime('now')),
+            method TEXT NOT NULL DEFAULT 'manual',
+            notes TEXT
+        );
         INSERT INTO statement_lines(statement_account, statement_date, description, amount, status)
           VALUES('102','2026-06-01','cash sale',1000,'matched'),
                 ('102','2026-06-05','expense',-300,'unmatched');
+        INSERT INTO reconciliation_matches(statement_line_id, entry_id, method)
+          VALUES(1, 1, 'auto_exact');
     """)
     con.commit()
     con.close()
@@ -349,5 +359,9 @@ def test_default_tile_payloads_end_to_end(tmp_path, monkeypatch):
     assert d["reconciliation"]["status"] == "needs_review"
     assert d["reconciliation"]["matched_count"] == 1
     assert d["reconciliation"]["unmatched_count"] == 1
+    matched_lines = [l for l in d["reconciliation"]["lines"] if l["status"] == "matched"]
+    assert matched_lines[0]["matched_entry_id"] == 1
+    assert matched_lines[0]["match_method"] == "auto_exact"
+    assert matched_lines[0]["match_confidence"] == "high"
     assert d["filing_obligations"]["next_filing_due"] == "2026-07-31"
     assert d["filing_obligations"]["estimated_tax_paid_ytd"] == 100.0

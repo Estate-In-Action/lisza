@@ -397,9 +397,15 @@ function reconciliationTile(r) {
     return `<div class="card"><h3>Reconciliation</h3><div class="muted">No statement data</div></div>`;
   }
   const lines = (r.lines || []).slice(0, 8).map(l =>
+    {
+      const match = l.match_method
+        ? ` · ${esc(l.match_method.replaceAll("_", " "))}${l.matched_entry_id ? ` #${esc(l.matched_entry_id)}` : ""}`
+        : "";
+      return (
     `<div class="kv"><span>${esc(l.description || "Statement line")} ` +
-    `<span class="muted">${esc(l.statement_date || "—")} · ${esc(l.status || "—")}</span></span>` +
-    `<span class="money">${money(l.amount)}</span></div>`).join("");
+    `<span class="muted">${esc(l.statement_date || "—")} · ${esc(l.status || "—")}${match}</span></span>` +
+    `<span class="money">${money(l.amount)}</span></div>`);
+    }).join("");
   return `<div class="card"><h3>Reconciliation</h3>` +
     kv("Status", r.status || "—") +
     kv("Statements", r.statement_count ?? 0) +
