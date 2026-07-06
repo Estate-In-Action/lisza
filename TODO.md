@@ -78,7 +78,7 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 
 ### 3. Integrations & scalability
 - [x] **Ecosystem compatibility** — two-way sync with core ledgers (QuickBooks Online, Xero) plus e-commerce platforms and payment processors. *(First slice shipped: read-only QBO/Xero-friendly export contract for accounts, journal lines, invoices, and bills with manifest field maps; live OAuth/API two-way sync remains later integration work.)*
-- [ ] **Customized reporting** — automated real-time financial statements + variance reports, easily shared with clients. *(Spec 2 dashboard is the first slice; per-client P&L/BS lands in Step 3.)*
+- [x] **Customized reporting** — automated real-time financial statements + variance reports, easily shared with clients. *(First slice shipped: client-level P&L variance report generator with JSON/CSV artifacts; richer branded report packs and delivery automation remain later extensions.)*
 
 ### Competitive benchmark (reference — incumbents to learn from / interoperate with)
 - **QuickBooks Online (QBO)** — North-American SMB standard. Strengths: deep report customization (classes/locations/multi-entity), AI reconciliation/anomaly flagging, 750+ app ecosystem, native 1099 + sales-tax filing, scales solo → multi-entity. Weaknesses: aggressive price hikes ($38→$275/mo), multi-user gated to top tiers, slow scripted support. **Implication for LISZA:** QBO two-way sync is table-stakes for integration; our wedge is price + responsiveness + AI automation depth.
