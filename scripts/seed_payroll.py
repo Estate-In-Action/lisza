@@ -58,6 +58,26 @@ _EMP_INSERT_FIELDS = ("entity_id", "name", "filing_status", "work_state",
                       "w4_extra_withholding")
 
 
+def reset_seeded_payroll(con: sqlite3.Connection) -> dict:
+    """Clear synthetic payroll rows so seed_payroll() is repeatable."""
+    entry_ids = [
+        r[0] for r in con.execute("SELECT id FROM entries WHERE source='payroll'")
+    ]
+    payroll_lines = con.execute("SELECT COUNT(*) FROM payroll_lines").fetchone()[0]
+    payroll_runs = con.execute("SELECT COUNT(*) FROM payroll_runs").fetchone()[0]
+    employees = con.execute("SELECT COUNT(*) FROM employees").fetchone()[0]
+    con.execute("DELETE FROM payroll_lines")
+    con.execute("DELETE FROM payroll_runs")
+    con.execute("DELETE FROM employees")
+    if entry_ids:
+        placeholders = ",".join("?" * len(entry_ids))
+        con.execute(f"DELETE FROM splits WHERE entry_id IN ({placeholders})", entry_ids)
+        con.execute(f"DELETE FROM entries WHERE id IN ({placeholders})", entry_ids)
+    con.commit()
+    return {"entries": len(entry_ids), "payroll_lines": payroll_lines,
+            "payroll_runs": payroll_runs, "employees": employees}
+
+
 def _entity_id(con, name: str) -> int:
     row = con.execute("SELECT id FROM entities WHERE name=?", (name,)).fetchone()
     return row[0] if row else con.execute(
@@ -85,7 +105,6 @@ def _insert_roster(con, roster) -> set[int]:
     con.commit()
     return entity_ids
 
-
 def seed_payroll(slug: str) -> int:
     """Insert the client's roster and book biweekly runs. Returns run count."""
     roster = ROSTERS.get(slug)
@@ -93,6 +112,7 @@ def seed_payroll(slug: str) -> int:
         return 0
     con = sqlite3.connect(tenancy.resolve_db(slug))
     try:
+        reset_seeded_payroll(con)
         entity_ids = sorted(_insert_roster(con, roster))
     finally:
         con.close()

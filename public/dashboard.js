@@ -216,6 +216,34 @@ function payrollTile(p) {
     `</div>`;
 }
 
+function inspectionRows(periods) {
+  const order = ["month", "quarter", "year"];
+  return order.map(k => {
+    const p = periods && periods[k];
+    if (!p) return kv(k, "—");
+    const balanced = Number(p.debit_total || 0) === Number(p.credit_total || 0);
+    const range = `${p.start || "—"} → ${p.end || "—"}`;
+    const flags = [
+      `${p.row_count || 0} rows`,
+      balanced ? "balanced" : "out of balance",
+      p.truncated ? "truncated" : null,
+    ].filter(Boolean).join(" · ");
+    return `<div class="kv"><span>${esc(k)} <span class="muted">${esc(range)}</span></span>` +
+      `<span class="money">${esc(flags)}</span></div>`;
+  }).join("");
+}
+
+function inspectionTile(i) {
+  if (!i || !i.periods) {
+    return `<div class="card"><h3>Inspection</h3>` +
+      `<div class="muted">No inspection views available</div></div>`;
+  }
+  return `<div class="card"><h3>Inspection</h3>` +
+    `<div class="muted">Read-only ledger slices for bookkeeper review.</div>` +
+    `${inspectionRows(i.periods)}` +
+    `</div>`;
+}
+
 function renderClientDetail(d) {
   const ents = (d.admin.entities || []);
   const entRows = ents.length > 1
@@ -252,6 +280,7 @@ function renderClientDetail(d) {
           ${kv("Posted entries", d.historical.entry_count)}
           <h4>Recent months</h4>${trendRows(d.historical.monthly)}
         </div>
+        ${inspectionTile(d.inspection)}
         ${payrollTile(d.payroll)}
       </div>
     </div>`;
@@ -299,5 +328,8 @@ if (typeof document !== "undefined" && document.getElementById) {
 }
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { esc, money, kv, renderClientDetail, renderTiles, parseHash, payrollTile };
+  module.exports = {
+    esc, money, kv, renderClientDetail, renderTiles, parseHash, payrollTile,
+    inspectionTile, inspectionRows
+  };
 }

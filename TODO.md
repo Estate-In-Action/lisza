@@ -31,12 +31,13 @@ Work items for the bookkeeping app. See `PLAN.md` for phases and principles.
 - [x] Generate each via the `seed_client.py` path, tweaked per business type so the numbers read realistically (different COA emphasis, transaction mix, seasonality).
 
 ### Step 3 — Per-client tiles (drill-down)
+> Progress 2026-07-06 — client detail JSON and console now surface Payroll, AR, AP, Admin, Historical, and read-only Inspection tiles. Broader default-tile research remains open.
 Decide the standard tile set a bookkeeper needs per client. Candidate set:
-- [ ] **Payroll** — employees, pay runs, liabilities.
-- [ ] **AR** (accounts receivable) — open invoices, aging.
-- [ ] **AP** (accounts payable) — bills due, aging.
-- [ ] **Admin / master data** — that client's profile (legal name, EIN, entity type, fiscal year, filing cadence, contacts, bank accounts, COA).
-- [ ] **Historical** — bookkeeper has an **active window** (last month / quarter / year / 2 years, configurable); everything older is "prior/historical" and surfaced here read-only. (Respects Principle #2 — history is never mutated.)
+- [x] **Payroll** — employees, pay runs, liabilities.
+- [x] **AR** (accounts receivable) — open invoices, aging.
+- [x] **AP** (accounts payable) — bills due, aging.
+- [x] **Admin / master data** — that client's profile (legal name, EIN, entity type, fiscal year, filing cadence, contacts, bank accounts, COA).
+- [x] **Historical** — bookkeeper has an **active window** (last month / quarter / year / 2 years, configurable); everything older is "prior/historical" and surfaced here read-only. (Respects Principle #2 — history is never mutated.)
 - [ ] Research **what other tiles general small businesses need** (e.g. cash flow, sales tax liability, fixed assets, trial balance, P&L/Balance Sheet, reconciliation status) and propose the default set.
 
 ### Step 4 — Per-client automation + config

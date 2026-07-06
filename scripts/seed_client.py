@@ -22,6 +22,10 @@ from client_profiles import ClientProfile
 SEED = 42
 START = date(2022, 1, 1)
 END = date(2026, 6, 9)
+SEED_ENTRY_SOURCES = (
+    "synthetic", "owner", "invoice", "ar_payment", "bill", "ap_payment",
+    "tax", "intercompany", "payroll",
+)
 
 
 def _months(start, end):
@@ -34,7 +38,6 @@ def _months(start, end):
 
 def _day(first, rng, lo=0, hi=27):
     return first + timedelta(days=rng.randint(lo, hi))
-
 
 def _entity_ids(con) -> list[int]:
     return [r[0] for r in con.execute(
@@ -55,10 +58,60 @@ def _booked(con, entity_id, d, desc, payee, dr_acct, cr_acct, amt,
     return eid
 
 
+def reset_seeded_book(con: sqlite3.Connection) -> dict:
+    """Remove only deterministic demo-seed rows before reseeding.
+
+    This keeps the synthetic demo generator idempotent while avoiding any broad
+    ledger wipe: non-seed ledger entries are left alone, while the synthetic
+    payroll roster/runs are replaced.
+    """
+    payroll_lines = con.execute("SELECT COUNT(*) FROM payroll_lines").fetchone()[0]
+    payroll_runs = con.execute("SELECT COUNT(*) FROM payroll_runs").fetchone()[0]
+    employees = con.execute("SELECT COUNT(*) FROM employees").fetchone()[0]
+    con.execute("DELETE FROM payroll_lines")
+    con.execute("DELETE FROM payroll_runs")
+    con.execute("DELETE FROM employees")
+
+    placeholders = ",".join("?" * len(SEED_ENTRY_SOURCES))
+    seeded_entry_ids = [
+        r[0] for r in con.execute(
+            f"SELECT id FROM entries WHERE source IN ({placeholders})",
+            SEED_ENTRY_SOURCES,
+        )
+    ]
+    seeded_count = len(seeded_entry_ids)
+    if seeded_entry_ids:
+        entry_placeholders = ",".join("?" * seeded_count)
+        con.execute(
+            f"DELETE FROM invoices WHERE entry_id IN ({entry_placeholders})",
+            seeded_entry_ids,
+        )
+        con.execute(
+            f"DELETE FROM bills WHERE entry_id IN ({entry_placeholders})",
+            seeded_entry_ids,
+        )
+        con.execute(
+            f"DELETE FROM splits WHERE entry_id IN ({entry_placeholders})",
+            seeded_entry_ids,
+        )
+        con.execute(
+            f"DELETE FROM entries WHERE id IN ({entry_placeholders})",
+            seeded_entry_ids,
+        )
+    con.commit()
+    return {
+        "entries": seeded_count,
+        "payroll_lines": payroll_lines,
+        "payroll_runs": payroll_runs,
+        "employees": employees,
+    }
+
+
 def seed(profile: ClientProfile, *, slug: str) -> dict:
     db = tenancy.resolve_db(slug)
     con = sqlite3.connect(db)
     con.execute("PRAGMA foreign_keys=ON")
+    reset_counts = reset_seeded_book(con)
 
     # ensure the profile's entities exist (default already present from register)
     existing = {r[0] for r in con.execute("SELECT name FROM entities")}
@@ -168,7 +221,8 @@ def seed(profile: ClientProfile, *, slug: str) -> dict:
     import seed_payroll
     seed_payroll.seed_payroll(slug=slug)
 
-    return {"slug": slug, "invoices": n_inv, "bills": n_bill, "dr": dr, "cr": cr}
+    return {"slug": slug, "invoices": n_inv, "bills": n_bill,
+            "dr": dr, "cr": cr, "reset": reset_counts}
 
 
 def main() -> int:
