@@ -15,6 +15,7 @@ from datetime import date
 from pathlib import Path
 
 import automation_profile
+import ar_ap_workflows
 import document_requests
 import tenancy
 
@@ -57,7 +58,11 @@ def sync_jobs(*, as_of: date | None = None,
     ref = as_of or date.today()
     queue = automation_profile.workflow_queue(
         as_of=ref, include_scheduled=include_scheduled)
-    planned_items = list(queue["queue"]) + document_requests.workflow_items(as_of=ref)
+    planned_items = (
+        list(queue["queue"])
+        + document_requests.workflow_items(as_of=ref)
+        + ar_ap_workflows.workflow_items(as_of=ref)
+    )
     con = _connect()
     inserted = 0
     updated = 0
@@ -195,7 +200,15 @@ def get_job(job_id: int) -> dict:
 
 def _write_receipt(job: sqlite3.Row) -> dict:
     payload = json.loads(job["payload_json"])
-    execution = "document_followup" if str(job["job_key"]).startswith("document_request:") else "report_prep_only"
+    job_key = str(job["job_key"])
+    if job_key.startswith("document_request:"):
+        execution = "document_followup"
+    elif job_key.startswith("ar_invoice_reminder:"):
+        execution = "client_payment_reminder_prep"
+    elif job_key.startswith("ap_bill_approval:"):
+        execution = "vendor_bill_approval_prep"
+    else:
+        execution = "report_prep_only"
     receipt = {
         "workflow_job_id": job["workflow_job_id"],
         "client_slug": job["client_slug"],
@@ -239,7 +252,13 @@ def run_approved(*, limit: int = 25) -> dict:
             (limit,),
         ).fetchall()
         for row in rows:
-            runnable = row["job_key"] in RUNNABLE or str(row["job_key"]).startswith("document_request:")
+            job_key = str(row["job_key"])
+            runnable = (
+                row["job_key"] in RUNNABLE
+                or job_key.startswith("document_request:")
+                or job_key.startswith("ar_invoice_reminder:")
+                or job_key.startswith("ap_bill_approval:")
+            )
             if not runnable:
                 con.execute(
                     """UPDATE workflow_jobs

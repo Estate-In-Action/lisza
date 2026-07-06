@@ -74,3 +74,47 @@ def test_dashboard_queue_can_still_be_generated(tmp_path, monkeypatch):
 
     assert queue["mode"] == "dry_run"
     assert queue["summary"]["approval_required"] >= 1
+
+
+def test_sync_includes_ar_ap_workflow_items(tmp_path, monkeypatch):
+    _client(tmp_path, monkeypatch)
+    con = sqlite3.connect(tenancy.resolve_db("acme"))
+    con.executescript(
+        """
+        INSERT INTO invoices(id, party, issue_date, due_date, amount, status)
+          VALUES(7, 'Customer A', '2026-06-01', '2026-07-05', 250.00, 'open');
+        INSERT INTO bills(id, party, issue_date, due_date, amount, status)
+          VALUES(9, 'Vendor B', '2026-06-01', '2026-07-08', 125.00, 'unpaid');
+        """
+    )
+    con.commit()
+    con.close()
+
+    workflow_runner.sync_jobs(as_of=date(2026, 7, 6))
+    jobs = workflow_runner.list_jobs()["jobs"]
+
+    assert any(j["job_key"] == "ar_invoice_reminder:7" for j in jobs)
+    assert any(j["job_key"] == "ap_bill_approval:9" for j in jobs)
+
+
+def test_ar_ap_workflows_run_as_prep_receipts_only(tmp_path, monkeypatch):
+    _client(tmp_path, monkeypatch)
+    con = sqlite3.connect(tenancy.resolve_db("acme"))
+    con.execute(
+        """INSERT INTO invoices(id, party, issue_date, due_date, amount, status)
+           VALUES(7, 'Customer A', '2026-06-01', '2026-07-05', 250.00, 'open')"""
+    )
+    con.commit()
+    con.close()
+
+    workflow_runner.sync_jobs(as_of=date(2026, 7, 6))
+    job = next(j for j in workflow_runner.list_jobs(status="pending_approval")["jobs"]
+               if j["job_key"] == "ar_invoice_reminder:7")
+    workflow_runner.decide(job["workflow_job_id"], "approve")
+    result = workflow_runner.run_approved(limit=1)
+    receipt = result["receipts"][0]
+
+    assert receipt["execution"] == "client_payment_reminder_prep"
+    assert receipt["external_delivery"] == "disabled"
+    assert receipt["ledger_write"] == "disabled"
+    assert receipt["payload"]["invoice_id"] == 7
