@@ -131,6 +131,13 @@ function renderRolodex() {
 }
 
 function allDueJobs() {
+  if (DATA.workflow && Array.isArray(DATA.workflow.jobs)) {
+    return DATA.workflow.jobs.map(j => ({
+      ...j,
+      key: j.job_key || j.key,
+      status: j.planner_status || j.status,
+    }));
+  }
   return (DATA.clients || []).flatMap(c => (c.due_jobs || []).map(j => ({
     ...j,
     client_slug: c.slug,
@@ -140,24 +147,61 @@ function allDueJobs() {
 
 function renderWorkflowQueue() {
   const jobs = allDueJobs();
-  const visible = jobs.filter(j => workflowFilter === "all" || j.status === workflowFilter);
+  const visible = jobs.filter(j =>
+    workflowFilter === "all" ||
+    j.status === workflowFilter ||
+    j.workflow_status === workflowFilter);
   const counts = {
     due_now: jobs.filter(j => j.status === "due_now").length,
     upcoming: jobs.filter(j => j.status === "upcoming").length,
+    pending_approval: jobs.filter(j => j.workflow_status === "pending_approval").length,
+    approved: jobs.filter(j => j.workflow_status === "approved").length,
+    completed: jobs.filter(j => j.workflow_status === "completed").length,
     blocked: jobs.filter(j => j.status === "blocked").length,
     all: jobs.length,
   };
-  const buttons = ["due_now", "upcoming", "blocked", "all"].map(k =>
+  const buttons = ["pending_approval", "approved", "completed", "due_now", "upcoming", "blocked", "all"].map(k =>
     `<button data-workflow-filter="${k}" class="${workflowFilter === k ? "active" : ""}">` +
     `${esc(k.replace("_", " "))} ${counts[k] || 0}</button>`).join("");
+  const summary = DATA.workflow && DATA.workflow.summary
+    ? `<div class="muted">Control plane: ${esc(JSON.stringify(DATA.workflow.summary))}</div>`
+    : `<div class="muted">Advisory queue only. Approval state not generated.</div>`;
+  const run = counts.approved
+    ? `<button data-workflow-run-approved>Run approved safe reports</button>`
+    : "";
   const rows = visible.length ? visible.map(j =>
     `<div class="workflow-row" data-slug="${esc(j.client_slug)}">` +
     `<span><strong>${esc(j.client_name)}</strong> ${esc(j.label || j.key)} ` +
     `<span class="muted">${esc(j.source || "profile")}</span></span>` +
-    `<span class="money">${esc(j.status)} · ${esc(j.due_date || "—")}</span></div>`
+    `<span class="money">${esc(j.workflow_status || "advisory")} · ${esc(j.status || "—")} · ${esc(j.due_date || "—")}</span>` +
+    `${j.workflow_status === "pending_approval" ? `<span class="actions">` +
+      `<button data-workflow-action="approve" data-workflow-id="${esc(j.workflow_job_id)}">Approve</button>` +
+      `<button data-workflow-action="skip" data-workflow-id="${esc(j.workflow_job_id)}">Skip</button>` +
+      `</span>` : ""}</div>`
   ).join("") : `<div class="muted">No workflow items in this filter.</div>`;
   return `<div class="card workflow-queue"><h3>Due Work</h3>` +
-    `<div class="queue-tabs">${buttons}</div>${rows}</div>`;
+    `${summary}<div class="queue-tabs">${buttons}${run}</div>${rows}</div>`;
+}
+
+function workflowPost(params) {
+  return fetch(`/api/lisza?${new URLSearchParams(params).toString()}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: "{}",
+  }).then(r => r.json()).then(j => {
+    if (j.error) throw new Error(j.error);
+    return refreshWorkflow().then(() => { render(); return j; });
+  });
+}
+
+function refreshWorkflow() {
+  return fetch("/api/lisza?mode=workflow_queue")
+    .then(r => r.json())
+    .then(j => {
+      if (!j.error && DATA) DATA.workflow = j;
+      return j;
+    })
+    .catch(() => DATA && DATA.workflow);
 }
 
 function render() {
@@ -179,6 +223,26 @@ function render() {
   board.querySelectorAll("[data-workflow-filter]").forEach(btn => {
     btn.onclick = () => { workflowFilter = btn.dataset.workflowFilter || "due_now"; render(); };
   });
+  board.querySelectorAll("[data-workflow-action]").forEach(btn => {
+    btn.onclick = (ev) => {
+      ev.stopPropagation();
+      btn.textContent = "Working...";
+      workflowPost({
+        mode: "workflow_action",
+        action: btn.dataset.workflowAction,
+        job_id: btn.dataset.workflowId,
+      }).catch(e => { btn.textContent = e.message || "Failed"; });
+    };
+  });
+  const runApproved = board.querySelector("[data-workflow-run-approved]");
+  if (runApproved) {
+    runApproved.onclick = (ev) => {
+      ev.stopPropagation();
+      runApproved.textContent = "Running...";
+      workflowPost({ mode: "workflow_run_approved" })
+        .catch(e => { runApproved.textContent = e.message || "Failed"; });
+    };
+  }
 
   if (layout === "rolodex") {
     const prev = document.getElementById("rolo-prev");
@@ -539,7 +603,7 @@ if (typeof document !== "undefined" && document.getElementById) {
     loadPrefs();
     initLayoutButtons();
     buildFieldToggles();
-    route();
+    refreshWorkflow().finally(route);
   }).catch(e => {
     document.getElementById("board").innerHTML =
       `<p class="muted">Could not load dashboard.json (${esc(e)}).</p>`;

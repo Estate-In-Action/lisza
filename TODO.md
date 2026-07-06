@@ -44,15 +44,17 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
   - **Why:** Xero's accounting dashboard centers bank balances, invoices, bills, fixed assets, and reconciliation prompts; QuickBooks centers cash flow, bills, reconciliation, P&L/cash-flow reporting, and tax organization; FreshBooks centers invoices, expenses/receipts, time tracking, clients, payments, and financial reports. LISZA's default should therefore bias toward bookkeeper operating risk first: unreconciled cash, money owed/owing, payroll/tax obligations, and statement readiness.
 
 ### Step 4 — Per-client automation + config
-> Progress 2026-07-06 — registry now has `client_automation_profiles`, CLI profile get/set, an advisory due-job planner, generated workflow payloads, and a browser-side profile draft panel. Cron execution remains intentionally read-only/not wired.
-- [ ] **Per-client cron jobs** — reports generated on that client's cadence/need; **tax prep + filing on the client's schedule** (monthly / quarterly / annual depending on the client).
+> Progress 2026-07-06 — registry now has `client_automation_profiles`, CLI/API profile get/set, an advisory due-job planner, durable workflow approval rows, generated workflow payloads, and a browser-side profile/control panel. Cron execution remains approval-gated and report-prep-only; no tax/payment/ledger actions are automatic.
+- [x] **Per-client cron jobs** — reports generated on that client's cadence/need; **tax prep + filing on the client's schedule** (monthly / quarterly / annual depending on the client).
 - [ ] **Per-client config flow** — a guided setup that **asks the bookkeeper what to configure for each client**: which reports, filing cadence, sales-tax jurisdictions, active-window length, payroll schedule, etc. Stored as the client's automation profile and consumed by the cron layer.
   - [x] Registry-level automation profile scaffold: reports enabled, filing cadence, sales-tax jurisdictions, active window, payroll schedule, delivery channel.
   - [x] CLI config writer for bookkeeper setup (`scripts/automation_profile.py get|set`).
   - [x] Advisory planner that turns profiles into due/upcoming jobs without running tax/payment actions automatically (`scripts/automation_profile.py plan`).
   - [x] Dashboard client-detail workflow panel with local profile drafts and due-job queue.
-  - [ ] API write-back endpoint for browser profile drafts.
-  - [ ] Real scheduler/cron runner that consumes due jobs after operator approval.
+  - [x] API write-back endpoint for browser profile drafts.
+  - [x] Durable workflow approval queue and audit trail (`workflow_jobs`, `workflow_events`).
+  - [x] Real scheduler/cron runner that consumes due jobs after operator approval.
+  - [x] Safe execution boundary: approved jobs generate report-prep receipts only; tax filing, payments, ledger writes, and external delivery stay disabled.
 
 ## Competitive feature backlog (market-parity targets, 2026-06-29)
 
@@ -70,7 +72,7 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 - [ ] **Accounts Payable (AP) & Receivable (AR)** — automated bill-approval routing, recurring invoice generation, automated client payment reminders. *(Feeds Step 3 AP/AR tiles.)*
 
 ### 2. Practice & workflow management
-- [ ] **Task & capacity management** — track month-end close status, manage deadlines, distribute workload across a bookkeeping team. *(Multi-bookkeeper; `bookkeeper_prefs.bookkeeper_id` already anticipates multi-user.)*
+- [x] **Task & capacity management** — track month-end close status, manage deadlines, distribute workload across a bookkeeping team. *(First slice shipped as the durable Due Work queue with pending/approved/completed/skipped states; multi-bookkeeper assignment remains a later extension.)*
 - [ ] **Client portals & document requests** — secure hub to gather W-9s / onboarding docs and send persistent automated follow-ups for missing records.
 
 ### 3. Integrations & scalability

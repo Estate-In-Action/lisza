@@ -1,0 +1,143 @@
+{
+  "generated_at": "2026-07-06T19:36:39Z",
+  "slug": "lakeside-bakery",
+  "display_name": "Lakeside Bakery",
+  "entity_type": null,
+  "status": "active",
+  "as_of": null,
+  "ar": {
+    "open_total": 0.0,
+    "open_count": 0,
+    "overdue_total": 0.0,
+    "overdue_count": 0,
+    "current_count": 0,
+    "status": "clear",
+    "aging": {
+      "current": 0.0,
+      "d1_30": 0.0,
+      "d31_60": 0.0,
+      "d61_90": 0.0,
+      "d90_plus": 0.0
+    },
+    "top_open": []
+  },
+  "ap": {
+    "open_total": 0.0,
+    "open_count": 0,
+    "overdue_total": 0.0,
+    "overdue_count": 0,
+    "current_count": 0,
+    "status": "clear",
+    "aging": {
+      "current": 0.0,
+      "d1_30": 0.0,
+      "d31_60": 0.0,
+      "d61_90": 0.0,
+      "d90_plus": 0.0
+    },
+    "top_open": []
+  },
+  "admin": {
+    "legal_name": "Lakeside Bakery LLC",
+    "ein_masked": null,
+    "entity_type": null,
+    "fiscal_year_end": "12-31",
+    "filing_cadence": "monthly",
+    "next_filing_due": null,
+    "active_window": "1y",
+    "status": "configured",
+    "entities": [
+      {
+        "name": "Main",
+        "type": "default"
+      }
+    ]
+  },
+  "historical": {
+    "span": {
+      "first": null,
+      "last": null
+    },
+    "monthly": [],
+    "entry_count": 0,
+    "active_window": {
+      "label": "1y",
+      "months": 12,
+      "start": null,
+      "end": null,
+      "posted_entries": 0,
+      "prior_entries": 0
+    },
+    "status": "read_only"
+  },
+  "inspection": {
+    "mode": "read_only",
+    "views": [
+      "month",
+      "quarter",
+      "year"
+    ],
+    "periods": {}
+  },
+  "cash_flow": {
+    "status": "no_posted_activity",
+    "start": null,
+    "end": null,
+    "inflow": 0.0,
+    "outflow": 0.0,
+    "net": 0.0,
+    "starting_cash": 0.0,
+    "ending_cash": 0.0
+  },
+  "pnl_balance": {
+    "status": "no_posted_activity",
+    "period": {
+      "start": null,
+      "end": null
+    }
+  },
+  "reconciliation": {
+    "status": "not_started",
+    "statement_count": 0,
+    "matched_count": 0,
+    "unmatched_count": 0,
+    "ignored_count": 0,
+    "latest_statement_date": null,
+    "lines": []
+  },
+  "filing_obligations": {
+    "status": "not_scheduled",
+    "filing_cadence": "monthly",
+    "fiscal_year_end": "12-31",
+    "next_filing_due": null,
+    "days_until_due": null,
+    "estimated_tax_paid_ytd": 0.0,
+    "payroll_tax_liability": 0.0
+  },
+  "automation_profile": {
+    "reports": {
+      "weekly_digest": true,
+      "monthly_close": true,
+      "quarterly_packet": true
+    },
+    "filing_cadence": "monthly",
+    "sales_tax_jurisdictions": [],
+    "active_window": "1y",
+    "payroll_schedule": "none",
+    "delivery": "dashboard"
+  },
+  "due_jobs": [
+    {
+      "key": "weekly_digest",
+      "label": "Weekly digest",
+      "due_date": "2026-07-06",
+      "status": "due_now",
+      "source": "profile.reports",
+      "approval_required": true
+    }
+  ],
+  "payroll": {
+    "status": "none",
+    "message": "No payroll runs on file"
+  }
+}

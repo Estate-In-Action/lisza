@@ -84,6 +84,32 @@ CREATE TABLE IF NOT EXISTS client_automation_profiles (
     profile_json TEXT NOT NULL,
     updated_at   TEXT NOT NULL DEFAULT (datetime('now'))
 );
+CREATE TABLE IF NOT EXISTS workflow_jobs (
+    workflow_job_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    client_id    TEXT NOT NULL REFERENCES clients(client_id),
+    job_key      TEXT NOT NULL,
+    label        TEXT NOT NULL,
+    due_date     TEXT NOT NULL,
+    planner_status TEXT NOT NULL,
+    workflow_status TEXT NOT NULL DEFAULT 'pending_approval'
+        CHECK(workflow_status IN ('pending_approval','approved','skipped','completed','failed','blocked')),
+    source       TEXT,
+    approval_required INTEGER NOT NULL DEFAULT 1,
+    payload_json TEXT NOT NULL,
+    planned_at   TEXT NOT NULL DEFAULT (datetime('now')),
+    decided_at   TEXT,
+    executed_at  TEXT,
+    updated_at   TEXT NOT NULL DEFAULT (datetime('now')),
+    UNIQUE(client_id, job_key, due_date)
+);
+CREATE TABLE IF NOT EXISTS workflow_events (
+    workflow_event_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    workflow_job_id INTEGER NOT NULL REFERENCES workflow_jobs(workflow_job_id),
+    event_type TEXT NOT NULL,
+    note TEXT,
+    payload_json TEXT,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
 """
 
 

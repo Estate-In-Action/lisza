@@ -13,6 +13,7 @@ from pathlib import Path
 
 import tenancy
 import automation_profile
+import workflow_runner
 
 PUBLIC_DIR = Path(__file__).resolve().parent.parent / "public"
 DEFAULT_CARD_FIELDS = ["cash", "open_ar", "open_ap", "last_entry"]
@@ -31,6 +32,7 @@ def _prefs(con: sqlite3.Connection) -> dict:
 
 def build_dashboard() -> dict:
     tenancy.registry_db()
+    workflow_runner.sync_jobs()
     con = sqlite3.connect(tenancy.registry_path())
     con.row_factory = sqlite3.Row
     prefs = _prefs(con)
@@ -40,7 +42,7 @@ def build_dashboard() -> dict:
                   s.entity_count, s.last_entry_date
            FROM clients c
            LEFT JOIN client_summary s ON s.client_id = c.client_id
-           WHERE c.status = 'active'
+           WHERE c.status = 'active' AND c.kind != 'house'
            ORDER BY c.display_name""").fetchall()
     con.close()
 
@@ -69,6 +71,7 @@ def build_dashboard() -> dict:
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "prefs": prefs,
         "clients": clients,
+        "workflow": workflow_runner.list_jobs(limit=200),
     }
 
 

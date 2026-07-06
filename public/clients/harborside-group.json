@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T19:26:16Z",
+  "generated_at": "2026-07-06T19:36:39Z",
   "slug": "harborside-group",
   "display_name": "Harborside Restaurant Group",
   "entity_type": "llc",
@@ -280,7 +280,7 @@
         "rows": [
           {
             "entry_date": "2026-06-07",
-            "entry_id": 3331,
+            "entry_id": 1491,
             "description": "Office rent",
             "payee": "Linen & Laundry",
             "source": "synthetic",
@@ -295,7 +295,7 @@
           },
           {
             "entry_date": "2026-06-07",
-            "entry_id": 3331,
+            "entry_id": 1491,
             "description": "Office rent",
             "payee": "Linen & Laundry",
             "source": "synthetic",
@@ -310,7 +310,7 @@
           },
           {
             "entry_date": "2026-06-07",
-            "entry_id": 3334,
+            "entry_id": 1494,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -325,7 +325,7 @@
           },
           {
             "entry_date": "2026-06-07",
-            "entry_id": 3334,
+            "entry_id": 1494,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -340,7 +340,7 @@
           },
           {
             "entry_date": "2026-06-08",
-            "entry_id": 3335,
+            "entry_id": 1495,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -355,7 +355,7 @@
           },
           {
             "entry_date": "2026-06-08",
-            "entry_id": 3335,
+            "entry_id": 1495,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -370,7 +370,7 @@
           },
           {
             "entry_date": "2026-06-09",
-            "entry_id": 3332,
+            "entry_id": 1492,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -385,7 +385,7 @@
           },
           {
             "entry_date": "2026-06-09",
-            "entry_id": 3332,
+            "entry_id": 1492,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -400,7 +400,7 @@
           },
           {
             "entry_date": "2026-06-09",
-            "entry_id": 3333,
+            "entry_id": 1493,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -415,7 +415,7 @@
           },
           {
             "entry_date": "2026-06-09",
-            "entry_id": 3333,
+            "entry_id": 1493,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -441,7 +441,7 @@
         "rows": [
           {
             "entry_date": "2026-04-02",
-            "entry_id": 3300,
+            "entry_id": 1460,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -456,7 +456,7 @@
           },
           {
             "entry_date": "2026-04-02",
-            "entry_id": 3300,
+            "entry_id": 1460,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -471,7 +471,7 @@
           },
           {
             "entry_date": "2026-04-02",
-            "entry_id": 3302,
+            "entry_id": 1462,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -486,7 +486,7 @@
           },
           {
             "entry_date": "2026-04-02",
-            "entry_id": 3302,
+            "entry_id": 1462,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -501,7 +501,7 @@
           },
           {
             "entry_date": "2026-04-02",
-            "entry_id": 3303,
+            "entry_id": 1463,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -516,7 +516,7 @@
           },
           {
             "entry_date": "2026-04-02",
-            "entry_id": 3303,
+            "entry_id": 1463,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -531,7 +531,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3233,
+            "entry_id": 1393,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -546,7 +546,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3233,
+            "entry_id": 1393,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -561,7 +561,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3666,
+            "entry_id": 1826,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -576,7 +576,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3666,
+            "entry_id": 1826,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -591,7 +591,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3666,
+            "entry_id": 1826,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -606,7 +606,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3666,
+            "entry_id": 1826,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -621,7 +621,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3666,
+            "entry_id": 1826,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -636,7 +636,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3666,
+            "entry_id": 1826,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -651,7 +651,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3666,
+            "entry_id": 1826,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -666,7 +666,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3667,
+            "entry_id": 1827,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -681,7 +681,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3667,
+            "entry_id": 1827,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -696,7 +696,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3667,
+            "entry_id": 1827,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -711,7 +711,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3667,
+            "entry_id": 1827,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -726,7 +726,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3667,
+            "entry_id": 1827,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -741,7 +741,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3667,
+            "entry_id": 1827,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -756,7 +756,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3667,
+            "entry_id": 1827,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -771,7 +771,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3668,
+            "entry_id": 1828,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -786,7 +786,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3668,
+            "entry_id": 1828,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -801,7 +801,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3668,
+            "entry_id": 1828,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -816,7 +816,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3668,
+            "entry_id": 1828,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -831,7 +831,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3668,
+            "entry_id": 1828,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -846,7 +846,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3668,
+            "entry_id": 1828,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -861,7 +861,7 @@
           },
           {
             "entry_date": "2026-04-04",
-            "entry_id": 3285,
+            "entry_id": 1445,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -876,7 +876,7 @@
           },
           {
             "entry_date": "2026-04-04",
-            "entry_id": 3285,
+            "entry_id": 1445,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -891,7 +891,7 @@
           },
           {
             "entry_date": "2026-04-04",
-            "entry_id": 3299,
+            "entry_id": 1459,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -906,7 +906,7 @@
           },
           {
             "entry_date": "2026-04-04",
-            "entry_id": 3299,
+            "entry_id": 1459,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -921,7 +921,7 @@
           },
           {
             "entry_date": "2026-04-05",
-            "entry_id": 3290,
+            "entry_id": 1450,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -936,7 +936,7 @@
           },
           {
             "entry_date": "2026-04-05",
-            "entry_id": 3290,
+            "entry_id": 1450,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -951,7 +951,7 @@
           },
           {
             "entry_date": "2026-04-07",
-            "entry_id": 3291,
+            "entry_id": 1451,
             "description": "Materials \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "bill",
@@ -966,7 +966,7 @@
           },
           {
             "entry_date": "2026-04-07",
-            "entry_id": 3291,
+            "entry_id": 1451,
             "description": "Materials \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "bill",
@@ -981,7 +981,7 @@
           },
           {
             "entry_date": "2026-04-07",
-            "entry_id": 3293,
+            "entry_id": 1453,
             "description": "Office rent",
             "payee": "Utilities Group",
             "source": "synthetic",
@@ -996,7 +996,7 @@
           },
           {
             "entry_date": "2026-04-07",
-            "entry_id": 3293,
+            "entry_id": 1453,
             "description": "Office rent",
             "payee": "Utilities Group",
             "source": "synthetic",
@@ -1011,7 +1011,7 @@
           },
           {
             "entry_date": "2026-04-09",
-            "entry_id": 3278,
+            "entry_id": 1438,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -1026,7 +1026,7 @@
           },
           {
             "entry_date": "2026-04-09",
-            "entry_id": 3278,
+            "entry_id": 1438,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -1041,7 +1041,7 @@
           },
           {
             "entry_date": "2026-04-09",
-            "entry_id": 3288,
+            "entry_id": 1448,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -1056,7 +1056,7 @@
           },
           {
             "entry_date": "2026-04-09",
-            "entry_id": 3288,
+            "entry_id": 1448,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -1071,7 +1071,7 @@
           },
           {
             "entry_date": "2026-04-10",
-            "entry_id": 3268,
+            "entry_id": 1428,
             "description": "Bill paid \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "ap_payment",
@@ -1086,7 +1086,7 @@
           },
           {
             "entry_date": "2026-04-10",
-            "entry_id": 3268,
+            "entry_id": 1428,
             "description": "Bill paid \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "ap_payment",
@@ -1101,7 +1101,7 @@
           },
           {
             "entry_date": "2026-04-10",
-            "entry_id": 3274,
+            "entry_id": 1434,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -1116,7 +1116,7 @@
           },
           {
             "entry_date": "2026-04-10",
-            "entry_id": 3274,
+            "entry_id": 1434,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -1131,7 +1131,7 @@
           },
           {
             "entry_date": "2026-04-11",
-            "entry_id": 3276,
+            "entry_id": 1436,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -1146,7 +1146,7 @@
           },
           {
             "entry_date": "2026-04-11",
-            "entry_id": 3276,
+            "entry_id": 1436,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -1161,7 +1161,7 @@
           },
           {
             "entry_date": "2026-04-13",
-            "entry_id": 3307,
+            "entry_id": 1467,
             "description": "Materials \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "bill",
@@ -1176,7 +1176,7 @@
           },
           {
             "entry_date": "2026-04-13",
-            "entry_id": 3307,
+            "entry_id": 1467,
             "description": "Materials \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "bill",
@@ -1191,7 +1191,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3297,
+            "entry_id": 1457,
             "description": "Materials \u2014 Linen & Laundry",
             "payee": "Linen & Laundry",
             "source": "bill",
@@ -1206,7 +1206,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3297,
+            "entry_id": 1457,
             "description": "Materials \u2014 Linen & Laundry",
             "payee": "Linen & Laundry",
             "source": "bill",
@@ -1221,7 +1221,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3669,
+            "entry_id": 1829,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1236,7 +1236,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3669,
+            "entry_id": 1829,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1251,7 +1251,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3669,
+            "entry_id": 1829,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1266,7 +1266,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3669,
+            "entry_id": 1829,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1281,7 +1281,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3669,
+            "entry_id": 1829,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1296,7 +1296,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3669,
+            "entry_id": 1829,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1311,7 +1311,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3670,
+            "entry_id": 1830,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1326,7 +1326,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3670,
+            "entry_id": 1830,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1341,7 +1341,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3670,
+            "entry_id": 1830,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1356,7 +1356,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3670,
+            "entry_id": 1830,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1371,7 +1371,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3670,
+            "entry_id": 1830,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1386,7 +1386,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3670,
+            "entry_id": 1830,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1401,7 +1401,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3671,
+            "entry_id": 1831,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1416,7 +1416,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3671,
+            "entry_id": 1831,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1431,7 +1431,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3671,
+            "entry_id": 1831,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1446,7 +1446,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3671,
+            "entry_id": 1831,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1461,7 +1461,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3671,
+            "entry_id": 1831,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1476,7 +1476,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3671,
+            "entry_id": 1831,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1491,7 +1491,7 @@
           },
           {
             "entry_date": "2026-04-18",
-            "entry_id": 3258,
+            "entry_id": 1418,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -1506,7 +1506,7 @@
           },
           {
             "entry_date": "2026-04-18",
-            "entry_id": 3258,
+            "entry_id": 1418,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -1521,7 +1521,7 @@
           },
           {
             "entry_date": "2026-04-19",
-            "entry_id": 3301,
+            "entry_id": 1461,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -1536,7 +1536,7 @@
           },
           {
             "entry_date": "2026-04-19",
-            "entry_id": 3301,
+            "entry_id": 1461,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -1551,7 +1551,7 @@
           },
           {
             "entry_date": "2026-04-22",
-            "entry_id": 3286,
+            "entry_id": 1446,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -1566,7 +1566,7 @@
           },
           {
             "entry_date": "2026-04-22",
-            "entry_id": 3286,
+            "entry_id": 1446,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -1581,7 +1581,7 @@
           },
           {
             "entry_date": "2026-04-23",
-            "entry_id": 3261,
+            "entry_id": 1421,
             "description": "Bill paid \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "ap_payment",
@@ -1596,7 +1596,7 @@
           },
           {
             "entry_date": "2026-04-23",
-            "entry_id": 3261,
+            "entry_id": 1421,
             "description": "Bill paid \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "ap_payment",
@@ -1611,7 +1611,7 @@
           },
           {
             "entry_date": "2026-04-23",
-            "entry_id": 3294,
+            "entry_id": 1454,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -1626,7 +1626,7 @@
           },
           {
             "entry_date": "2026-04-23",
-            "entry_id": 3294,
+            "entry_id": 1454,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -1641,7 +1641,7 @@
           },
           {
             "entry_date": "2026-04-24",
-            "entry_id": 3304,
+            "entry_id": 1464,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -1656,7 +1656,7 @@
           },
           {
             "entry_date": "2026-04-24",
-            "entry_id": 3304,
+            "entry_id": 1464,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -1671,7 +1671,7 @@
           },
           {
             "entry_date": "2026-04-24",
-            "entry_id": 3305,
+            "entry_id": 1465,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -1686,7 +1686,7 @@
           },
           {
             "entry_date": "2026-04-24",
-            "entry_id": 3305,
+            "entry_id": 1465,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -1701,7 +1701,7 @@
           },
           {
             "entry_date": "2026-04-25",
-            "entry_id": 3289,
+            "entry_id": 1449,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -1716,7 +1716,7 @@
           },
           {
             "entry_date": "2026-04-25",
-            "entry_id": 3289,
+            "entry_id": 1449,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -1731,7 +1731,7 @@
           },
           {
             "entry_date": "2026-04-25",
-            "entry_id": 3295,
+            "entry_id": 1455,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -1746,7 +1746,7 @@
           },
           {
             "entry_date": "2026-04-25",
-            "entry_id": 3295,
+            "entry_id": 1455,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -1761,7 +1761,7 @@
           },
           {
             "entry_date": "2026-04-26",
-            "entry_id": 3272,
+            "entry_id": 1432,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -1776,7 +1776,7 @@
           },
           {
             "entry_date": "2026-04-26",
-            "entry_id": 3272,
+            "entry_id": 1432,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -1791,7 +1791,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3309,
+            "entry_id": 1469,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -1806,7 +1806,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3309,
+            "entry_id": 1469,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -1821,7 +1821,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3310,
+            "entry_id": 1470,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -1836,7 +1836,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3310,
+            "entry_id": 1470,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -1851,7 +1851,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3311,
+            "entry_id": 1471,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -1866,7 +1866,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3311,
+            "entry_id": 1471,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -1881,7 +1881,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3312,
+            "entry_id": 1472,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -1896,7 +1896,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3312,
+            "entry_id": 1472,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -1911,7 +1911,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3672,
+            "entry_id": 1832,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1926,7 +1926,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3672,
+            "entry_id": 1832,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1941,7 +1941,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3672,
+            "entry_id": 1832,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1956,7 +1956,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3672,
+            "entry_id": 1832,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1971,7 +1971,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3672,
+            "entry_id": 1832,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -1986,7 +1986,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3672,
+            "entry_id": 1832,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2001,7 +2001,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3673,
+            "entry_id": 1833,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2016,7 +2016,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3673,
+            "entry_id": 1833,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2031,7 +2031,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3673,
+            "entry_id": 1833,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2046,7 +2046,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3673,
+            "entry_id": 1833,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2061,7 +2061,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3673,
+            "entry_id": 1833,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2076,7 +2076,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3673,
+            "entry_id": 1833,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2091,7 +2091,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3674,
+            "entry_id": 1834,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2106,7 +2106,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3674,
+            "entry_id": 1834,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2121,7 +2121,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3674,
+            "entry_id": 1834,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2136,7 +2136,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3674,
+            "entry_id": 1834,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2151,7 +2151,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3674,
+            "entry_id": 1834,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2166,7 +2166,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3674,
+            "entry_id": 1834,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2181,7 +2181,7 @@
           },
           {
             "entry_date": "2026-05-03",
-            "entry_id": 3292,
+            "entry_id": 1452,
             "description": "Bill paid \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "ap_payment",
@@ -2196,7 +2196,7 @@
           },
           {
             "entry_date": "2026-05-03",
-            "entry_id": 3292,
+            "entry_id": 1452,
             "description": "Bill paid \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "ap_payment",
@@ -2211,7 +2211,7 @@
           },
           {
             "entry_date": "2026-05-03",
-            "entry_id": 3323,
+            "entry_id": 1483,
             "description": "Office rent",
             "payee": "Beverage Distributor",
             "source": "synthetic",
@@ -2226,7 +2226,7 @@
           },
           {
             "entry_date": "2026-05-03",
-            "entry_id": 3323,
+            "entry_id": 1483,
             "description": "Office rent",
             "payee": "Beverage Distributor",
             "source": "synthetic",
@@ -2241,7 +2241,7 @@
           },
           {
             "entry_date": "2026-05-04",
-            "entry_id": 3319,
+            "entry_id": 1479,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -2256,7 +2256,7 @@
           },
           {
             "entry_date": "2026-05-04",
-            "entry_id": 3319,
+            "entry_id": 1479,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -2271,7 +2271,7 @@
           },
           {
             "entry_date": "2026-05-05",
-            "entry_id": 3313,
+            "entry_id": 1473,
             "description": "Office rent",
             "payee": "Restaurant Supply Co",
             "source": "synthetic",
@@ -2286,7 +2286,7 @@
           },
           {
             "entry_date": "2026-05-05",
-            "entry_id": 3313,
+            "entry_id": 1473,
             "description": "Office rent",
             "payee": "Restaurant Supply Co",
             "source": "synthetic",
@@ -2301,7 +2301,7 @@
           },
           {
             "entry_date": "2026-05-07",
-            "entry_id": 3315,
+            "entry_id": 1475,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -2316,7 +2316,7 @@
           },
           {
             "entry_date": "2026-05-07",
-            "entry_id": 3315,
+            "entry_id": 1475,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -2331,7 +2331,7 @@
           },
           {
             "entry_date": "2026-05-07",
-            "entry_id": 3324,
+            "entry_id": 1484,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -2346,7 +2346,7 @@
           },
           {
             "entry_date": "2026-05-07",
-            "entry_id": 3324,
+            "entry_id": 1484,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -2361,7 +2361,7 @@
           },
           {
             "entry_date": "2026-05-08",
-            "entry_id": 3314,
+            "entry_id": 1474,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -2376,7 +2376,7 @@
           },
           {
             "entry_date": "2026-05-08",
-            "entry_id": 3314,
+            "entry_id": 1474,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -2391,7 +2391,7 @@
           },
           {
             "entry_date": "2026-05-09",
-            "entry_id": 3318,
+            "entry_id": 1478,
             "description": "Materials \u2014 Seafood Direct",
             "payee": "Seafood Direct",
             "source": "bill",
@@ -2406,7 +2406,7 @@
           },
           {
             "entry_date": "2026-05-09",
-            "entry_id": 3318,
+            "entry_id": 1478,
             "description": "Materials \u2014 Seafood Direct",
             "payee": "Seafood Direct",
             "source": "bill",
@@ -2421,7 +2421,7 @@
           },
           {
             "entry_date": "2026-05-11",
-            "entry_id": 3308,
+            "entry_id": 1468,
             "description": "Bill paid \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "ap_payment",
@@ -2436,7 +2436,7 @@
           },
           {
             "entry_date": "2026-05-11",
-            "entry_id": 3308,
+            "entry_id": 1468,
             "description": "Bill paid \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "ap_payment",
@@ -2451,7 +2451,7 @@
           },
           {
             "entry_date": "2026-05-11",
-            "entry_id": 3320,
+            "entry_id": 1480,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -2466,7 +2466,7 @@
           },
           {
             "entry_date": "2026-05-11",
-            "entry_id": 3320,
+            "entry_id": 1480,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -2481,7 +2481,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3287,
+            "entry_id": 1447,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -2496,7 +2496,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3287,
+            "entry_id": 1447,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -2511,7 +2511,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3675,
+            "entry_id": 1835,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2526,7 +2526,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3675,
+            "entry_id": 1835,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2541,7 +2541,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3675,
+            "entry_id": 1835,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2556,7 +2556,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3675,
+            "entry_id": 1835,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2571,7 +2571,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3675,
+            "entry_id": 1835,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2586,7 +2586,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3675,
+            "entry_id": 1835,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2601,7 +2601,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3676,
+            "entry_id": 1836,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2616,7 +2616,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3676,
+            "entry_id": 1836,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2631,7 +2631,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3676,
+            "entry_id": 1836,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2646,7 +2646,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3676,
+            "entry_id": 1836,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2661,7 +2661,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3676,
+            "entry_id": 1836,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2676,7 +2676,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3676,
+            "entry_id": 1836,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2691,7 +2691,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3677,
+            "entry_id": 1837,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2706,7 +2706,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3677,
+            "entry_id": 1837,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2721,7 +2721,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3677,
+            "entry_id": 1837,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2736,7 +2736,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3677,
+            "entry_id": 1837,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2751,7 +2751,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3677,
+            "entry_id": 1837,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2766,7 +2766,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3677,
+            "entry_id": 1837,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -2781,7 +2781,7 @@
           },
           {
             "entry_date": "2026-05-17",
-            "entry_id": 3322,
+            "entry_id": 1482,
             "description": "Materials \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "bill",
@@ -2796,7 +2796,7 @@
           },
           {
             "entry_date": "2026-05-17",
-            "entry_id": 3322,
+            "entry_id": 1482,
             "description": "Materials \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "bill",
@@ -2811,7 +2811,7 @@
           },
           {
             "entry_date": "2026-05-18",
-            "entry_id": 3321,
+            "entry_id": 1481,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -2826,7 +2826,7 @@
           },
           {
             "entry_date": "2026-05-18",
-            "entry_id": 3321,
+            "entry_id": 1481,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -2841,7 +2841,7 @@
           },
           {
             "entry_date": "2026-05-18",
-            "entry_id": 3325,
+            "entry_id": 1485,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -2856,7 +2856,7 @@
           },
           {
             "entry_date": "2026-05-18",
-            "entry_id": 3325,
+            "entry_id": 1485,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -2871,7 +2871,7 @@
           },
           {
             "entry_date": "2026-05-19",
-            "entry_id": 3298,
+            "entry_id": 1458,
             "description": "Bill paid \u2014 Linen & Laundry",
             "payee": "Linen & Laundry",
             "source": "ap_payment",
@@ -2886,7 +2886,7 @@
           },
           {
             "entry_date": "2026-05-19",
-            "entry_id": 3298,
+            "entry_id": 1458,
             "description": "Bill paid \u2014 Linen & Laundry",
             "payee": "Linen & Laundry",
             "source": "ap_payment",
@@ -2901,7 +2901,7 @@
           },
           {
             "entry_date": "2026-05-20",
-            "entry_id": 3306,
+            "entry_id": 1466,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -2916,7 +2916,7 @@
           },
           {
             "entry_date": "2026-05-20",
-            "entry_id": 3306,
+            "entry_id": 1466,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -2931,7 +2931,7 @@
           },
           {
             "entry_date": "2026-05-20",
-            "entry_id": 3326,
+            "entry_id": 1486,
             "description": "Materials \u2014 Seafood Direct",
             "payee": "Seafood Direct",
             "source": "bill",
@@ -2946,7 +2946,7 @@
           },
           {
             "entry_date": "2026-05-20",
-            "entry_id": 3326,
+            "entry_id": 1486,
             "description": "Materials \u2014 Seafood Direct",
             "payee": "Seafood Direct",
             "source": "bill",
@@ -2961,7 +2961,7 @@
           },
           {
             "entry_date": "2026-05-21",
-            "entry_id": 3296,
+            "entry_id": 1456,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -2976,7 +2976,7 @@
           },
           {
             "entry_date": "2026-05-21",
-            "entry_id": 3296,
+            "entry_id": 1456,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -2991,7 +2991,7 @@
           },
           {
             "entry_date": "2026-05-24",
-            "entry_id": 3317,
+            "entry_id": 1477,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -3006,7 +3006,7 @@
           },
           {
             "entry_date": "2026-05-24",
-            "entry_id": 3317,
+            "entry_id": 1477,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -3021,7 +3021,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3316,
+            "entry_id": 1476,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -3036,7 +3036,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3316,
+            "entry_id": 1476,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -3051,7 +3051,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3327,
+            "entry_id": 1487,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -3066,7 +3066,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3327,
+            "entry_id": 1487,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -3081,7 +3081,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3328,
+            "entry_id": 1488,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -3096,7 +3096,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3328,
+            "entry_id": 1488,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -3111,7 +3111,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3329,
+            "entry_id": 1489,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -3126,7 +3126,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3329,
+            "entry_id": 1489,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -3141,7 +3141,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3330,
+            "entry_id": 1490,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -3156,7 +3156,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3330,
+            "entry_id": 1490,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -3171,7 +3171,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3678,
+            "entry_id": 1838,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3186,7 +3186,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3678,
+            "entry_id": 1838,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3201,7 +3201,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3678,
+            "entry_id": 1838,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3216,7 +3216,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3678,
+            "entry_id": 1838,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3231,7 +3231,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3678,
+            "entry_id": 1838,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3246,7 +3246,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3678,
+            "entry_id": 1838,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3261,7 +3261,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3679,
+            "entry_id": 1839,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3276,7 +3276,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3679,
+            "entry_id": 1839,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3291,7 +3291,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3679,
+            "entry_id": 1839,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3306,7 +3306,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3679,
+            "entry_id": 1839,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3321,7 +3321,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3679,
+            "entry_id": 1839,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3336,7 +3336,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3679,
+            "entry_id": 1839,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3351,7 +3351,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3680,
+            "entry_id": 1840,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3366,7 +3366,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3680,
+            "entry_id": 1840,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3381,7 +3381,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3680,
+            "entry_id": 1840,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3396,7 +3396,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3680,
+            "entry_id": 1840,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3411,7 +3411,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3680,
+            "entry_id": 1840,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3426,7 +3426,7 @@
           },
           {
             "entry_date": "2026-05-29",
-            "entry_id": 3680,
+            "entry_id": 1840,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -3441,7 +3441,7 @@
           },
           {
             "entry_date": "2026-06-07",
-            "entry_id": 3331,
+            "entry_id": 1491,
             "description": "Office rent",
             "payee": "Linen & Laundry",
             "source": "synthetic",
@@ -3456,7 +3456,7 @@
           },
           {
             "entry_date": "2026-06-07",
-            "entry_id": 3331,
+            "entry_id": 1491,
             "description": "Office rent",
             "payee": "Linen & Laundry",
             "source": "synthetic",
@@ -3471,7 +3471,7 @@
           },
           {
             "entry_date": "2026-06-07",
-            "entry_id": 3334,
+            "entry_id": 1494,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -3486,7 +3486,7 @@
           },
           {
             "entry_date": "2026-06-07",
-            "entry_id": 3334,
+            "entry_id": 1494,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -3501,7 +3501,7 @@
           },
           {
             "entry_date": "2026-06-08",
-            "entry_id": 3335,
+            "entry_id": 1495,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -3516,7 +3516,7 @@
           },
           {
             "entry_date": "2026-06-08",
-            "entry_id": 3335,
+            "entry_id": 1495,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -3531,7 +3531,7 @@
           },
           {
             "entry_date": "2026-06-09",
-            "entry_id": 3332,
+            "entry_id": 1492,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -3546,7 +3546,7 @@
           },
           {
             "entry_date": "2026-06-09",
-            "entry_id": 3332,
+            "entry_id": 1492,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -3561,7 +3561,7 @@
           },
           {
             "entry_date": "2026-06-09",
-            "entry_id": 3333,
+            "entry_id": 1493,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -3576,7 +3576,7 @@
           },
           {
             "entry_date": "2026-06-09",
-            "entry_id": 3333,
+            "entry_id": 1493,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -3602,7 +3602,7 @@
         "rows": [
           {
             "entry_date": "2026-01-01",
-            "entry_id": 3200,
+            "entry_id": 1360,
             "description": "Materials \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "bill",
@@ -3617,7 +3617,7 @@
           },
           {
             "entry_date": "2026-01-01",
-            "entry_id": 3200,
+            "entry_id": 1360,
             "description": "Materials \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "bill",
@@ -3632,7 +3632,7 @@
           },
           {
             "entry_date": "2026-01-02",
-            "entry_id": 3217,
+            "entry_id": 1377,
             "description": "Materials \u2014 Beverage Distributor",
             "payee": "Beverage Distributor",
             "source": "bill",
@@ -3647,7 +3647,7 @@
           },
           {
             "entry_date": "2026-01-02",
-            "entry_id": 3217,
+            "entry_id": 1377,
             "description": "Materials \u2014 Beverage Distributor",
             "payee": "Beverage Distributor",
             "source": "bill",
@@ -3662,7 +3662,7 @@
           },
           {
             "entry_date": "2026-01-03",
-            "entry_id": 3167,
+            "entry_id": 1327,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -3677,7 +3677,7 @@
           },
           {
             "entry_date": "2026-01-03",
-            "entry_id": 3167,
+            "entry_id": 1327,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -3692,7 +3692,7 @@
           },
           {
             "entry_date": "2026-01-04",
-            "entry_id": 3203,
+            "entry_id": 1363,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -3707,7 +3707,7 @@
           },
           {
             "entry_date": "2026-01-04",
-            "entry_id": 3203,
+            "entry_id": 1363,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -3722,7 +3722,7 @@
           },
           {
             "entry_date": "2026-01-04",
-            "entry_id": 3214,
+            "entry_id": 1374,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -3737,7 +3737,7 @@
           },
           {
             "entry_date": "2026-01-04",
-            "entry_id": 3214,
+            "entry_id": 1374,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -3752,7 +3752,7 @@
           },
           {
             "entry_date": "2026-01-05",
-            "entry_id": 3173,
+            "entry_id": 1333,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -3767,7 +3767,7 @@
           },
           {
             "entry_date": "2026-01-05",
-            "entry_id": 3173,
+            "entry_id": 1333,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -3782,7 +3782,7 @@
           },
           {
             "entry_date": "2026-01-05",
-            "entry_id": 3193,
+            "entry_id": 1353,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -3797,7 +3797,7 @@
           },
           {
             "entry_date": "2026-01-05",
-            "entry_id": 3193,
+            "entry_id": 1353,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -3812,7 +3812,7 @@
           },
           {
             "entry_date": "2026-01-05",
-            "entry_id": 3210,
+            "entry_id": 1370,
             "description": "Office rent",
             "payee": "Beverage Distributor",
             "source": "synthetic",
@@ -3827,7 +3827,7 @@
           },
           {
             "entry_date": "2026-01-05",
-            "entry_id": 3210,
+            "entry_id": 1370,
             "description": "Office rent",
             "payee": "Beverage Distributor",
             "source": "synthetic",
@@ -3842,7 +3842,7 @@
           },
           {
             "entry_date": "2026-01-06",
-            "entry_id": 3194,
+            "entry_id": 1354,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -3857,7 +3857,7 @@
           },
           {
             "entry_date": "2026-01-06",
-            "entry_id": 3194,
+            "entry_id": 1354,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -3872,7 +3872,7 @@
           },
           {
             "entry_date": "2026-01-07",
-            "entry_id": 3192,
+            "entry_id": 1352,
             "description": "Office rent",
             "payee": "Linen & Laundry",
             "source": "synthetic",
@@ -3887,7 +3887,7 @@
           },
           {
             "entry_date": "2026-01-07",
-            "entry_id": 3192,
+            "entry_id": 1352,
             "description": "Office rent",
             "payee": "Linen & Laundry",
             "source": "synthetic",
@@ -3902,7 +3902,7 @@
           },
           {
             "entry_date": "2026-01-07",
-            "entry_id": 3196,
+            "entry_id": 1356,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -3917,7 +3917,7 @@
           },
           {
             "entry_date": "2026-01-07",
-            "entry_id": 3196,
+            "entry_id": 1356,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -3932,7 +3932,7 @@
           },
           {
             "entry_date": "2026-01-07",
-            "entry_id": 3209,
+            "entry_id": 1369,
             "description": "Materials \u2014 Linen & Laundry",
             "payee": "Linen & Laundry",
             "source": "bill",
@@ -3947,7 +3947,7 @@
           },
           {
             "entry_date": "2026-01-07",
-            "entry_id": 3209,
+            "entry_id": 1369,
             "description": "Materials \u2014 Linen & Laundry",
             "payee": "Linen & Laundry",
             "source": "bill",
@@ -3962,7 +3962,7 @@
           },
           {
             "entry_date": "2026-01-08",
-            "entry_id": 3202,
+            "entry_id": 1362,
             "description": "Office rent",
             "payee": "Linen & Laundry",
             "source": "synthetic",
@@ -3977,7 +3977,7 @@
           },
           {
             "entry_date": "2026-01-08",
-            "entry_id": 3202,
+            "entry_id": 1362,
             "description": "Office rent",
             "payee": "Linen & Laundry",
             "source": "synthetic",
@@ -3992,7 +3992,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3184,
+            "entry_id": 1344,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -4007,7 +4007,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3184,
+            "entry_id": 1344,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -4022,7 +4022,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3648,
+            "entry_id": 1808,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4037,7 +4037,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3648,
+            "entry_id": 1808,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4052,7 +4052,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3648,
+            "entry_id": 1808,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4067,7 +4067,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3648,
+            "entry_id": 1808,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4082,7 +4082,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3648,
+            "entry_id": 1808,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4097,7 +4097,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3648,
+            "entry_id": 1808,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4112,7 +4112,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3648,
+            "entry_id": 1808,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4127,7 +4127,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3648,
+            "entry_id": 1808,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4142,7 +4142,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3649,
+            "entry_id": 1809,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4157,7 +4157,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3649,
+            "entry_id": 1809,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4172,7 +4172,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3649,
+            "entry_id": 1809,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4187,7 +4187,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3649,
+            "entry_id": 1809,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4202,7 +4202,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3649,
+            "entry_id": 1809,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4217,7 +4217,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3649,
+            "entry_id": 1809,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4232,7 +4232,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3649,
+            "entry_id": 1809,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4247,7 +4247,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3649,
+            "entry_id": 1809,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4262,7 +4262,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3650,
+            "entry_id": 1810,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4277,7 +4277,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3650,
+            "entry_id": 1810,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4292,7 +4292,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3650,
+            "entry_id": 1810,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4307,7 +4307,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3650,
+            "entry_id": 1810,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4322,7 +4322,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3650,
+            "entry_id": 1810,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4337,7 +4337,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3650,
+            "entry_id": 1810,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4352,7 +4352,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3650,
+            "entry_id": 1810,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4367,7 +4367,7 @@
           },
           {
             "entry_date": "2026-01-09",
-            "entry_id": 3650,
+            "entry_id": 1810,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4382,7 +4382,7 @@
           },
           {
             "entry_date": "2026-01-10",
-            "entry_id": 3205,
+            "entry_id": 1365,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -4397,7 +4397,7 @@
           },
           {
             "entry_date": "2026-01-10",
-            "entry_id": 3205,
+            "entry_id": 1365,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -4412,7 +4412,7 @@
           },
           {
             "entry_date": "2026-01-12",
-            "entry_id": 3204,
+            "entry_id": 1364,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -4427,7 +4427,7 @@
           },
           {
             "entry_date": "2026-01-12",
-            "entry_id": 3204,
+            "entry_id": 1364,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -4442,7 +4442,7 @@
           },
           {
             "entry_date": "2026-01-13",
-            "entry_id": 3198,
+            "entry_id": 1358,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -4457,7 +4457,7 @@
           },
           {
             "entry_date": "2026-01-13",
-            "entry_id": 3198,
+            "entry_id": 1358,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -4472,7 +4472,7 @@
           },
           {
             "entry_date": "2026-01-14",
-            "entry_id": 3207,
+            "entry_id": 1367,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -4487,7 +4487,7 @@
           },
           {
             "entry_date": "2026-01-14",
-            "entry_id": 3207,
+            "entry_id": 1367,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -4502,7 +4502,7 @@
           },
           {
             "entry_date": "2026-01-14",
-            "entry_id": 3211,
+            "entry_id": 1371,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -4517,7 +4517,7 @@
           },
           {
             "entry_date": "2026-01-14",
-            "entry_id": 3211,
+            "entry_id": 1371,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -4532,7 +4532,7 @@
           },
           {
             "entry_date": "2026-01-16",
-            "entry_id": 3201,
+            "entry_id": 1361,
             "description": "Bill paid \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "ap_payment",
@@ -4547,7 +4547,7 @@
           },
           {
             "entry_date": "2026-01-16",
-            "entry_id": 3201,
+            "entry_id": 1361,
             "description": "Bill paid \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "ap_payment",
@@ -4562,7 +4562,7 @@
           },
           {
             "entry_date": "2026-01-17",
-            "entry_id": 3169,
+            "entry_id": 1329,
             "description": "Bill paid \u2014 Seafood Direct",
             "payee": "Seafood Direct",
             "source": "ap_payment",
@@ -4577,7 +4577,7 @@
           },
           {
             "entry_date": "2026-01-17",
-            "entry_id": 3169,
+            "entry_id": 1329,
             "description": "Bill paid \u2014 Seafood Direct",
             "payee": "Seafood Direct",
             "source": "ap_payment",
@@ -4592,7 +4592,7 @@
           },
           {
             "entry_date": "2026-01-17",
-            "entry_id": 3197,
+            "entry_id": 1357,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -4607,7 +4607,7 @@
           },
           {
             "entry_date": "2026-01-17",
-            "entry_id": 3197,
+            "entry_id": 1357,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -4622,7 +4622,7 @@
           },
           {
             "entry_date": "2026-01-21",
-            "entry_id": 3218,
+            "entry_id": 1378,
             "description": "Bill paid \u2014 Beverage Distributor",
             "payee": "Beverage Distributor",
             "source": "ap_payment",
@@ -4637,7 +4637,7 @@
           },
           {
             "entry_date": "2026-01-21",
-            "entry_id": 3218,
+            "entry_id": 1378,
             "description": "Bill paid \u2014 Beverage Distributor",
             "payee": "Beverage Distributor",
             "source": "ap_payment",
@@ -4652,7 +4652,7 @@
           },
           {
             "entry_date": "2026-01-22",
-            "entry_id": 3195,
+            "entry_id": 1355,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -4667,7 +4667,7 @@
           },
           {
             "entry_date": "2026-01-22",
-            "entry_id": 3195,
+            "entry_id": 1355,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -4682,7 +4682,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3212,
+            "entry_id": 1372,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -4697,7 +4697,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3212,
+            "entry_id": 1372,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -4712,7 +4712,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3651,
+            "entry_id": 1811,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4727,7 +4727,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3651,
+            "entry_id": 1811,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4742,7 +4742,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3651,
+            "entry_id": 1811,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4757,7 +4757,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3651,
+            "entry_id": 1811,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4772,7 +4772,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3651,
+            "entry_id": 1811,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4787,7 +4787,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3651,
+            "entry_id": 1811,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4802,7 +4802,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3651,
+            "entry_id": 1811,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4817,7 +4817,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3651,
+            "entry_id": 1811,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4832,7 +4832,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3652,
+            "entry_id": 1812,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4847,7 +4847,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3652,
+            "entry_id": 1812,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4862,7 +4862,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3652,
+            "entry_id": 1812,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4877,7 +4877,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3652,
+            "entry_id": 1812,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4892,7 +4892,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3652,
+            "entry_id": 1812,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4907,7 +4907,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3652,
+            "entry_id": 1812,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4922,7 +4922,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3652,
+            "entry_id": 1812,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4937,7 +4937,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3652,
+            "entry_id": 1812,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4952,7 +4952,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3653,
+            "entry_id": 1813,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4967,7 +4967,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3653,
+            "entry_id": 1813,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4982,7 +4982,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3653,
+            "entry_id": 1813,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -4997,7 +4997,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3653,
+            "entry_id": 1813,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5012,7 +5012,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3653,
+            "entry_id": 1813,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5027,7 +5027,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3653,
+            "entry_id": 1813,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5042,7 +5042,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3653,
+            "entry_id": 1813,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5057,7 +5057,7 @@
           },
           {
             "entry_date": "2026-01-23",
-            "entry_id": 3653,
+            "entry_id": 1813,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5072,7 +5072,7 @@
           },
           {
             "entry_date": "2026-01-24",
-            "entry_id": 3199,
+            "entry_id": 1359,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -5087,7 +5087,7 @@
           },
           {
             "entry_date": "2026-01-24",
-            "entry_id": 3199,
+            "entry_id": 1359,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -5102,7 +5102,7 @@
           },
           {
             "entry_date": "2026-01-25",
-            "entry_id": 3215,
+            "entry_id": 1375,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -5117,7 +5117,7 @@
           },
           {
             "entry_date": "2026-01-25",
-            "entry_id": 3215,
+            "entry_id": 1375,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -5132,7 +5132,7 @@
           },
           {
             "entry_date": "2026-01-26",
-            "entry_id": 3206,
+            "entry_id": 1366,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -5147,7 +5147,7 @@
           },
           {
             "entry_date": "2026-01-26",
-            "entry_id": 3206,
+            "entry_id": 1366,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -5162,7 +5162,7 @@
           },
           {
             "entry_date": "2026-01-26",
-            "entry_id": 3219,
+            "entry_id": 1379,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -5177,7 +5177,7 @@
           },
           {
             "entry_date": "2026-01-26",
-            "entry_id": 3219,
+            "entry_id": 1379,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -5192,7 +5192,7 @@
           },
           {
             "entry_date": "2026-01-26",
-            "entry_id": 3220,
+            "entry_id": 1380,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -5207,7 +5207,7 @@
           },
           {
             "entry_date": "2026-01-26",
-            "entry_id": 3220,
+            "entry_id": 1380,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -5222,7 +5222,7 @@
           },
           {
             "entry_date": "2026-01-26",
-            "entry_id": 3221,
+            "entry_id": 1381,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -5237,7 +5237,7 @@
           },
           {
             "entry_date": "2026-01-26",
-            "entry_id": 3221,
+            "entry_id": 1381,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -5252,7 +5252,7 @@
           },
           {
             "entry_date": "2026-01-26",
-            "entry_id": 3222,
+            "entry_id": 1382,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -5267,7 +5267,7 @@
           },
           {
             "entry_date": "2026-01-26",
-            "entry_id": 3222,
+            "entry_id": 1382,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -5282,7 +5282,7 @@
           },
           {
             "entry_date": "2026-01-28",
-            "entry_id": 3208,
+            "entry_id": 1368,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -5297,7 +5297,7 @@
           },
           {
             "entry_date": "2026-01-28",
-            "entry_id": 3208,
+            "entry_id": 1368,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -5312,7 +5312,7 @@
           },
           {
             "entry_date": "2026-01-29",
-            "entry_id": 3177,
+            "entry_id": 1337,
             "description": "Bill paid \u2014 Linen & Laundry",
             "payee": "Linen & Laundry",
             "source": "ap_payment",
@@ -5327,7 +5327,7 @@
           },
           {
             "entry_date": "2026-01-29",
-            "entry_id": 3177,
+            "entry_id": 1337,
             "description": "Bill paid \u2014 Linen & Laundry",
             "payee": "Linen & Laundry",
             "source": "ap_payment",
@@ -5342,7 +5342,7 @@
           },
           {
             "entry_date": "2026-02-03",
-            "entry_id": 3231,
+            "entry_id": 1391,
             "description": "Office rent",
             "payee": "Seafood Direct",
             "source": "synthetic",
@@ -5357,7 +5357,7 @@
           },
           {
             "entry_date": "2026-02-03",
-            "entry_id": 3231,
+            "entry_id": 1391,
             "description": "Office rent",
             "payee": "Seafood Direct",
             "source": "synthetic",
@@ -5372,7 +5372,7 @@
           },
           {
             "entry_date": "2026-02-04",
-            "entry_id": 3224,
+            "entry_id": 1384,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -5387,7 +5387,7 @@
           },
           {
             "entry_date": "2026-02-04",
-            "entry_id": 3224,
+            "entry_id": 1384,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -5402,7 +5402,7 @@
           },
           {
             "entry_date": "2026-02-04",
-            "entry_id": 3237,
+            "entry_id": 1397,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -5417,7 +5417,7 @@
           },
           {
             "entry_date": "2026-02-04",
-            "entry_id": 3237,
+            "entry_id": 1397,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -5432,7 +5432,7 @@
           },
           {
             "entry_date": "2026-02-05",
-            "entry_id": 3213,
+            "entry_id": 1373,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -5447,7 +5447,7 @@
           },
           {
             "entry_date": "2026-02-05",
-            "entry_id": 3213,
+            "entry_id": 1373,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -5462,7 +5462,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3227,
+            "entry_id": 1387,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -5477,7 +5477,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3227,
+            "entry_id": 1387,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -5492,7 +5492,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3654,
+            "entry_id": 1814,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5507,7 +5507,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3654,
+            "entry_id": 1814,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5522,7 +5522,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3654,
+            "entry_id": 1814,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5537,7 +5537,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3654,
+            "entry_id": 1814,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5552,7 +5552,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3654,
+            "entry_id": 1814,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5567,7 +5567,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3654,
+            "entry_id": 1814,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5582,7 +5582,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3654,
+            "entry_id": 1814,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5597,7 +5597,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3654,
+            "entry_id": 1814,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5612,7 +5612,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3655,
+            "entry_id": 1815,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5627,7 +5627,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3655,
+            "entry_id": 1815,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5642,7 +5642,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3655,
+            "entry_id": 1815,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5657,7 +5657,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3655,
+            "entry_id": 1815,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5672,7 +5672,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3655,
+            "entry_id": 1815,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5687,7 +5687,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3655,
+            "entry_id": 1815,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5702,7 +5702,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3655,
+            "entry_id": 1815,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5717,7 +5717,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3655,
+            "entry_id": 1815,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5732,7 +5732,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3656,
+            "entry_id": 1816,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5747,7 +5747,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3656,
+            "entry_id": 1816,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5762,7 +5762,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3656,
+            "entry_id": 1816,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5777,7 +5777,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3656,
+            "entry_id": 1816,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5792,7 +5792,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3656,
+            "entry_id": 1816,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5807,7 +5807,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3656,
+            "entry_id": 1816,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5822,7 +5822,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3656,
+            "entry_id": 1816,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5837,7 +5837,7 @@
           },
           {
             "entry_date": "2026-02-06",
-            "entry_id": 3656,
+            "entry_id": 1816,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -5852,7 +5852,7 @@
           },
           {
             "entry_date": "2026-02-07",
-            "entry_id": 3223,
+            "entry_id": 1383,
             "description": "Office rent",
             "payee": "Linen & Laundry",
             "source": "synthetic",
@@ -5867,7 +5867,7 @@
           },
           {
             "entry_date": "2026-02-07",
-            "entry_id": 3223,
+            "entry_id": 1383,
             "description": "Office rent",
             "payee": "Linen & Laundry",
             "source": "synthetic",
@@ -5882,7 +5882,7 @@
           },
           {
             "entry_date": "2026-02-07",
-            "entry_id": 3241,
+            "entry_id": 1401,
             "description": "Office rent",
             "payee": "Restaurant Supply Co",
             "source": "synthetic",
@@ -5897,7 +5897,7 @@
           },
           {
             "entry_date": "2026-02-07",
-            "entry_id": 3241,
+            "entry_id": 1401,
             "description": "Office rent",
             "payee": "Restaurant Supply Co",
             "source": "synthetic",
@@ -5912,7 +5912,7 @@
           },
           {
             "entry_date": "2026-02-09",
-            "entry_id": 3249,
+            "entry_id": 1409,
             "description": "Materials \u2014 Beverage Distributor",
             "payee": "Beverage Distributor",
             "source": "bill",
@@ -5927,7 +5927,7 @@
           },
           {
             "entry_date": "2026-02-09",
-            "entry_id": 3249,
+            "entry_id": 1409,
             "description": "Materials \u2014 Beverage Distributor",
             "payee": "Beverage Distributor",
             "source": "bill",
@@ -5942,7 +5942,7 @@
           },
           {
             "entry_date": "2026-02-16",
-            "entry_id": 3244,
+            "entry_id": 1404,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -5957,7 +5957,7 @@
           },
           {
             "entry_date": "2026-02-16",
-            "entry_id": 3244,
+            "entry_id": 1404,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -5972,7 +5972,7 @@
           },
           {
             "entry_date": "2026-02-17",
-            "entry_id": 3247,
+            "entry_id": 1407,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -5987,7 +5987,7 @@
           },
           {
             "entry_date": "2026-02-17",
-            "entry_id": 3247,
+            "entry_id": 1407,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -6002,7 +6002,7 @@
           },
           {
             "entry_date": "2026-02-18",
-            "entry_id": 3245,
+            "entry_id": 1405,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -6017,7 +6017,7 @@
           },
           {
             "entry_date": "2026-02-18",
-            "entry_id": 3245,
+            "entry_id": 1405,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -6032,7 +6032,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3226,
+            "entry_id": 1386,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -6047,7 +6047,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3226,
+            "entry_id": 1386,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -6062,7 +6062,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3236,
+            "entry_id": 1396,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -6077,7 +6077,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3236,
+            "entry_id": 1396,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -6092,7 +6092,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3657,
+            "entry_id": 1817,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6107,7 +6107,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3657,
+            "entry_id": 1817,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6122,7 +6122,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3657,
+            "entry_id": 1817,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6137,7 +6137,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3657,
+            "entry_id": 1817,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6152,7 +6152,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3657,
+            "entry_id": 1817,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6167,7 +6167,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3657,
+            "entry_id": 1817,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6182,7 +6182,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3657,
+            "entry_id": 1817,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6197,7 +6197,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3657,
+            "entry_id": 1817,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6212,7 +6212,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3658,
+            "entry_id": 1818,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6227,7 +6227,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3658,
+            "entry_id": 1818,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6242,7 +6242,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3658,
+            "entry_id": 1818,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6257,7 +6257,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3658,
+            "entry_id": 1818,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6272,7 +6272,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3658,
+            "entry_id": 1818,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6287,7 +6287,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3658,
+            "entry_id": 1818,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6302,7 +6302,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3658,
+            "entry_id": 1818,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6317,7 +6317,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3658,
+            "entry_id": 1818,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6332,7 +6332,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3659,
+            "entry_id": 1819,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6347,7 +6347,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3659,
+            "entry_id": 1819,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6362,7 +6362,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3659,
+            "entry_id": 1819,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6377,7 +6377,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3659,
+            "entry_id": 1819,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6392,7 +6392,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3659,
+            "entry_id": 1819,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6407,7 +6407,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3659,
+            "entry_id": 1819,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6422,7 +6422,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3659,
+            "entry_id": 1819,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6437,7 +6437,7 @@
           },
           {
             "entry_date": "2026-02-20",
-            "entry_id": 3659,
+            "entry_id": 1819,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -6452,7 +6452,7 @@
           },
           {
             "entry_date": "2026-02-22",
-            "entry_id": 3225,
+            "entry_id": 1385,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -6467,7 +6467,7 @@
           },
           {
             "entry_date": "2026-02-22",
-            "entry_id": 3225,
+            "entry_id": 1385,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -6482,7 +6482,7 @@
           },
           {
             "entry_date": "2026-02-22",
-            "entry_id": 3239,
+            "entry_id": 1399,
             "description": "Materials \u2014 Fresh Produce Co",
             "payee": "Fresh Produce Co",
             "source": "bill",
@@ -6497,7 +6497,7 @@
           },
           {
             "entry_date": "2026-02-22",
-            "entry_id": 3239,
+            "entry_id": 1399,
             "description": "Materials \u2014 Fresh Produce Co",
             "payee": "Fresh Produce Co",
             "source": "bill",
@@ -6512,7 +6512,7 @@
           },
           {
             "entry_date": "2026-02-23",
-            "entry_id": 3242,
+            "entry_id": 1402,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -6527,7 +6527,7 @@
           },
           {
             "entry_date": "2026-02-23",
-            "entry_id": 3242,
+            "entry_id": 1402,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -6542,7 +6542,7 @@
           },
           {
             "entry_date": "2026-02-24",
-            "entry_id": 3232,
+            "entry_id": 1392,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -6557,7 +6557,7 @@
           },
           {
             "entry_date": "2026-02-24",
-            "entry_id": 3232,
+            "entry_id": 1392,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -6572,7 +6572,7 @@
           },
           {
             "entry_date": "2026-02-26",
-            "entry_id": 3229,
+            "entry_id": 1389,
             "description": "Materials \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "bill",
@@ -6587,7 +6587,7 @@
           },
           {
             "entry_date": "2026-02-26",
-            "entry_id": 3229,
+            "entry_id": 1389,
             "description": "Materials \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "bill",
@@ -6602,7 +6602,7 @@
           },
           {
             "entry_date": "2026-02-26",
-            "entry_id": 3234,
+            "entry_id": 1394,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -6617,7 +6617,7 @@
           },
           {
             "entry_date": "2026-02-26",
-            "entry_id": 3234,
+            "entry_id": 1394,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -6632,7 +6632,7 @@
           },
           {
             "entry_date": "2026-02-28",
-            "entry_id": 3251,
+            "entry_id": 1411,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -6647,7 +6647,7 @@
           },
           {
             "entry_date": "2026-02-28",
-            "entry_id": 3251,
+            "entry_id": 1411,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -6662,7 +6662,7 @@
           },
           {
             "entry_date": "2026-02-28",
-            "entry_id": 3252,
+            "entry_id": 1412,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -6677,7 +6677,7 @@
           },
           {
             "entry_date": "2026-02-28",
-            "entry_id": 3252,
+            "entry_id": 1412,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -6692,7 +6692,7 @@
           },
           {
             "entry_date": "2026-02-28",
-            "entry_id": 3253,
+            "entry_id": 1413,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -6707,7 +6707,7 @@
           },
           {
             "entry_date": "2026-02-28",
-            "entry_id": 3253,
+            "entry_id": 1413,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -6722,7 +6722,7 @@
           },
           {
             "entry_date": "2026-02-28",
-            "entry_id": 3254,
+            "entry_id": 1414,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -6737,7 +6737,7 @@
           },
           {
             "entry_date": "2026-02-28",
-            "entry_id": 3254,
+            "entry_id": 1414,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -6752,7 +6752,7 @@
           },
           {
             "entry_date": "2026-03-02",
-            "entry_id": 3259,
+            "entry_id": 1419,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -6767,7 +6767,7 @@
           },
           {
             "entry_date": "2026-03-02",
-            "entry_id": 3259,
+            "entry_id": 1419,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -6782,7 +6782,7 @@
           },
           {
             "entry_date": "2026-03-02",
-            "entry_id": 3275,
+            "entry_id": 1435,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -6797,7 +6797,7 @@
           },
           {
             "entry_date": "2026-03-02",
-            "entry_id": 3275,
+            "entry_id": 1435,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -6812,7 +6812,7 @@
           },
           {
             "entry_date": "2026-03-03",
-            "entry_id": 3216,
+            "entry_id": 1376,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -6827,7 +6827,7 @@
           },
           {
             "entry_date": "2026-03-03",
-            "entry_id": 3216,
+            "entry_id": 1376,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -6842,7 +6842,7 @@
           },
           {
             "entry_date": "2026-03-03",
-            "entry_id": 3250,
+            "entry_id": 1410,
             "description": "Bill paid \u2014 Beverage Distributor",
             "payee": "Beverage Distributor",
             "source": "ap_payment",
@@ -6857,7 +6857,7 @@
           },
           {
             "entry_date": "2026-03-03",
-            "entry_id": 3250,
+            "entry_id": 1410,
             "description": "Bill paid \u2014 Beverage Distributor",
             "payee": "Beverage Distributor",
             "source": "ap_payment",
@@ -6872,7 +6872,7 @@
           },
           {
             "entry_date": "2026-03-04",
-            "entry_id": 3238,
+            "entry_id": 1398,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -6887,7 +6887,7 @@
           },
           {
             "entry_date": "2026-03-04",
-            "entry_id": 3238,
+            "entry_id": 1398,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -6902,7 +6902,7 @@
           },
           {
             "entry_date": "2026-03-04",
-            "entry_id": 3265,
+            "entry_id": 1425,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -6917,7 +6917,7 @@
           },
           {
             "entry_date": "2026-03-04",
-            "entry_id": 3265,
+            "entry_id": 1425,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -6932,7 +6932,7 @@
           },
           {
             "entry_date": "2026-03-04",
-            "entry_id": 3270,
+            "entry_id": 1430,
             "description": "Office rent",
             "payee": "Utilities Group",
             "source": "synthetic",
@@ -6947,7 +6947,7 @@
           },
           {
             "entry_date": "2026-03-04",
-            "entry_id": 3270,
+            "entry_id": 1430,
             "description": "Office rent",
             "payee": "Utilities Group",
             "source": "synthetic",
@@ -6962,7 +6962,7 @@
           },
           {
             "entry_date": "2026-03-05",
-            "entry_id": 3255,
+            "entry_id": 1415,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -6977,7 +6977,7 @@
           },
           {
             "entry_date": "2026-03-05",
-            "entry_id": 3255,
+            "entry_id": 1415,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -6992,7 +6992,7 @@
           },
           {
             "entry_date": "2026-03-05",
-            "entry_id": 3277,
+            "entry_id": 1437,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -7007,7 +7007,7 @@
           },
           {
             "entry_date": "2026-03-05",
-            "entry_id": 3277,
+            "entry_id": 1437,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -7022,7 +7022,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3660,
+            "entry_id": 1820,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7037,7 +7037,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3660,
+            "entry_id": 1820,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7052,7 +7052,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3660,
+            "entry_id": 1820,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7067,7 +7067,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3660,
+            "entry_id": 1820,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7082,7 +7082,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3660,
+            "entry_id": 1820,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7097,7 +7097,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3660,
+            "entry_id": 1820,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7112,7 +7112,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3660,
+            "entry_id": 1820,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7127,7 +7127,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3660,
+            "entry_id": 1820,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7142,7 +7142,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3661,
+            "entry_id": 1821,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7157,7 +7157,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3661,
+            "entry_id": 1821,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7172,7 +7172,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3661,
+            "entry_id": 1821,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7187,7 +7187,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3661,
+            "entry_id": 1821,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7202,7 +7202,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3661,
+            "entry_id": 1821,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7217,7 +7217,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3661,
+            "entry_id": 1821,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7232,7 +7232,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3661,
+            "entry_id": 1821,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7247,7 +7247,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3661,
+            "entry_id": 1821,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7262,7 +7262,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3662,
+            "entry_id": 1822,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7277,7 +7277,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3662,
+            "entry_id": 1822,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7292,7 +7292,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3662,
+            "entry_id": 1822,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7307,7 +7307,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3662,
+            "entry_id": 1822,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7322,7 +7322,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3662,
+            "entry_id": 1822,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7337,7 +7337,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3662,
+            "entry_id": 1822,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7352,7 +7352,7 @@
           },
           {
             "entry_date": "2026-03-06",
-            "entry_id": 3662,
+            "entry_id": 1822,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7367,7 +7367,7 @@
           },
           {
             "entry_date": "2026-03-07",
-            "entry_id": 3263,
+            "entry_id": 1423,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -7382,7 +7382,7 @@
           },
           {
             "entry_date": "2026-03-07",
-            "entry_id": 3263,
+            "entry_id": 1423,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -7397,7 +7397,7 @@
           },
           {
             "entry_date": "2026-03-07",
-            "entry_id": 3273,
+            "entry_id": 1433,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -7412,7 +7412,7 @@
           },
           {
             "entry_date": "2026-03-07",
-            "entry_id": 3273,
+            "entry_id": 1433,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -7427,7 +7427,7 @@
           },
           {
             "entry_date": "2026-03-08",
-            "entry_id": 3246,
+            "entry_id": 1406,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -7442,7 +7442,7 @@
           },
           {
             "entry_date": "2026-03-08",
-            "entry_id": 3246,
+            "entry_id": 1406,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -7457,7 +7457,7 @@
           },
           {
             "entry_date": "2026-03-10",
-            "entry_id": 3228,
+            "entry_id": 1388,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -7472,7 +7472,7 @@
           },
           {
             "entry_date": "2026-03-10",
-            "entry_id": 3228,
+            "entry_id": 1388,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -7487,7 +7487,7 @@
           },
           {
             "entry_date": "2026-03-12",
-            "entry_id": 3280,
+            "entry_id": 1440,
             "description": "Estimated income tax",
             "payee": "Tax Authority",
             "source": "tax",
@@ -7502,7 +7502,7 @@
           },
           {
             "entry_date": "2026-03-12",
-            "entry_id": 3280,
+            "entry_id": 1440,
             "description": "Estimated income tax",
             "payee": "Tax Authority",
             "source": "tax",
@@ -7517,7 +7517,7 @@
           },
           {
             "entry_date": "2026-03-13",
-            "entry_id": 3262,
+            "entry_id": 1422,
             "description": "Estimated income tax",
             "payee": "Tax Authority",
             "source": "tax",
@@ -7532,7 +7532,7 @@
           },
           {
             "entry_date": "2026-03-13",
-            "entry_id": 3262,
+            "entry_id": 1422,
             "description": "Estimated income tax",
             "payee": "Tax Authority",
             "source": "tax",
@@ -7547,7 +7547,7 @@
           },
           {
             "entry_date": "2026-03-14",
-            "entry_id": 3269,
+            "entry_id": 1429,
             "description": "Estimated income tax",
             "payee": "Tax Authority",
             "source": "tax",
@@ -7562,7 +7562,7 @@
           },
           {
             "entry_date": "2026-03-14",
-            "entry_id": 3269,
+            "entry_id": 1429,
             "description": "Estimated income tax",
             "payee": "Tax Authority",
             "source": "tax",
@@ -7577,7 +7577,7 @@
           },
           {
             "entry_date": "2026-03-15",
-            "entry_id": 3256,
+            "entry_id": 1416,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -7592,7 +7592,7 @@
           },
           {
             "entry_date": "2026-03-15",
-            "entry_id": 3256,
+            "entry_id": 1416,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -7607,7 +7607,7 @@
           },
           {
             "entry_date": "2026-03-15",
-            "entry_id": 3257,
+            "entry_id": 1417,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -7622,7 +7622,7 @@
           },
           {
             "entry_date": "2026-03-15",
-            "entry_id": 3257,
+            "entry_id": 1417,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -7637,7 +7637,7 @@
           },
           {
             "entry_date": "2026-03-15",
-            "entry_id": 3264,
+            "entry_id": 1424,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -7652,7 +7652,7 @@
           },
           {
             "entry_date": "2026-03-15",
-            "entry_id": 3264,
+            "entry_id": 1424,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -7667,7 +7667,7 @@
           },
           {
             "entry_date": "2026-03-16",
-            "entry_id": 3230,
+            "entry_id": 1390,
             "description": "Bill paid \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "ap_payment",
@@ -7682,7 +7682,7 @@
           },
           {
             "entry_date": "2026-03-16",
-            "entry_id": 3230,
+            "entry_id": 1390,
             "description": "Bill paid \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "ap_payment",
@@ -7697,7 +7697,7 @@
           },
           {
             "entry_date": "2026-03-16",
-            "entry_id": 3240,
+            "entry_id": 1400,
             "description": "Bill paid \u2014 Fresh Produce Co",
             "payee": "Fresh Produce Co",
             "source": "ap_payment",
@@ -7712,7 +7712,7 @@
           },
           {
             "entry_date": "2026-03-16",
-            "entry_id": 3240,
+            "entry_id": 1400,
             "description": "Bill paid \u2014 Fresh Produce Co",
             "payee": "Fresh Produce Co",
             "source": "ap_payment",
@@ -7727,7 +7727,7 @@
           },
           {
             "entry_date": "2026-03-17",
-            "entry_id": 3260,
+            "entry_id": 1420,
             "description": "Materials \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "bill",
@@ -7742,7 +7742,7 @@
           },
           {
             "entry_date": "2026-03-17",
-            "entry_id": 3260,
+            "entry_id": 1420,
             "description": "Materials \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "bill",
@@ -7757,7 +7757,7 @@
           },
           {
             "entry_date": "2026-03-17",
-            "entry_id": 3279,
+            "entry_id": 1439,
             "description": "Materials \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "bill",
@@ -7772,7 +7772,7 @@
           },
           {
             "entry_date": "2026-03-17",
-            "entry_id": 3279,
+            "entry_id": 1439,
             "description": "Materials \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "bill",
@@ -7787,7 +7787,7 @@
           },
           {
             "entry_date": "2026-03-18",
-            "entry_id": 3243,
+            "entry_id": 1403,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -7802,7 +7802,7 @@
           },
           {
             "entry_date": "2026-03-18",
-            "entry_id": 3243,
+            "entry_id": 1403,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -7817,7 +7817,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3663,
+            "entry_id": 1823,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7832,7 +7832,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3663,
+            "entry_id": 1823,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7847,7 +7847,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3663,
+            "entry_id": 1823,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7862,7 +7862,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3663,
+            "entry_id": 1823,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7877,7 +7877,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3663,
+            "entry_id": 1823,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7892,7 +7892,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3663,
+            "entry_id": 1823,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7907,7 +7907,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3663,
+            "entry_id": 1823,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7922,7 +7922,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3664,
+            "entry_id": 1824,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7937,7 +7937,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3664,
+            "entry_id": 1824,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7952,7 +7952,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3664,
+            "entry_id": 1824,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7967,7 +7967,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3664,
+            "entry_id": 1824,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7982,7 +7982,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3664,
+            "entry_id": 1824,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -7997,7 +7997,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3664,
+            "entry_id": 1824,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8012,7 +8012,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3664,
+            "entry_id": 1824,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8027,7 +8027,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3665,
+            "entry_id": 1825,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8042,7 +8042,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3665,
+            "entry_id": 1825,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8057,7 +8057,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3665,
+            "entry_id": 1825,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8072,7 +8072,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3665,
+            "entry_id": 1825,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8087,7 +8087,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3665,
+            "entry_id": 1825,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8102,7 +8102,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3665,
+            "entry_id": 1825,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8117,7 +8117,7 @@
           },
           {
             "entry_date": "2026-03-20",
-            "entry_id": 3665,
+            "entry_id": 1825,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8132,7 +8132,7 @@
           },
           {
             "entry_date": "2026-03-23",
-            "entry_id": 3267,
+            "entry_id": 1427,
             "description": "Materials \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "bill",
@@ -8147,7 +8147,7 @@
           },
           {
             "entry_date": "2026-03-23",
-            "entry_id": 3267,
+            "entry_id": 1427,
             "description": "Materials \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "bill",
@@ -8162,7 +8162,7 @@
           },
           {
             "entry_date": "2026-03-24",
-            "entry_id": 3271,
+            "entry_id": 1431,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -8177,7 +8177,7 @@
           },
           {
             "entry_date": "2026-03-24",
-            "entry_id": 3271,
+            "entry_id": 1431,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -8192,7 +8192,7 @@
           },
           {
             "entry_date": "2026-03-28",
-            "entry_id": 3235,
+            "entry_id": 1395,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -8207,7 +8207,7 @@
           },
           {
             "entry_date": "2026-03-28",
-            "entry_id": 3235,
+            "entry_id": 1395,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -8222,7 +8222,7 @@
           },
           {
             "entry_date": "2026-03-28",
-            "entry_id": 3248,
+            "entry_id": 1408,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -8237,7 +8237,7 @@
           },
           {
             "entry_date": "2026-03-28",
-            "entry_id": 3248,
+            "entry_id": 1408,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -8252,7 +8252,7 @@
           },
           {
             "entry_date": "2026-03-28",
-            "entry_id": 3281,
+            "entry_id": 1441,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -8267,7 +8267,7 @@
           },
           {
             "entry_date": "2026-03-28",
-            "entry_id": 3281,
+            "entry_id": 1441,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -8282,7 +8282,7 @@
           },
           {
             "entry_date": "2026-03-28",
-            "entry_id": 3282,
+            "entry_id": 1442,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -8297,7 +8297,7 @@
           },
           {
             "entry_date": "2026-03-28",
-            "entry_id": 3282,
+            "entry_id": 1442,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -8312,7 +8312,7 @@
           },
           {
             "entry_date": "2026-03-28",
-            "entry_id": 3283,
+            "entry_id": 1443,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -8327,7 +8327,7 @@
           },
           {
             "entry_date": "2026-03-28",
-            "entry_id": 3283,
+            "entry_id": 1443,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -8342,7 +8342,7 @@
           },
           {
             "entry_date": "2026-03-28",
-            "entry_id": 3284,
+            "entry_id": 1444,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -8357,7 +8357,7 @@
           },
           {
             "entry_date": "2026-03-28",
-            "entry_id": 3284,
+            "entry_id": 1444,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -8372,7 +8372,7 @@
           },
           {
             "entry_date": "2026-03-30",
-            "entry_id": 3266,
+            "entry_id": 1426,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -8387,7 +8387,7 @@
           },
           {
             "entry_date": "2026-03-30",
-            "entry_id": 3266,
+            "entry_id": 1426,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -8402,7 +8402,7 @@
           },
           {
             "entry_date": "2026-04-02",
-            "entry_id": 3300,
+            "entry_id": 1460,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -8417,7 +8417,7 @@
           },
           {
             "entry_date": "2026-04-02",
-            "entry_id": 3300,
+            "entry_id": 1460,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -8432,7 +8432,7 @@
           },
           {
             "entry_date": "2026-04-02",
-            "entry_id": 3302,
+            "entry_id": 1462,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -8447,7 +8447,7 @@
           },
           {
             "entry_date": "2026-04-02",
-            "entry_id": 3302,
+            "entry_id": 1462,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -8462,7 +8462,7 @@
           },
           {
             "entry_date": "2026-04-02",
-            "entry_id": 3303,
+            "entry_id": 1463,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -8477,7 +8477,7 @@
           },
           {
             "entry_date": "2026-04-02",
-            "entry_id": 3303,
+            "entry_id": 1463,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -8492,7 +8492,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3233,
+            "entry_id": 1393,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -8507,7 +8507,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3233,
+            "entry_id": 1393,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -8522,7 +8522,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3666,
+            "entry_id": 1826,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8537,7 +8537,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3666,
+            "entry_id": 1826,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8552,7 +8552,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3666,
+            "entry_id": 1826,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8567,7 +8567,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3666,
+            "entry_id": 1826,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8582,7 +8582,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3666,
+            "entry_id": 1826,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8597,7 +8597,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3666,
+            "entry_id": 1826,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8612,7 +8612,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3666,
+            "entry_id": 1826,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8627,7 +8627,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3667,
+            "entry_id": 1827,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8642,7 +8642,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3667,
+            "entry_id": 1827,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8657,7 +8657,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3667,
+            "entry_id": 1827,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8672,7 +8672,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3667,
+            "entry_id": 1827,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8687,7 +8687,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3667,
+            "entry_id": 1827,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8702,7 +8702,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3667,
+            "entry_id": 1827,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8717,7 +8717,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3667,
+            "entry_id": 1827,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8732,7 +8732,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3668,
+            "entry_id": 1828,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8747,7 +8747,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3668,
+            "entry_id": 1828,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8762,7 +8762,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3668,
+            "entry_id": 1828,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8777,7 +8777,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3668,
+            "entry_id": 1828,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8792,7 +8792,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3668,
+            "entry_id": 1828,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8807,7 +8807,7 @@
           },
           {
             "entry_date": "2026-04-03",
-            "entry_id": 3668,
+            "entry_id": 1828,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -8822,7 +8822,7 @@
           },
           {
             "entry_date": "2026-04-04",
-            "entry_id": 3285,
+            "entry_id": 1445,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -8837,7 +8837,7 @@
           },
           {
             "entry_date": "2026-04-04",
-            "entry_id": 3285,
+            "entry_id": 1445,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -8852,7 +8852,7 @@
           },
           {
             "entry_date": "2026-04-04",
-            "entry_id": 3299,
+            "entry_id": 1459,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -8867,7 +8867,7 @@
           },
           {
             "entry_date": "2026-04-04",
-            "entry_id": 3299,
+            "entry_id": 1459,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -8882,7 +8882,7 @@
           },
           {
             "entry_date": "2026-04-05",
-            "entry_id": 3290,
+            "entry_id": 1450,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -8897,7 +8897,7 @@
           },
           {
             "entry_date": "2026-04-05",
-            "entry_id": 3290,
+            "entry_id": 1450,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -8912,7 +8912,7 @@
           },
           {
             "entry_date": "2026-04-07",
-            "entry_id": 3291,
+            "entry_id": 1451,
             "description": "Materials \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "bill",
@@ -8927,7 +8927,7 @@
           },
           {
             "entry_date": "2026-04-07",
-            "entry_id": 3291,
+            "entry_id": 1451,
             "description": "Materials \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "bill",
@@ -8942,7 +8942,7 @@
           },
           {
             "entry_date": "2026-04-07",
-            "entry_id": 3293,
+            "entry_id": 1453,
             "description": "Office rent",
             "payee": "Utilities Group",
             "source": "synthetic",
@@ -8957,7 +8957,7 @@
           },
           {
             "entry_date": "2026-04-07",
-            "entry_id": 3293,
+            "entry_id": 1453,
             "description": "Office rent",
             "payee": "Utilities Group",
             "source": "synthetic",
@@ -8972,7 +8972,7 @@
           },
           {
             "entry_date": "2026-04-09",
-            "entry_id": 3278,
+            "entry_id": 1438,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -8987,7 +8987,7 @@
           },
           {
             "entry_date": "2026-04-09",
-            "entry_id": 3278,
+            "entry_id": 1438,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -9002,7 +9002,7 @@
           },
           {
             "entry_date": "2026-04-09",
-            "entry_id": 3288,
+            "entry_id": 1448,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -9017,7 +9017,7 @@
           },
           {
             "entry_date": "2026-04-09",
-            "entry_id": 3288,
+            "entry_id": 1448,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -9032,7 +9032,7 @@
           },
           {
             "entry_date": "2026-04-10",
-            "entry_id": 3268,
+            "entry_id": 1428,
             "description": "Bill paid \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "ap_payment",
@@ -9047,7 +9047,7 @@
           },
           {
             "entry_date": "2026-04-10",
-            "entry_id": 3268,
+            "entry_id": 1428,
             "description": "Bill paid \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "ap_payment",
@@ -9062,7 +9062,7 @@
           },
           {
             "entry_date": "2026-04-10",
-            "entry_id": 3274,
+            "entry_id": 1434,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -9077,7 +9077,7 @@
           },
           {
             "entry_date": "2026-04-10",
-            "entry_id": 3274,
+            "entry_id": 1434,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -9092,7 +9092,7 @@
           },
           {
             "entry_date": "2026-04-11",
-            "entry_id": 3276,
+            "entry_id": 1436,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -9107,7 +9107,7 @@
           },
           {
             "entry_date": "2026-04-11",
-            "entry_id": 3276,
+            "entry_id": 1436,
             "description": "Payment \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "ar_payment",
@@ -9122,7 +9122,7 @@
           },
           {
             "entry_date": "2026-04-13",
-            "entry_id": 3307,
+            "entry_id": 1467,
             "description": "Materials \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "bill",
@@ -9137,7 +9137,7 @@
           },
           {
             "entry_date": "2026-04-13",
-            "entry_id": 3307,
+            "entry_id": 1467,
             "description": "Materials \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "bill",
@@ -9152,7 +9152,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3297,
+            "entry_id": 1457,
             "description": "Materials \u2014 Linen & Laundry",
             "payee": "Linen & Laundry",
             "source": "bill",
@@ -9167,7 +9167,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3297,
+            "entry_id": 1457,
             "description": "Materials \u2014 Linen & Laundry",
             "payee": "Linen & Laundry",
             "source": "bill",
@@ -9182,7 +9182,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3669,
+            "entry_id": 1829,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9197,7 +9197,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3669,
+            "entry_id": 1829,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9212,7 +9212,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3669,
+            "entry_id": 1829,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9227,7 +9227,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3669,
+            "entry_id": 1829,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9242,7 +9242,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3669,
+            "entry_id": 1829,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9257,7 +9257,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3669,
+            "entry_id": 1829,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9272,7 +9272,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3670,
+            "entry_id": 1830,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9287,7 +9287,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3670,
+            "entry_id": 1830,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9302,7 +9302,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3670,
+            "entry_id": 1830,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9317,7 +9317,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3670,
+            "entry_id": 1830,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9332,7 +9332,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3670,
+            "entry_id": 1830,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9347,7 +9347,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3670,
+            "entry_id": 1830,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9362,7 +9362,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3671,
+            "entry_id": 1831,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9377,7 +9377,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3671,
+            "entry_id": 1831,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9392,7 +9392,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3671,
+            "entry_id": 1831,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9407,7 +9407,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3671,
+            "entry_id": 1831,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9422,7 +9422,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3671,
+            "entry_id": 1831,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9437,7 +9437,7 @@
           },
           {
             "entry_date": "2026-04-17",
-            "entry_id": 3671,
+            "entry_id": 1831,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9452,7 +9452,7 @@
           },
           {
             "entry_date": "2026-04-18",
-            "entry_id": 3258,
+            "entry_id": 1418,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -9467,7 +9467,7 @@
           },
           {
             "entry_date": "2026-04-18",
-            "entry_id": 3258,
+            "entry_id": 1418,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -9482,7 +9482,7 @@
           },
           {
             "entry_date": "2026-04-19",
-            "entry_id": 3301,
+            "entry_id": 1461,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -9497,7 +9497,7 @@
           },
           {
             "entry_date": "2026-04-19",
-            "entry_id": 3301,
+            "entry_id": 1461,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -9512,7 +9512,7 @@
           },
           {
             "entry_date": "2026-04-22",
-            "entry_id": 3286,
+            "entry_id": 1446,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -9527,7 +9527,7 @@
           },
           {
             "entry_date": "2026-04-22",
-            "entry_id": 3286,
+            "entry_id": 1446,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -9542,7 +9542,7 @@
           },
           {
             "entry_date": "2026-04-23",
-            "entry_id": 3261,
+            "entry_id": 1421,
             "description": "Bill paid \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "ap_payment",
@@ -9557,7 +9557,7 @@
           },
           {
             "entry_date": "2026-04-23",
-            "entry_id": 3261,
+            "entry_id": 1421,
             "description": "Bill paid \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "ap_payment",
@@ -9572,7 +9572,7 @@
           },
           {
             "entry_date": "2026-04-23",
-            "entry_id": 3294,
+            "entry_id": 1454,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -9587,7 +9587,7 @@
           },
           {
             "entry_date": "2026-04-23",
-            "entry_id": 3294,
+            "entry_id": 1454,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -9602,7 +9602,7 @@
           },
           {
             "entry_date": "2026-04-24",
-            "entry_id": 3304,
+            "entry_id": 1464,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -9617,7 +9617,7 @@
           },
           {
             "entry_date": "2026-04-24",
-            "entry_id": 3304,
+            "entry_id": 1464,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -9632,7 +9632,7 @@
           },
           {
             "entry_date": "2026-04-24",
-            "entry_id": 3305,
+            "entry_id": 1465,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -9647,7 +9647,7 @@
           },
           {
             "entry_date": "2026-04-24",
-            "entry_id": 3305,
+            "entry_id": 1465,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -9662,7 +9662,7 @@
           },
           {
             "entry_date": "2026-04-25",
-            "entry_id": 3289,
+            "entry_id": 1449,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -9677,7 +9677,7 @@
           },
           {
             "entry_date": "2026-04-25",
-            "entry_id": 3289,
+            "entry_id": 1449,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -9692,7 +9692,7 @@
           },
           {
             "entry_date": "2026-04-25",
-            "entry_id": 3295,
+            "entry_id": 1455,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -9707,7 +9707,7 @@
           },
           {
             "entry_date": "2026-04-25",
-            "entry_id": 3295,
+            "entry_id": 1455,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -9722,7 +9722,7 @@
           },
           {
             "entry_date": "2026-04-26",
-            "entry_id": 3272,
+            "entry_id": 1432,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -9737,7 +9737,7 @@
           },
           {
             "entry_date": "2026-04-26",
-            "entry_id": 3272,
+            "entry_id": 1432,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -9752,7 +9752,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3309,
+            "entry_id": 1469,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -9767,7 +9767,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3309,
+            "entry_id": 1469,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -9782,7 +9782,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3310,
+            "entry_id": 1470,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -9797,7 +9797,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3310,
+            "entry_id": 1470,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -9812,7 +9812,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3311,
+            "entry_id": 1471,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -9827,7 +9827,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3311,
+            "entry_id": 1471,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -9842,7 +9842,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3312,
+            "entry_id": 1472,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -9857,7 +9857,7 @@
           },
           {
             "entry_date": "2026-04-28",
-            "entry_id": 3312,
+            "entry_id": 1472,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -9872,7 +9872,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3672,
+            "entry_id": 1832,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9887,7 +9887,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3672,
+            "entry_id": 1832,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9902,7 +9902,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3672,
+            "entry_id": 1832,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9917,7 +9917,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3672,
+            "entry_id": 1832,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9932,7 +9932,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3672,
+            "entry_id": 1832,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9947,7 +9947,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3672,
+            "entry_id": 1832,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9962,7 +9962,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3673,
+            "entry_id": 1833,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9977,7 +9977,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3673,
+            "entry_id": 1833,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -9992,7 +9992,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3673,
+            "entry_id": 1833,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10007,7 +10007,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3673,
+            "entry_id": 1833,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10022,7 +10022,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3673,
+            "entry_id": 1833,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10037,7 +10037,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3673,
+            "entry_id": 1833,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10052,7 +10052,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3674,
+            "entry_id": 1834,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10067,7 +10067,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3674,
+            "entry_id": 1834,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10082,7 +10082,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3674,
+            "entry_id": 1834,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10097,7 +10097,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3674,
+            "entry_id": 1834,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10112,7 +10112,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3674,
+            "entry_id": 1834,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10127,7 +10127,7 @@
           },
           {
             "entry_date": "2026-05-01",
-            "entry_id": 3674,
+            "entry_id": 1834,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10142,7 +10142,7 @@
           },
           {
             "entry_date": "2026-05-03",
-            "entry_id": 3292,
+            "entry_id": 1452,
             "description": "Bill paid \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "ap_payment",
@@ -10157,7 +10157,7 @@
           },
           {
             "entry_date": "2026-05-03",
-            "entry_id": 3292,
+            "entry_id": 1452,
             "description": "Bill paid \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "ap_payment",
@@ -10172,7 +10172,7 @@
           },
           {
             "entry_date": "2026-05-03",
-            "entry_id": 3323,
+            "entry_id": 1483,
             "description": "Office rent",
             "payee": "Beverage Distributor",
             "source": "synthetic",
@@ -10187,7 +10187,7 @@
           },
           {
             "entry_date": "2026-05-03",
-            "entry_id": 3323,
+            "entry_id": 1483,
             "description": "Office rent",
             "payee": "Beverage Distributor",
             "source": "synthetic",
@@ -10202,7 +10202,7 @@
           },
           {
             "entry_date": "2026-05-04",
-            "entry_id": 3319,
+            "entry_id": 1479,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -10217,7 +10217,7 @@
           },
           {
             "entry_date": "2026-05-04",
-            "entry_id": 3319,
+            "entry_id": 1479,
             "description": "Office rent",
             "payee": "Fresh Produce Co",
             "source": "synthetic",
@@ -10232,7 +10232,7 @@
           },
           {
             "entry_date": "2026-05-05",
-            "entry_id": 3313,
+            "entry_id": 1473,
             "description": "Office rent",
             "payee": "Restaurant Supply Co",
             "source": "synthetic",
@@ -10247,7 +10247,7 @@
           },
           {
             "entry_date": "2026-05-05",
-            "entry_id": 3313,
+            "entry_id": 1473,
             "description": "Office rent",
             "payee": "Restaurant Supply Co",
             "source": "synthetic",
@@ -10262,7 +10262,7 @@
           },
           {
             "entry_date": "2026-05-07",
-            "entry_id": 3315,
+            "entry_id": 1475,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -10277,7 +10277,7 @@
           },
           {
             "entry_date": "2026-05-07",
-            "entry_id": 3315,
+            "entry_id": 1475,
             "description": "Invoice \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "invoice",
@@ -10292,7 +10292,7 @@
           },
           {
             "entry_date": "2026-05-07",
-            "entry_id": 3324,
+            "entry_id": 1484,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -10307,7 +10307,7 @@
           },
           {
             "entry_date": "2026-05-07",
-            "entry_id": 3324,
+            "entry_id": 1484,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -10322,7 +10322,7 @@
           },
           {
             "entry_date": "2026-05-08",
-            "entry_id": 3314,
+            "entry_id": 1474,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -10337,7 +10337,7 @@
           },
           {
             "entry_date": "2026-05-08",
-            "entry_id": 3314,
+            "entry_id": 1474,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -10352,7 +10352,7 @@
           },
           {
             "entry_date": "2026-05-09",
-            "entry_id": 3318,
+            "entry_id": 1478,
             "description": "Materials \u2014 Seafood Direct",
             "payee": "Seafood Direct",
             "source": "bill",
@@ -10367,7 +10367,7 @@
           },
           {
             "entry_date": "2026-05-09",
-            "entry_id": 3318,
+            "entry_id": 1478,
             "description": "Materials \u2014 Seafood Direct",
             "payee": "Seafood Direct",
             "source": "bill",
@@ -10382,7 +10382,7 @@
           },
           {
             "entry_date": "2026-05-11",
-            "entry_id": 3308,
+            "entry_id": 1468,
             "description": "Bill paid \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "ap_payment",
@@ -10397,7 +10397,7 @@
           },
           {
             "entry_date": "2026-05-11",
-            "entry_id": 3308,
+            "entry_id": 1468,
             "description": "Bill paid \u2014 Utilities Group",
             "payee": "Utilities Group",
             "source": "ap_payment",
@@ -10412,7 +10412,7 @@
           },
           {
             "entry_date": "2026-05-11",
-            "entry_id": 3320,
+            "entry_id": 1480,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -10427,7 +10427,7 @@
           },
           {
             "entry_date": "2026-05-11",
-            "entry_id": 3320,
+            "entry_id": 1480,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -10442,7 +10442,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3287,
+            "entry_id": 1447,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -10457,7 +10457,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3287,
+            "entry_id": 1447,
             "description": "Payment \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "ar_payment",
@@ -10472,7 +10472,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3675,
+            "entry_id": 1835,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10487,7 +10487,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3675,
+            "entry_id": 1835,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10502,7 +10502,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3675,
+            "entry_id": 1835,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10517,7 +10517,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3675,
+            "entry_id": 1835,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10532,7 +10532,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3675,
+            "entry_id": 1835,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10547,7 +10547,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3675,
+            "entry_id": 1835,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10562,7 +10562,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3676,
+            "entry_id": 1836,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10577,7 +10577,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3676,
+            "entry_id": 1836,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10592,7 +10592,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3676,
+            "entry_id": 1836,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10607,7 +10607,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3676,
+            "entry_id": 1836,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10622,7 +10622,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3676,
+            "entry_id": 1836,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10637,7 +10637,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3676,
+            "entry_id": 1836,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10652,7 +10652,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3677,
+            "entry_id": 1837,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10667,7 +10667,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3677,
+            "entry_id": 1837,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10682,7 +10682,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3677,
+            "entry_id": 1837,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10697,7 +10697,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3677,
+            "entry_id": 1837,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10712,7 +10712,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3677,
+            "entry_id": 1837,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10727,7 +10727,7 @@
           },
           {
             "entry_date": "2026-05-15",
-            "entry_id": 3677,
+            "entry_id": 1837,
             "description": "Payroll",
             "payee": "Payroll",
             "source": "payroll",
@@ -10742,7 +10742,7 @@
           },
           {
             "entry_date": "2026-05-17",
-            "entry_id": 3322,
+            "entry_id": 1482,
             "description": "Materials \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "bill",
@@ -10757,7 +10757,7 @@
           },
           {
             "entry_date": "2026-05-17",
-            "entry_id": 3322,
+            "entry_id": 1482,
             "description": "Materials \u2014 Restaurant Supply Co",
             "payee": "Restaurant Supply Co",
             "source": "bill",
@@ -10772,7 +10772,7 @@
           },
           {
             "entry_date": "2026-05-18",
-            "entry_id": 3321,
+            "entry_id": 1481,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -10787,7 +10787,7 @@
           },
           {
             "entry_date": "2026-05-18",
-            "entry_id": 3321,
+            "entry_id": 1481,
             "description": "Invoice \u2014 Event Booking",
             "payee": "Event Booking",
             "source": "invoice",
@@ -10802,7 +10802,7 @@
           },
           {
             "entry_date": "2026-05-18",
-            "entry_id": 3325,
+            "entry_id": 1485,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -10817,7 +10817,7 @@
           },
           {
             "entry_date": "2026-05-18",
-            "entry_id": 3325,
+            "entry_id": 1485,
             "description": "Invoice \u2014 Walk-in",
             "payee": "Walk-in",
             "source": "invoice",
@@ -10832,7 +10832,7 @@
           },
           {
             "entry_date": "2026-05-19",
-            "entry_id": 3298,
+            "entry_id": 1458,
             "description": "Bill paid \u2014 Linen & Laundry",
             "payee": "Linen & Laundry",
             "source": "ap_payment",
@@ -10847,7 +10847,7 @@
           },
           {
             "entry_date": "2026-05-19",
-            "entry_id": 3298,
+            "entry_id": 1458,
             "description": "Bill paid \u2014 Linen & Laundry",
             "payee": "Linen & Laundry",
             "source": "ap_payment",
@@ -10862,7 +10862,7 @@
           },
           {
             "entry_date": "2026-05-20",
-            "entry_id": 3306,
+            "entry_id": 1466,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -10877,7 +10877,7 @@
           },
           {
             "entry_date": "2026-05-20",
-            "entry_id": 3306,
+            "entry_id": 1466,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -10892,7 +10892,7 @@
           },
           {
             "entry_date": "2026-05-20",
-            "entry_id": 3326,
+            "entry_id": 1486,
             "description": "Materials \u2014 Seafood Direct",
             "payee": "Seafood Direct",
             "source": "bill",
@@ -10907,7 +10907,7 @@
           },
           {
             "entry_date": "2026-05-20",
-            "entry_id": 3326,
+            "entry_id": 1486,
             "description": "Materials \u2014 Seafood Direct",
             "payee": "Seafood Direct",
             "source": "bill",
@@ -10922,7 +10922,7 @@
           },
           {
             "entry_date": "2026-05-21",
-            "entry_id": 3296,
+            "entry_id": 1456,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -10937,7 +10937,7 @@
           },
           {
             "entry_date": "2026-05-21",
-            "entry_id": 3296,
+            "entry_id": 1456,
             "description": "Payment \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "ar_payment",
@@ -10952,7 +10952,7 @@
           },
           {
             "entry_date": "2026-05-24",
-            "entry_id": 3317,
+            "entry_id": 1477,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -10967,7 +10967,7 @@
           },
           {
             "entry_date": "2026-05-24",
-            "entry_id": 3317,
+            "entry_id": 1477,
             "description": "Invoice \u2014 Delivery Apps",
             "payee": "Delivery Apps",
             "source": "invoice",
@@ -10982,7 +10982,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3316,
+            "entry_id": 1476,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -10997,7 +10997,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3316,
+            "entry_id": 1476,
             "description": "Payment \u2014 Catering Client",
             "payee": "Catering Client",
             "source": "ar_payment",
@@ -11012,7 +11012,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3327,
+            "entry_id": 1487,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -11027,7 +11027,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3327,
+            "entry_id": 1487,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -11042,7 +11042,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3328,
+            "entry_id": 1488,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -11057,7 +11057,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3328,
+            "entry_id": 1488,
             "description": "Inter-company management fee (expense)",
             "payee": "Internal",
             "source": "intercompany",
@@ -11072,7 +11072,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3329,
+            "entry_id": 1489,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",
@@ -11087,7 +11087,7 @@
           },
           {
             "entry_date": "2026-05-26",
-            "entry_id": 3329,
+            "entry_id": 1489,
             "description": "Inter-company management fee (revenue)",
             "payee": "Internal",
             "source": "intercompany",

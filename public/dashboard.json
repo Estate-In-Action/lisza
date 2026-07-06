@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T19:26:16Z",
+  "generated_at": "2026-07-06T19:37:33Z",
   "prefs": {
     "layout": "tile",
     "card_fields": [
@@ -15,7 +15,7 @@
       "display_name": "Guitar Works",
       "entity_type": "llc",
       "status": "active",
-      "cash": -655374.64,
+      "cash": -650156.89,
       "open_ar": 179352.57,
       "open_ap": 63496.38,
       "ar_count": 23,
@@ -133,43 +133,6 @@
       ]
     },
     {
-      "slug": "_house",
-      "display_name": "House (My Books)",
-      "entity_type": null,
-      "status": "active",
-      "cash": null,
-      "open_ar": null,
-      "open_ap": null,
-      "ar_count": null,
-      "ap_count": null,
-      "entity_count": 1,
-      "consolidates": false,
-      "last_entry": null,
-      "next_filing_due": null,
-      "automation_profile": {
-        "reports": {
-          "weekly_digest": true,
-          "monthly_close": true,
-          "quarterly_packet": true
-        },
-        "filing_cadence": "quarterly",
-        "sales_tax_jurisdictions": [],
-        "active_window": "1y",
-        "payroll_schedule": "none",
-        "delivery": "dashboard"
-      },
-      "due_jobs": [
-        {
-          "key": "weekly_digest",
-          "label": "Weekly digest",
-          "due_date": "2026-07-06",
-          "status": "due_now",
-          "source": "profile.reports",
-          "approval_required": true
-        }
-      ]
-    },
-    {
       "slug": "jb-design",
       "display_name": "J.B. Design",
       "entity_type": "sole_prop",
@@ -182,7 +145,7 @@
       "entity_count": 1,
       "consolidates": false,
       "last_entry": "2026-06-08",
-      "next_filing_due": "2027-04-15",
+      "next_filing_due": "2026-07-31",
       "automation_profile": {
         "reports": {
           "weekly_digest": true,
@@ -211,6 +174,14 @@
           "status": "due_now",
           "source": "profile.reports",
           "approval_required": true
+        },
+        {
+          "key": "quarterly_packet",
+          "label": "Quarterly packet",
+          "due_date": "2026-07-17",
+          "status": "upcoming",
+          "source": "next_filing_due",
+          "approval_required": true
         }
       ]
     },
@@ -219,11 +190,11 @@
       "display_name": "Lakeside Bakery",
       "entity_type": null,
       "status": "active",
-      "cash": 0.0,
-      "open_ar": 0.0,
-      "open_ap": 0.0,
-      "ar_count": 0,
-      "ap_count": 0,
+      "cash": null,
+      "open_ar": null,
+      "open_ap": null,
+      "ar_count": null,
+      "ap_count": null,
       "entity_count": 1,
       "consolidates": false,
       "last_entry": null,
@@ -251,5 +222,209 @@
         }
       ]
     }
-  ]
+  ],
+  "workflow": {
+    "summary": {
+      "pending_approval": 12,
+      "approved": 0,
+      "skipped": 0,
+      "completed": 0,
+      "failed": 0,
+      "blocked": 0
+    },
+    "jobs": [
+      {
+        "workflow_job_id": 1,
+        "client_slug": "guitar-works",
+        "client_name": "Guitar Works",
+        "job_key": "monthly_close",
+        "label": "Monthly close review",
+        "due_date": "2026-07-05",
+        "planner_status": "due_now",
+        "workflow_status": "pending_approval",
+        "source": "last_entry_date",
+        "approval_required": 1,
+        "planned_at": "2026-07-06 19:36:39",
+        "decided_at": null,
+        "executed_at": null,
+        "updated_at": "2026-07-06 19:37:33"
+      },
+      {
+        "workflow_job_id": 2,
+        "client_slug": "harborside-group",
+        "client_name": "Harborside Restaurant Group",
+        "job_key": "monthly_close",
+        "label": "Monthly close review",
+        "due_date": "2026-07-05",
+        "planner_status": "due_now",
+        "workflow_status": "pending_approval",
+        "source": "last_entry_date",
+        "approval_required": 1,
+        "planned_at": "2026-07-06 19:36:39",
+        "decided_at": null,
+        "executed_at": null,
+        "updated_at": "2026-07-06 19:37:33"
+      },
+      {
+        "workflow_job_id": 3,
+        "client_slug": "jb-design",
+        "client_name": "J.B. Design",
+        "job_key": "monthly_close",
+        "label": "Monthly close review",
+        "due_date": "2026-07-05",
+        "planner_status": "due_now",
+        "workflow_status": "pending_approval",
+        "source": "last_entry_date",
+        "approval_required": 1,
+        "planned_at": "2026-07-06 19:36:39",
+        "decided_at": null,
+        "executed_at": null,
+        "updated_at": "2026-07-06 19:37:33"
+      },
+      {
+        "workflow_job_id": 4,
+        "client_slug": "guitar-works",
+        "client_name": "Guitar Works",
+        "job_key": "payroll_review",
+        "label": "Payroll liability review",
+        "due_date": "2026-07-06",
+        "planner_status": "due_now",
+        "workflow_status": "pending_approval",
+        "source": "profile.payroll_schedule",
+        "approval_required": 1,
+        "planned_at": "2026-07-06 19:36:39",
+        "decided_at": null,
+        "executed_at": null,
+        "updated_at": "2026-07-06 19:37:33"
+      },
+      {
+        "workflow_job_id": 5,
+        "client_slug": "guitar-works",
+        "client_name": "Guitar Works",
+        "job_key": "weekly_digest",
+        "label": "Weekly digest",
+        "due_date": "2026-07-06",
+        "planner_status": "due_now",
+        "workflow_status": "pending_approval",
+        "source": "profile.reports",
+        "approval_required": 1,
+        "planned_at": "2026-07-06 19:36:39",
+        "decided_at": null,
+        "executed_at": null,
+        "updated_at": "2026-07-06 19:37:33"
+      },
+      {
+        "workflow_job_id": 6,
+        "client_slug": "harborside-group",
+        "client_name": "Harborside Restaurant Group",
+        "job_key": "payroll_review",
+        "label": "Payroll liability review",
+        "due_date": "2026-07-06",
+        "planner_status": "due_now",
+        "workflow_status": "pending_approval",
+        "source": "profile.payroll_schedule",
+        "approval_required": 1,
+        "planned_at": "2026-07-06 19:36:39",
+        "decided_at": null,
+        "executed_at": null,
+        "updated_at": "2026-07-06 19:37:33"
+      },
+      {
+        "workflow_job_id": 7,
+        "client_slug": "harborside-group",
+        "client_name": "Harborside Restaurant Group",
+        "job_key": "weekly_digest",
+        "label": "Weekly digest",
+        "due_date": "2026-07-06",
+        "planner_status": "due_now",
+        "workflow_status": "pending_approval",
+        "source": "profile.reports",
+        "approval_required": 1,
+        "planned_at": "2026-07-06 19:36:39",
+        "decided_at": null,
+        "executed_at": null,
+        "updated_at": "2026-07-06 19:37:33"
+      },
+      {
+        "workflow_job_id": 8,
+        "client_slug": "jb-design",
+        "client_name": "J.B. Design",
+        "job_key": "weekly_digest",
+        "label": "Weekly digest",
+        "due_date": "2026-07-06",
+        "planner_status": "due_now",
+        "workflow_status": "pending_approval",
+        "source": "profile.reports",
+        "approval_required": 1,
+        "planned_at": "2026-07-06 19:36:39",
+        "decided_at": null,
+        "executed_at": null,
+        "updated_at": "2026-07-06 19:37:33"
+      },
+      {
+        "workflow_job_id": 9,
+        "client_slug": "lakeside-bakery",
+        "client_name": "Lakeside Bakery",
+        "job_key": "weekly_digest",
+        "label": "Weekly digest",
+        "due_date": "2026-07-06",
+        "planner_status": "due_now",
+        "workflow_status": "pending_approval",
+        "source": "profile.reports",
+        "approval_required": 1,
+        "planned_at": "2026-07-06 19:36:39",
+        "decided_at": null,
+        "executed_at": null,
+        "updated_at": "2026-07-06 19:37:33"
+      },
+      {
+        "workflow_job_id": 10,
+        "client_slug": "guitar-works",
+        "client_name": "Guitar Works",
+        "job_key": "quarterly_packet",
+        "label": "Quarterly packet",
+        "due_date": "2026-07-17",
+        "planner_status": "upcoming",
+        "workflow_status": "pending_approval",
+        "source": "next_filing_due",
+        "approval_required": 1,
+        "planned_at": "2026-07-06 19:36:39",
+        "decided_at": null,
+        "executed_at": null,
+        "updated_at": "2026-07-06 19:37:33"
+      },
+      {
+        "workflow_job_id": 11,
+        "client_slug": "harborside-group",
+        "client_name": "Harborside Restaurant Group",
+        "job_key": "quarterly_packet",
+        "label": "Quarterly packet",
+        "due_date": "2026-07-17",
+        "planner_status": "upcoming",
+        "workflow_status": "pending_approval",
+        "source": "next_filing_due",
+        "approval_required": 1,
+        "planned_at": "2026-07-06 19:36:39",
+        "decided_at": null,
+        "executed_at": null,
+        "updated_at": "2026-07-06 19:37:33"
+      },
+      {
+        "workflow_job_id": 12,
+        "client_slug": "jb-design",
+        "client_name": "J.B. Design",
+        "job_key": "quarterly_packet",
+        "label": "Quarterly packet",
+        "due_date": "2026-07-17",
+        "planner_status": "upcoming",
+        "workflow_status": "pending_approval",
+        "source": "next_filing_due",
+        "approval_required": 1,
+        "planned_at": "2026-07-06 19:36:39",
+        "decided_at": null,
+        "executed_at": null,
+        "updated_at": "2026-07-06 19:37:33"
+      }
+    ]
+  }
 }
