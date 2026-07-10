@@ -118,3 +118,14 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 > - **Single immutable `AccountingLedgerEntry`** — every document posts to one ledger table (`party, account, debit, credit, referenceType, referenceName, reverted, reverts`). Adjustments are **reversal entries, never edits/deletes** — matches LISZA's add-don't-subtract rule and validates the untracked `ledger_tools.py` reversal/adjusting-entry direction.
 > - **Tree chart-of-accounts** (`isTree`, `parentAccount`, `rootType` = Asset/Liability/Equity/Income/Expense) — confirms LISZA's `income` (not `revenue`) choice; a parent-account tree is the upgrade path when the flat COA outgrows itself.
 > - **`NumberSeries` as a first-class entity** — document numbering (invoice #, journal #) is configurable data, not hardcoded.
+
+### New workstream — Frappe Books alignment (2026-07-09)
+
+- [x] **Phase 1: accounting workspace shell** — move LISZA from dashboard-first
+  to document-first UX. First slice: persistent left nav, dashboard as one
+  destination, read-only indexes for Invoices / Bills / Journal Entries / Party
+  directory, no ledger-engine rewrite. Implemented 2026-07-10 as the live
+  proof shell at `https://dadadanja.zo.space/lisza/workspace`; legacy route
+  remains available at `https://dadadanja.zo.space/lisza/console` while the new
+  shell proves itself. Implementation note:
+  `docs/plans/2026-07-09-frappe-books-alignment.md`
