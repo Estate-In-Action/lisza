@@ -150,18 +150,24 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 > `[Finance-first]` below. Items that merely deepen an existing "later extension"
 > note are marked `(extends: …)`.
 
+> **First wave shipped 2026-07-11** — the money loop now closes (open invoice →
+> payment → aging → cash flow). Payment application/reconciliation, AR/AP aging,
+> and the cash flow statement are live in v2 (see checked items below). XLSX bank
+> import added alongside the existing CSV path. Remaining A/B/C/D items stay the
+> committed backlog; C-bucket new modules still confirm-first before file creation.
+
 ### A. Money movement & billing depth (highest leverage; mostly `[Finance-first]`)
-- [ ] **Payment application & reconciliation** — record a payment and allocate it across one/many invoices or bills; partial payments, deposits, over/underpayment handling. `[Finance-first]` *(extends: Sales/Purchasing pipelines stop at "open invoice"/"unpaid bill")* — Bigcapital, ERPNext, LedgerSMB.
+- [x] **Payment application & reconciliation** — record a payment and allocate it across one/many invoices or bills; partial payments, deposits, over/underpayment handling. `[Finance-first]` *(extends: Sales/Purchasing pipelines stop at "open invoice"/"unpaid bill")* — Bigcapital, ERPNext, LedgerSMB. *(Shipped 2026-07-11: `scripts/payments.py` — receipts/disbursements, multi-invoice/bill allocation, partial + on-account/unapplied handling, over-allocation guards, posts balanced cash journal + relieves sub-ledger to paid. Wired: `/api/lisza` `payment_apply`/`payments`/`open_items` modes + v2 Payments tab. Tested end-to-end.)*
 - [ ] **Online payment collection** — payment-gateway integrations (Stripe/PayPal/etc.) so a client can pay an invoice online; record the receipt back to the ledger. — Invoice Ninja, Akaunting, Dolibarr, ERPNext, Bigcapital.
-- [ ] **Recurring / subscription invoicing** — schedule-driven auto-generation of invoices (and bills). *(extends: AP/AR note "recurring invoice generation remains later")* — Invoice Ninja, Akaunting, ERPNext, Dolibarr.
+- [x] **Recurring / subscription invoicing** — schedule-driven auto-generation of invoices (and bills). *(extends: AP/AR note "recurring invoice generation remains later")* — Invoice Ninja, Akaunting, ERPNext, Dolibarr. *(Shipped 2026-07-11 CR-004: `scripts/recurring_invoicing.py` — templates + `recurring_invoice_runs` idempotency ledger; Manual/Review/Auto modes; approval-gated `generate_due` posts `Dr110/Cr revenue`; advisory `recurring_invoice_due` planner job; `/api/lisza` `recurring`/`recurring_add`/`recurring_generate` + Sales "Recurring" sub-tab. 27 tests; full suite 263 passed.)*
 - [ ] **Credit notes / debit notes / vendor credits** — first-class credit documents that post reversing/offsetting ledger entries (fits add-don't-subtract). `[Finance-first]` — Bigcapital, ERPNext, Invoice Ninja.
 - [ ] **Dunning / late-fee escalation** — tiered automated reminder ladder + late fees. *(extends: AR reminder workflow exists; escalation/fees do not)* — Invoice Ninja, Akaunting.
 - [ ] **Client payment portal** — client-facing view to see and pay open invoices. *(extends: client portal is doc-request only today)* — Invoice Ninja, Akaunting, ERPNext.
 - [ ] **Estimate/quote acceptance + e-signature** — client approves a quote to convert it to an order/invoice. — Invoice Ninja, FreshBooks-style.
 
 ### B. Accounting depth (statement & compliance completeness; `[Finance-first]`)
-- [ ] **AR / AP aging reports** — bucketed receivables/payables aging (0–30/31–60/…). `[Finance-first]` — Bigcapital, ERPNext, LedgerSMB.
-- [ ] **Cash flow statement** — formal CFS alongside the shipped P&L / BS / TB suite. `[Finance-first]` *(extends: reporting suite)* — Bigcapital, ERPNext.
+- [x] **AR / AP aging reports** — bucketed receivables/payables aging (0–30/31–60/…). `[Finance-first]` — Bigcapital, ERPNext, LedgerSMB. *(Live: `/api/lisza/report?type=ar_aging|ap_aging` — current/1–30/31–60/61–90/90+ buckets, surfaced in the Reports tab and per-client AR/AP tiles.)*
+- [x] **Cash flow statement** — formal CFS alongside the shipped P&L / BS / TB suite. `[Finance-first]` *(extends: reporting suite)* — Bigcapital, ERPNext. *(Shipped 2026-07-11: direct-method `statement_suite.cash_flow()` — cash-account-centric, buckets each entry's cash delta into operating/investing/financing by non-cash counterpart type, reconciles opening+net=closing; `/api/lisza/report?type=cash_flow` + Reports tab "Cash Flow" pill. 4 unit tests.)*
 - [ ] **Tax engine** — sales-tax/VAT rate tables, tax-inclusive/exclusive lines, tax templates, tax-liability report, 1099 support. `[Finance-first]` — all six.
 - [ ] **Cost centers / accounting dimensions** — tag postings by project/department/class for dimensional reporting. `[Finance-first]` *(extends: budgeting notes "project/department dimensions remain later")* — ERPNext, LedgerSMB.
 - [ ] **Period / fiscal-year closing** — closing vouchers that roll income & expense into retained earnings and lock the period. `[Finance-first]` *(extends: GL note "closing workflows remain a later extension")* — ERPNext, LedgerSMB.

@@ -74,6 +74,32 @@ def _has_payroll(slug: str) -> bool:
     return bool(row and row[0])
 
 
+def _recurring_due(slug: str, ref: date) -> tuple[int, date | None]:
+    """Count active recurring-invoice templates due on/before ``ref``.
+
+    Defensive: books without the recurring schema simply report zero — the
+    planner is read-only and must never create tables as a side effect.
+    """
+    import sqlite3
+
+    con = sqlite3.connect(tenancy.resolve_db(slug))
+    try:
+        rows = con.execute(
+            """SELECT next_run_date FROM recurring_invoice_templates
+               WHERE active=1 AND next_run_date<=?
+                 AND (end_date IS NULL OR next_run_date<=end_date)""",
+            (ref.isoformat(),),
+        ).fetchall()
+    except sqlite3.OperationalError:
+        return (0, None)
+    finally:
+        con.close()
+    if not rows:
+        return (0, None)
+    earliest = min(date.fromisoformat(r[0]) for r in rows)
+    return (len(rows), earliest)
+
+
 def plan_due_jobs(slug: str, *, as_of: date | None = None,
                   include_scheduled: bool = False) -> list[dict]:
     ref = as_of or date.today()
@@ -114,6 +140,12 @@ def plan_due_jobs(slug: str, *, as_of: date | None = None,
     if profile.get("sales_tax_jurisdictions"):
         jobs.append(_job("sales_tax_review", "Sales-tax liability review",
                          ref, ref, "profile.sales_tax_jurisdictions"))
+
+    rec_count, rec_due = _recurring_due(slug, ref)
+    if rec_count:
+        label = (f"{rec_count} recurring invoice{'s' if rec_count != 1 else ''} due")
+        jobs.append(_job("recurring_invoice_due", label, rec_due, ref,
+                         "recurring_invoice_templates"))
 
     if not include_scheduled:
         jobs = [j for j in jobs if j["status"] in ("due_now", "upcoming")]

@@ -76,3 +76,10 @@ python3 scripts/config_doctor.py
 `accounts` (chart of accounts) · `entries` (a transaction) · `splits` (the
 balanced debit/credit lines) · `pending_inbox` (un-posted intake) · `payee_rules`
 (auto-categorization). See `scripts/init_ledger.py` for the schema.
+
+## Operational logs
+
+- **`OPS_LOG.md`** — narrative "what changed recently"; read the last few entries
+  before starting work, append your own at session end.
+- **`docs/CHANGE_LOG.md`** — one-row-per-change CR registry; governance is tiered by
+  whether a change can touch posted ledger data or a client's money.

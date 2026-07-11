@@ -37,6 +37,26 @@ def test_plan_due_jobs_is_advisory_and_profile_driven(tmp_path, monkeypatch):
     assert all(j["status"] in ("due_now", "upcoming") for j in jobs)
 
 
+def test_plan_emits_recurring_invoice_due_job(tmp_path, monkeypatch):
+    _client(tmp_path, monkeypatch)
+    import recurring_invoicing
+    recurring_invoicing.add_template(
+        "acme", party="Rent LLC", amount=2500.0, frequency="monthly",
+        revenue_code="420", anchor_day=1, start_date="2026-07-01",
+    )
+    jobs = automation_profile.plan_due_jobs("acme", as_of=date(2026, 7, 6))
+    rec = [j for j in jobs if j["key"] == "recurring_invoice_due"]
+    assert len(rec) == 1
+    assert rec[0]["approval_required"] is True
+    assert rec[0]["status"] in ("due_now", "upcoming")
+
+
+def test_plan_no_recurring_job_when_none_due(tmp_path, monkeypatch):
+    _client(tmp_path, monkeypatch)
+    jobs = automation_profile.plan_due_jobs("acme", as_of=date(2026, 7, 6))
+    assert not any(j["key"] == "recurring_invoice_due" for j in jobs)
+
+
 def test_plan_all_lists_clients(tmp_path, monkeypatch):
     _client(tmp_path, monkeypatch, slug="a-co")
     _client(tmp_path, monkeypatch, slug="b-co")

@@ -30,7 +30,7 @@ import os
 import re
 import sqlite3
 import sys
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
@@ -224,6 +224,55 @@ def parse_csv_content(text: str, source_file: str = "upload.csv") -> list[dict]:
     if fmt == "checking":
         return parse_checking(reader, source_file)
     return []
+
+
+def _xlsx_cell(value: Any) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, datetime):
+        return value.strftime("%Y-%m-%d")
+    if isinstance(value, date):
+        return value.strftime("%Y-%m-%d")
+    return str(value)
+
+
+def xlsx_to_csv_text(source: str | Path | bytes | bytearray) -> str:
+    """Transcode the first worksheet of an XLSX workbook to CSV text.
+
+    `source` may be a path or raw bytes. Emitting standard CSV lets an .xlsx
+    bank/card export flow through the exact same preamble-scan, header detection,
+    dedup and categorization pipeline as a .csv one — no duplicated parsing logic.
+    """
+    from openpyxl import load_workbook
+
+    src: Any = io.BytesIO(source) if isinstance(source, (bytes, bytearray)) else source
+    wb = load_workbook(src, read_only=True, data_only=True)
+    try:
+        ws = wb.active
+        out = io.StringIO()
+        writer = csv.writer(out)
+        for row in ws.iter_rows(values_only=True):
+            if all(c is None for c in row):
+                continue
+            writer.writerow([_xlsx_cell(c) for c in row])
+        return out.getvalue()
+    finally:
+        wb.close()
+
+
+def ingest_xlsx(
+    source: str | Path | bytes | bytearray,
+    db_path: str | Path,
+    source_file: str = "upload.xlsx",
+    dry_run: bool = False,
+) -> dict:
+    """Import an XLSX bank/card export into a client's pending_inbox review gate."""
+    return ingest_text(
+        xlsx_to_csv_text(source),
+        db_path=db_path,
+        source_file=source_file,
+        dry_run=dry_run,
+    )
 
 
 def load_csv(path: Path) -> list[dict]:
@@ -787,9 +836,55 @@ def _cli_import_text(argv) -> int:
     return 0
 
 
+def _cli_import_xlsx(argv) -> int:
+    """`import-xlsx --client <slug> (--file <path> | --payload <json>)` → JSON.
+
+    File path for local use; base64 payload {"xlsx_b64": "...", "source_file":
+    "x.xlsx"} for the console upload path (browsers can't put binary in JSON text).
+    """
+    import argparse
+    import base64
+
+    from tenancy import resolve_db
+
+    ap = argparse.ArgumentParser(prog="ingest_txns.py import-xlsx")
+    ap.add_argument("--client", required=True)
+    ap.add_argument("--file")
+    ap.add_argument("--payload")
+    a = ap.parse_args(argv)
+    try:
+        db_path = resolve_db(a.client)
+        if not db_path.exists():
+            print(json.dumps({"error": f"client '{a.client}' not found"}))
+            return 0
+        if a.file:
+            source: bytes = Path(a.file).read_bytes()
+            source_file = Path(a.file).name
+        elif a.payload is not None:
+            payload = json.loads(a.payload)
+            b64 = payload.get("xlsx_b64")
+            if not b64:
+                print(json.dumps({"error": "payload is missing 'xlsx_b64'"}))
+                return 0
+            source = base64.b64decode(b64)
+            source_file = payload.get("source_file") or "upload.xlsx"
+        else:
+            print(json.dumps({"error": "provide --file or --payload"}))
+            return 0
+        result = ingest_xlsx(source, db_path=db_path, source_file=source_file)
+        print(json.dumps({"ok": True, **result}))
+    except (ValueError, json.JSONDecodeError) as e:
+        print(json.dumps({"error": str(e)}))
+    except Exception as e:
+        print(json.dumps({"error": f"{type(e).__name__}: {e}"}))
+    return 0
+
+
 def main() -> int:
     if len(sys.argv) > 1 and sys.argv[1] == "import-text":
         return _cli_import_text(sys.argv[2:])
+    if len(sys.argv) > 1 and sys.argv[1] == "import-xlsx":
+        return _cli_import_xlsx(sys.argv[2:])
 
     dry_run = "--dry-run" in sys.argv
     args = [a for a in sys.argv[1:] if not a.startswith("--")]

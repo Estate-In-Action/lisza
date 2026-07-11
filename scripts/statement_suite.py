@@ -81,11 +81,94 @@ def balance_sheet(slug: str, *, as_of: str | None = None) -> dict:
     }
 
 
+# Cash movements are classified by the type of the non-cash counterpart account.
+_CF_CLASS = {
+    "income": "operating",
+    "expense": "operating",
+    "asset": "investing",
+    "liability": "financing",
+    "equity": "financing",
+}
+
+
+def cash_flow(slug: str, *, start: str, end: str) -> dict:
+    """Direct-method cash flow statement, reconstructed from the cash accounts.
+
+    Each posted entry that moves a cash account is bucketed by the type of its
+    non-cash counterpart(s); when an entry has mixed counterparts the cash delta
+    is split proportionally by counterpart magnitude. Cash-to-cash transfers net
+    to zero across the cash accounts and drop out.
+    """
+    con = _book(slug)
+    cash = tuple(tenancy.CASH_ACCOUNTS)
+    placeholders = ",".join("?" * len(cash))
+    types = {r["code"]: r["type"] for r in con.execute("SELECT code, type FROM accounts")}
+
+    def cash_balance(date_clause: str, params: tuple) -> float:
+        row = con.execute(
+            f"""SELECT ROUND(COALESCE(SUM(s.dr - s.cr), 0), 2) AS bal
+                FROM splits s JOIN entries e ON e.id = s.entry_id
+                WHERE e.status = 'posted' AND s.account IN ({placeholders}) {date_clause}""",
+            (*cash, *params),
+        ).fetchone()
+        return round(float(row["bal"] or 0), 2)
+
+    opening = cash_balance("AND e.entry_date < ?", (start,))
+    closing = cash_balance("AND e.entry_date <= ?", (end,))
+
+    entry_ids = [
+        r["id"]
+        for r in con.execute(
+            f"""SELECT DISTINCT e.id
+                FROM entries e JOIN splits s ON s.entry_id = e.id
+                WHERE e.status = 'posted' AND e.entry_date >= ? AND e.entry_date <= ?
+                  AND s.account IN ({placeholders})""",
+            (start, end, *cash),
+        )
+    ]
+
+    buckets = {"operating": 0.0, "investing": 0.0, "financing": 0.0}
+    for eid in entry_ids:
+        splits = con.execute(
+            "SELECT account, dr, cr FROM splits WHERE entry_id=?", (eid,)
+        ).fetchall()
+        cash_delta = round(
+            sum(float(s["dr"]) - float(s["cr"]) for s in splits if s["account"] in cash), 2
+        )
+        if cash_delta == 0:
+            continue
+        counter = [s for s in splits if s["account"] not in cash]
+        weight = sum(abs(float(s["dr"]) - float(s["cr"])) for s in counter)
+        if weight == 0:
+            continue
+        for s in counter:
+            mag = abs(float(s["dr"]) - float(s["cr"]))
+            if mag == 0:
+                continue
+            bucket = _CF_CLASS.get(types.get(s["account"], ""), "operating")
+            buckets[bucket] = round(buckets[bucket] + cash_delta * (mag / weight), 2)
+    con.close()
+
+    net_change = round(sum(buckets.values()), 2)
+    return {
+        "start": start,
+        "end": end,
+        "opening_cash": opening,
+        "operating": round(buckets["operating"], 2),
+        "investing": round(buckets["investing"], 2),
+        "financing": round(buckets["financing"], 2),
+        "net_change": net_change,
+        "closing_cash": closing,
+        "reconciled": round(opening + net_change - closing, 2),
+    }
+
+
 def statement_suite(slug: str, *, start: str, end: str, as_of: str | None = None) -> dict:
     return {
         "client_slug": slug,
         "pnl": pnl(slug, start=start, end=end),
         "balance_sheet": balance_sheet(slug, as_of=as_of or end),
+        "cash_flow": cash_flow(slug, start=start, end=end),
         "trial_balance": trial_balance(slug, as_of=as_of or end),
     }
 
