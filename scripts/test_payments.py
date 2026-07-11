@@ -1,6 +1,9 @@
+import os
 import sqlite3
 
 import pytest
+
+SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 import payments
 import sales_pipeline
@@ -180,6 +183,30 @@ def test_unapplied_receipt_posts_full_to_control(tmp_path, monkeypatch):
     # full 500 cash in, full 500 credited to AR control (200 applied + 300 on-account credit)
     assert splits["102"] == (500.0, 0.0)
     assert splits["110"] == (0.0, 500.0)
+
+
+def test_pay_json_cli(tmp_path, monkeypatch):
+    import json
+    import subprocess
+
+    slug = _mk_client(tmp_path, monkeypatch)
+    inv = _mk_invoice(slug, amount=250.0)
+    payload = json.dumps({
+        "direction": "receipt", "amount": 250.0, "payment_date": "2026-07-19",
+        "cash_account": "102", "party": "Customer A",
+        "allocations": [{"target_id": inv, "amount": 250.0}],
+    })
+    proc = subprocess.run(
+        ["python3", "payments.py", "pay-json", "--client", slug, "--payload", payload],
+        cwd=SCRIPTS_DIR,
+        capture_output=True, text=True, env={**os.environ, "LISZA_HOME": str(tmp_path)},
+    )
+    out = json.loads(proc.stdout.strip())
+    assert out.get("ok") is True
+    assert out["allocated"] == 250.0
+    con = sqlite3.connect(tenancy.resolve_db(slug))
+    assert con.execute("SELECT status FROM invoices WHERE id=?", (inv,)).fetchone()[0] == "paid"
+    con.close()
 
 
 def test_open_items_lists_receivables_and_payables(tmp_path, monkeypatch):

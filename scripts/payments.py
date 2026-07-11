@@ -293,7 +293,50 @@ def list_payments(slug: str) -> list[dict]:
         con.close()
 
 
+def _cli_pay_json(argv) -> None:
+    """`pay-json --client <slug> [--payload <json> | stdin]` → JSON result.
+
+    payload = {direction, amount, payment_date?, party?, method?, cash_account?,
+               reference?, memo?, allocations: [{target_id, amount}, ...]}
+    Mirrors post_entry.post-json so the API can spawn it uniformly.
+    """
+    from pathlib import Path
+
+    ap = argparse.ArgumentParser(prog="payments.py pay-json")
+    ap.add_argument("--client", required=True)
+    ap.add_argument("--payload")
+    a = ap.parse_args(argv)
+    try:
+        raw = a.payload if a.payload is not None else __import__("sys").stdin.read()
+        p = json.loads(raw)
+        if not Path(tenancy.resolve_db(a.client)).exists():
+            print(json.dumps({"error": f"client '{a.client}' not found"}))
+            return
+        res = record_payment(
+            a.client,
+            direction=str(p.get("direction") or ""),
+            amount=p.get("amount") or 0,
+            payment_date=p.get("payment_date"),
+            party=p.get("party"),
+            method=p.get("method"),
+            cash_account=p.get("cash_account"),
+            reference=p.get("reference"),
+            memo=p.get("memo"),
+            allocations=p.get("allocations") or [],
+        )
+        print(json.dumps({"ok": True, **res}))
+    except (ValueError, json.JSONDecodeError) as e:
+        print(json.dumps({"error": str(e)}))
+    except Exception as e:  # surface unexpected failures as JSON, never a traceback
+        print(json.dumps({"error": f"{type(e).__name__}: {e}"}))
+
+
 def main() -> int:
+    argv = __import__("sys").argv[1:]
+    if argv and argv[0] == "pay-json":
+        _cli_pay_json(argv[1:])
+        return 0
+
     ap = argparse.ArgumentParser(description=__doc__)
     sub = ap.add_subparsers(dest="cmd", required=True)
 
