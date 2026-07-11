@@ -133,6 +133,12 @@ def test_build_detail_end_to_end(tmp_path, monkeypatch):
     assert isinstance(d["due_jobs"], list)
     assert d["payroll"]["status"] == "none"
     assert len(d["historical"]["monthly"]) == 12
+    assert "document_workspace" in d
+    assert set(d["document_workspace"]["schemas"]) >= {"invoice", "bill", "journal", "payment"}
+    assert d["document_workspace"]["number_series"]["invoice"]["next_number"] == "INV-00001"
+    assert d["document_workspace"]["documents"]["invoice"][0]["party"] == "Cust"
+    assert d["document_workspace"]["pending_actions"][0]["action"] == "send_invoice"
+    assert d["financial_state"]["liquidity"]["open_ar"] == 1000.0
 
 
 def test_client_isolation(tmp_path, monkeypatch):

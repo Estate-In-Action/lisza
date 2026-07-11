@@ -8,6 +8,92 @@ from __future__ import annotations
 import sqlite3
 
 
+DOCUMENT_SCHEMA_REGISTRY = {
+    "invoice": {
+        "label": "Invoice",
+        "table": "invoices",
+        "series_key": "invoice",
+        "identity_field": "id",
+        "sections": [
+            {
+                "key": "header",
+                "label": "Header",
+                "fields": ["number", "party", "issue_date", "due_date", "status"],
+            },
+            {
+                "key": "amounts",
+                "label": "Amounts",
+                "fields": ["amount", "paid_date"],
+            },
+            {
+                "key": "actions",
+                "label": "Actions",
+                "fields": ["send_invoice", "payment_reminder"],
+            },
+        ],
+    },
+    "bill": {
+        "label": "Bill",
+        "table": "bills",
+        "series_key": "bill",
+        "identity_field": "id",
+        "sections": [
+            {
+                "key": "header",
+                "label": "Header",
+                "fields": ["number", "party", "issue_date", "due_date", "status"],
+            },
+            {
+                "key": "amounts",
+                "label": "Amounts",
+                "fields": ["amount", "paid_date"],
+            },
+            {
+                "key": "actions",
+                "label": "Actions",
+                "fields": ["approval_review"],
+            },
+        ],
+    },
+    "journal": {
+        "label": "Journal Entry",
+        "table": "entries",
+        "series_key": "journal",
+        "identity_field": "id",
+        "sections": [
+            {
+                "key": "header",
+                "label": "Header",
+                "fields": ["number", "entry_date", "description", "source", "status"],
+            },
+            {
+                "key": "posting",
+                "label": "Posting",
+                "fields": ["payee", "source_ref", "posted_at"],
+            },
+        ],
+    },
+    "payment": {
+        "label": "Payment",
+        "table": "entries",
+        "series_key": "payment",
+        "identity_field": "id",
+        "sections": [
+            {
+                "key": "header",
+                "label": "Header",
+                "fields": ["number", "entry_date", "payee", "description", "status"],
+            },
+            {
+                "key": "cash",
+                "label": "Cash",
+                "fields": ["amount", "source", "source_ref"],
+            },
+        ],
+    },
+}
+
+
 def _has_column(con: sqlite3.Connection, table: str, column: str) -> bool:
     return any(r[1] == column for r in con.execute(f"PRAGMA table_info({table})"))
 
@@ -116,3 +202,13 @@ def ensure_book_schema(con: sqlite3.Connection) -> None:
 def default_entity_id(con: sqlite3.Connection) -> int:
     return con.execute(
         "SELECT id FROM entities WHERE is_default=1 ORDER BY id LIMIT 1").fetchone()[0]
+
+def document_schema_registry() -> dict:
+    """Return the lightweight v2 document shape registry."""
+    return {
+        key: {
+            **value,
+            "sections": [dict(section) for section in value["sections"]],
+        }
+        for key, value in DOCUMENT_SCHEMA_REGISTRY.items()
+    }

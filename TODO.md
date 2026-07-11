@@ -129,3 +129,75 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
   remains available at `https://dadadanja.zo.space/lisza/console` while the new
   shell proves itself. Implementation note:
   `docs/plans/2026-07-09-frappe-books-alignment.md`
+- [ ] **Phase 2: make v2 the canonical LISZA surface** — v2 is now the build line.
+  Public/showpiece links should point to `/lisza/workspace`; v1 console/demo
+  remains available only as a deprecated comparison path. Next build slices:
+  document detail pages, lightweight schema registry for document fields,
+  number-series helpers, and first approval-gated write actions.
+
+## Accounting-suite gap scan — 6-package review (2026-07-11)
+
+> Operator handed six open-source accounting/ERP packages and asked: review all
+> feature sets, and if we don't have them, put them into development. This is the
+> **de-duplicated gap list** — features present across the reviewed packages that
+> LISZA does not yet have even as a first slice. Sources scanned: **LedgerSMB,
+> Akaunting, Dolibarr, Invoice Ninja, Bigcapital, ERPNext**.
+>
+> Same rules as the backlogs above: **direction, not committed scope** — each
+> becomes its own brainstorm → spec → plan → build, synthetic data only until the
+> operator says otherwise. Where a gap is a shared bookkeeping primitive, the
+> **Finance-inheritance rule applies** (build in Finance, port to LISZA) — flagged
+> `[Finance-first]` below. Items that merely deepen an existing "later extension"
+> note are marked `(extends: …)`.
+
+### A. Money movement & billing depth (highest leverage; mostly `[Finance-first]`)
+- [ ] **Payment application & reconciliation** — record a payment and allocate it across one/many invoices or bills; partial payments, deposits, over/underpayment handling. `[Finance-first]` *(extends: Sales/Purchasing pipelines stop at "open invoice"/"unpaid bill")* — Bigcapital, ERPNext, LedgerSMB.
+- [ ] **Online payment collection** — payment-gateway integrations (Stripe/PayPal/etc.) so a client can pay an invoice online; record the receipt back to the ledger. — Invoice Ninja, Akaunting, Dolibarr, ERPNext, Bigcapital.
+- [ ] **Recurring / subscription invoicing** — schedule-driven auto-generation of invoices (and bills). *(extends: AP/AR note "recurring invoice generation remains later")* — Invoice Ninja, Akaunting, ERPNext, Dolibarr.
+- [ ] **Credit notes / debit notes / vendor credits** — first-class credit documents that post reversing/offsetting ledger entries (fits add-don't-subtract). `[Finance-first]` — Bigcapital, ERPNext, Invoice Ninja.
+- [ ] **Dunning / late-fee escalation** — tiered automated reminder ladder + late fees. *(extends: AR reminder workflow exists; escalation/fees do not)* — Invoice Ninja, Akaunting.
+- [ ] **Client payment portal** — client-facing view to see and pay open invoices. *(extends: client portal is doc-request only today)* — Invoice Ninja, Akaunting, ERPNext.
+- [ ] **Estimate/quote acceptance + e-signature** — client approves a quote to convert it to an order/invoice. — Invoice Ninja, FreshBooks-style.
+
+### B. Accounting depth (statement & compliance completeness; `[Finance-first]`)
+- [ ] **AR / AP aging reports** — bucketed receivables/payables aging (0–30/31–60/…). `[Finance-first]` — Bigcapital, ERPNext, LedgerSMB.
+- [ ] **Cash flow statement** — formal CFS alongside the shipped P&L / BS / TB suite. `[Finance-first]` *(extends: reporting suite)* — Bigcapital, ERPNext.
+- [ ] **Tax engine** — sales-tax/VAT rate tables, tax-inclusive/exclusive lines, tax templates, tax-liability report, 1099 support. `[Finance-first]` — all six.
+- [ ] **Cost centers / accounting dimensions** — tag postings by project/department/class for dimensional reporting. `[Finance-first]` *(extends: budgeting notes "project/department dimensions remain later")* — ERPNext, LedgerSMB.
+- [ ] **Period / fiscal-year closing** — closing vouchers that roll income & expense into retained earnings and lock the period. `[Finance-first]` *(extends: GL note "closing workflows remain a later extension")* — ERPNext, LedgerSMB.
+- [ ] **Deferred revenue / deferred expense schedules** — recognize prepaid/unearned amounts over time. `[Finance-first]` — ERPNext.
+- [ ] **FX revaluation & realized/unrealized gain-loss posting** — actually post FX gain/loss, not just store source-currency metadata. `[Finance-first]` *(extends: multi-currency first slice)* — ERPNext.
+- [ ] **Live bank feeds** — real bank/card sync (Plaid or equivalent) into the reconciliation lane. *(extends: reconciliation ships with deterministic matching only)* — Bigcapital, ERPNext, Akaunting.
+
+### C. ERP breadth (new modules; per-module confirm before building)
+- [ ] **CRM opportunity pipeline** — lead → opportunity → quotation with stages/forecast. *(extends: party directory has a `lead` role but no pipeline)* — Dolibarr, ERPNext.
+- [ ] **Multi-company / consolidated financials** — group-level statements across client entities. — ERPNext, Akaunting, Dolibarr.
+- [ ] **Warehouse & stock depth** — multi-location stock, batch/serial tracking, stock transfers, landed-cost allocation. *(extends: inventory movement ledger)* — ERPNext, Dolibarr.
+- [ ] **Manufacturing** — BOM assemblies, work orders, COGS posting on build. *(extends: inventory note "BOM assemblies and COGS posting remain later")* — ERPNext, Dolibarr, LedgerSMB.
+- [ ] **Project accounting & profitability** — project P&L rolling up time, expenses, and billing. *(extends: time tracking rolls into invoices but no project P&L)* — ERPNext, Dolibarr, Invoice Ninja.
+- [ ] **Expense claims / employee reimbursements** — submit → approve → reimburse expense reports. — ERPNext, Dolibarr.
+- [ ] **POS** — point-of-sale sales capture for retail/restaurant client personas (Harborside). — Dolibarr, ERPNext.
+- [ ] **E-commerce / marketplace connectors** — sync orders from external storefronts. — Dolibarr, ERPNext, Akaunting.
+
+### D. Platform & configurability (cross-cutting)
+- [ ] **Role-based access control + 2FA** — per-user roles/permissions on client books and multi-bookkeeper access. — ERPNext, Dolibarr, Akaunting.
+- [ ] **E-invoicing standards** — PEPPOL / UBL / GST-style structured e-invoice output. — ERPNext, Dolibarr.
+- [ ] **Branded document/PDF template designer** — customizable invoice/statement templates. — Invoice Ninja, Akaunting.
+- [ ] **Public REST API + webhooks + app marketplace** — programmable integration surface. *(extends: read-only QBO/Xero export contract)* — Akaunting, ERPNext, Invoice Ninja.
+- [ ] **Number series & tree chart-of-accounts** — already captured in the Frappe Books reference above; re-confirmed as gaps by this scan (configurable numbering; parent-account tree).
+
+> **Recommended first wave** (if the operator greenlights): bucket **A + B**, built
+> Finance-first and ported — they complete the money-movement loop the current
+> pipelines stop short of (open invoice → payment → aging → close) and are shared
+> primitives every client book needs, versus bucket C which is per-vertical ERP
+> breadth. Awaiting operator priority call before any new module files (Rule #7).
+
+### Insights — peer benchmarking (2026-07-11)
+
+- [ ] **Insights tab — wire a real peer-benchmark source.** Prototype shipped in
+  v2 (`/lisza/workspace` → Insights): source selector + NAICS vertical selector +
+  spend-mix-vs-peer-median bars + advisor read, all on **illustrative sample
+  medians** and clearly marked "Prototype." Nothing to change in the code
+  meanwhile. Whenever you want to pick it back up, the open question is just:
+  which public source to wire first (Census CBP / BLS / Economic Census / IRS
+  SOI) and then the ledger-category → NAICS-line mapping.

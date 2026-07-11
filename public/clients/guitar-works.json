@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T20:04:24Z",
+  "generated_at": "2026-07-11T00:23:32Z",
   "slug": "guitar-works",
   "display_name": "Guitar Works",
   "entity_type": "llc",
@@ -11810,74 +11810,2534 @@
   ],
   "document_requests": {
     "summary": {
-      "requested": 4,
+      "requested": 0,
       "received": 0,
       "waived": 0,
       "overdue": 0,
-      "open": 4
+      "open": 0
     },
-    "requests": [
-      {
-        "document_request_id": 2,
-        "client_slug": "guitar-works",
-        "client_name": "Guitar Works",
-        "doc_key": "bank_statement_current",
-        "label": "Current bank statement",
-        "description": "Needed for reconciliation and opening balance review.",
-        "due_date": "2026-07-20",
-        "status": "requested",
-        "requested_at": "2026-07-06 20:04:24",
-        "received_at": null,
-        "last_followup_at": null,
-        "followup_count": 0,
-        "updated_at": "2026-07-06 20:04:24"
+    "requests": []
+  },
+  "document_workspace": {
+    "schemas": {
+      "invoice": {
+        "label": "Invoice",
+        "table": "invoices",
+        "series_key": "invoice",
+        "identity_field": "id",
+        "sections": [
+          {
+            "key": "header",
+            "label": "Header",
+            "fields": [
+              "number",
+              "party",
+              "issue_date",
+              "due_date",
+              "status"
+            ]
+          },
+          {
+            "key": "amounts",
+            "label": "Amounts",
+            "fields": [
+              "amount",
+              "paid_date"
+            ]
+          },
+          {
+            "key": "actions",
+            "label": "Actions",
+            "fields": [
+              "send_invoice",
+              "payment_reminder"
+            ]
+          }
+        ]
       },
-      {
-        "document_request_id": 4,
-        "client_slug": "guitar-works",
-        "client_name": "Guitar Works",
-        "doc_key": "entity_docs",
-        "label": "Entity formation documents",
-        "description": "Needed to confirm legal name, entity type, and ownership.",
-        "due_date": "2026-07-20",
-        "status": "requested",
-        "requested_at": "2026-07-06 20:04:24",
-        "received_at": null,
-        "last_followup_at": null,
-        "followup_count": 0,
-        "updated_at": "2026-07-06 20:04:24"
+      "bill": {
+        "label": "Bill",
+        "table": "bills",
+        "series_key": "bill",
+        "identity_field": "id",
+        "sections": [
+          {
+            "key": "header",
+            "label": "Header",
+            "fields": [
+              "number",
+              "party",
+              "issue_date",
+              "due_date",
+              "status"
+            ]
+          },
+          {
+            "key": "amounts",
+            "label": "Amounts",
+            "fields": [
+              "amount",
+              "paid_date"
+            ]
+          },
+          {
+            "key": "actions",
+            "label": "Actions",
+            "fields": [
+              "approval_review"
+            ]
+          }
+        ]
       },
-      {
-        "document_request_id": 3,
-        "client_slug": "guitar-works",
-        "client_name": "Guitar Works",
-        "doc_key": "prior_year_tax_return",
-        "label": "Prior-year tax return",
-        "description": "Needed to understand carryovers and filing history.",
-        "due_date": "2026-07-20",
-        "status": "requested",
-        "requested_at": "2026-07-06 20:04:24",
-        "received_at": null,
-        "last_followup_at": null,
-        "followup_count": 0,
-        "updated_at": "2026-07-06 20:04:24"
+      "journal": {
+        "label": "Journal Entry",
+        "table": "entries",
+        "series_key": "journal",
+        "identity_field": "id",
+        "sections": [
+          {
+            "key": "header",
+            "label": "Header",
+            "fields": [
+              "number",
+              "entry_date",
+              "description",
+              "source",
+              "status"
+            ]
+          },
+          {
+            "key": "posting",
+            "label": "Posting",
+            "fields": [
+              "payee",
+              "source_ref",
+              "posted_at"
+            ]
+          }
+        ]
       },
-      {
-        "document_request_id": 1,
-        "client_slug": "guitar-works",
-        "client_name": "Guitar Works",
-        "doc_key": "w9",
-        "label": "W-9 or tax identity form",
-        "description": "Needed before 1099/vendor tax handling.",
-        "due_date": "2026-07-20",
-        "status": "requested",
-        "requested_at": "2026-07-06 20:04:24",
-        "received_at": null,
-        "last_followup_at": null,
-        "followup_count": 0,
-        "updated_at": "2026-07-06 20:04:24"
+      "payment": {
+        "label": "Payment",
+        "table": "entries",
+        "series_key": "payment",
+        "identity_field": "id",
+        "sections": [
+          {
+            "key": "header",
+            "label": "Header",
+            "fields": [
+              "number",
+              "entry_date",
+              "payee",
+              "description",
+              "status"
+            ]
+          },
+          {
+            "key": "cash",
+            "label": "Cash",
+            "fields": [
+              "amount",
+              "source",
+              "source_ref"
+            ]
+          }
+        ]
       }
-    ]
+    },
+    "number_series": {
+      "bill": {
+        "prefix": "BILL",
+        "next_value": 1,
+        "padding": 5,
+        "next_number": "BILL-00001"
+      },
+      "invoice": {
+        "prefix": "INV",
+        "next_value": 1,
+        "padding": 5,
+        "next_number": "INV-00001"
+      },
+      "journal": {
+        "prefix": "JRN",
+        "next_value": 1,
+        "padding": 5,
+        "next_number": "JRN-00001"
+      },
+      "payment": {
+        "prefix": "PAY",
+        "next_value": 1,
+        "padding": 5,
+        "next_number": "PAY-00001"
+      }
+    },
+    "documents": {
+      "invoice": [
+        {
+          "id": 333,
+          "party": "Tidewater Marketing",
+          "issue_date": "2026-06-08",
+          "due_date": "2026-07-08",
+          "amount": 11078.01,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 332,
+          "party": "Cedar & Pine Realty",
+          "issue_date": "2026-06-06",
+          "due_date": "2026-06-21",
+          "amount": 5548.66,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 330,
+          "party": "Maple & Co Consulting",
+          "issue_date": "2026-06-06",
+          "due_date": "2026-06-21",
+          "amount": 5250.65,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 331,
+          "party": "Tidewater Marketing",
+          "issue_date": "2026-06-04",
+          "due_date": "2026-06-19",
+          "amount": 5633.68,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 326,
+          "party": "Bluepeak Ventures",
+          "issue_date": "2026-05-25",
+          "due_date": "2026-06-24",
+          "amount": 10307.07,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 329,
+          "party": "Northgate Retail",
+          "issue_date": "2026-05-18",
+          "due_date": "2026-06-17",
+          "amount": 10351.27,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 328,
+          "party": "Lantern Logistics",
+          "issue_date": "2026-05-09",
+          "due_date": "2026-06-08",
+          "amount": 8929.25,
+          "status": "paid",
+          "paid_date": "2026-06-03",
+          "memo": null
+        },
+        {
+          "id": 327,
+          "party": "Tidewater Marketing",
+          "issue_date": "2026-05-09",
+          "due_date": "2026-06-08",
+          "amount": 11841.36,
+          "status": "paid",
+          "paid_date": "2026-05-30",
+          "memo": null
+        },
+        {
+          "id": 325,
+          "party": "Cedar & Pine Realty",
+          "issue_date": "2026-05-05",
+          "due_date": "2026-05-20",
+          "amount": 6398.39,
+          "status": "paid",
+          "paid_date": "2026-05-17",
+          "memo": null
+        },
+        {
+          "id": 324,
+          "party": "Tidewater Marketing",
+          "issue_date": "2026-05-04",
+          "due_date": "2026-05-19",
+          "amount": 6439.98,
+          "status": "paid",
+          "paid_date": "2026-05-09",
+          "memo": null
+        },
+        {
+          "id": 323,
+          "party": "Maple & Co Consulting",
+          "issue_date": "2026-05-02",
+          "due_date": "2026-05-17",
+          "amount": 5984.16,
+          "status": "paid",
+          "paid_date": "2026-05-08",
+          "memo": null
+        },
+        {
+          "id": 319,
+          "party": "Summit Yoga Collective",
+          "issue_date": "2026-04-14",
+          "due_date": "2026-05-14",
+          "amount": 10969.86,
+          "status": "paid",
+          "paid_date": "2026-06-05",
+          "memo": null
+        },
+        {
+          "id": 322,
+          "party": "Lantern Logistics",
+          "issue_date": "2026-04-13",
+          "due_date": "2026-05-13",
+          "amount": 13123.68,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 321,
+          "party": "Summit Yoga Collective",
+          "issue_date": "2026-04-10",
+          "due_date": "2026-05-10",
+          "amount": 11612.82,
+          "status": "paid",
+          "paid_date": "2026-05-13",
+          "memo": null
+        },
+        {
+          "id": 316,
+          "party": "Maple & Co Consulting",
+          "issue_date": "2026-04-06",
+          "due_date": "2026-04-21",
+          "amount": 6057.49,
+          "status": "paid",
+          "paid_date": "2026-04-24",
+          "memo": null
+        },
+        {
+          "id": 317,
+          "party": "Tidewater Marketing",
+          "issue_date": "2026-04-03",
+          "due_date": "2026-04-18",
+          "amount": 6365.55,
+          "status": "paid",
+          "paid_date": "2026-04-15",
+          "memo": null
+        },
+        {
+          "id": 318,
+          "party": "Cedar & Pine Realty",
+          "issue_date": "2026-04-02",
+          "due_date": "2026-04-17",
+          "amount": 5631.03,
+          "status": "paid",
+          "paid_date": "2026-04-08",
+          "memo": null
+        },
+        {
+          "id": 320,
+          "party": "Brightwave Media",
+          "issue_date": "2026-04-01",
+          "due_date": "2026-05-01",
+          "amount": 12542.27,
+          "status": "paid",
+          "paid_date": "2026-04-17",
+          "memo": null
+        },
+        {
+          "id": 315,
+          "party": "Bluepeak Ventures",
+          "issue_date": "2026-03-20",
+          "due_date": "2026-04-19",
+          "amount": 17997.52,
+          "status": "paid",
+          "paid_date": "2026-05-01",
+          "memo": null
+        },
+        {
+          "id": 313,
+          "party": "Tidewater Marketing",
+          "issue_date": "2026-03-10",
+          "due_date": "2026-04-09",
+          "amount": 16657.9,
+          "status": "paid",
+          "paid_date": "2026-03-29",
+          "memo": null
+        },
+        {
+          "id": 314,
+          "party": "Harborline Design",
+          "issue_date": "2026-03-07",
+          "due_date": "2026-04-06",
+          "amount": 10276.67,
+          "status": "paid",
+          "paid_date": "2026-04-19",
+          "memo": null
+        },
+        {
+          "id": 311,
+          "party": "Tidewater Marketing",
+          "issue_date": "2026-03-06",
+          "due_date": "2026-03-21",
+          "amount": 5583.29,
+          "status": "paid",
+          "paid_date": "2026-03-19",
+          "memo": null
+        },
+        {
+          "id": 310,
+          "party": "Maple & Co Consulting",
+          "issue_date": "2026-03-05",
+          "due_date": "2026-03-20",
+          "amount": 5898.64,
+          "status": "paid",
+          "paid_date": "2026-03-13",
+          "memo": null
+        },
+        {
+          "id": 312,
+          "party": "Cedar & Pine Realty",
+          "issue_date": "2026-03-03",
+          "due_date": "2026-03-18",
+          "amount": 6027.91,
+          "status": "paid",
+          "paid_date": "2026-03-07",
+          "memo": null
+        },
+        {
+          "id": 307,
+          "party": "Tidewater Marketing",
+          "issue_date": "2026-02-17",
+          "due_date": "2026-03-19",
+          "amount": 11921.96,
+          "status": "paid",
+          "paid_date": "2026-03-12",
+          "memo": null
+        },
+        {
+          "id": 308,
+          "party": "Northgate Retail",
+          "issue_date": "2026-02-16",
+          "due_date": "2026-03-18",
+          "amount": 9716.86,
+          "status": "paid",
+          "paid_date": "2026-03-26",
+          "memo": null
+        },
+        {
+          "id": 309,
+          "party": "Bluepeak Ventures",
+          "issue_date": "2026-02-09",
+          "due_date": "2026-03-11",
+          "amount": 12538.32,
+          "status": "paid",
+          "paid_date": "2026-03-05",
+          "memo": null
+        },
+        {
+          "id": 306,
+          "party": "Maple & Co Consulting",
+          "issue_date": "2026-02-08",
+          "due_date": "2026-03-10",
+          "amount": 8277.94,
+          "status": "paid",
+          "paid_date": "2026-03-22",
+          "memo": null
+        },
+        {
+          "id": 304,
+          "party": "Tidewater Marketing",
+          "issue_date": "2026-02-05",
+          "due_date": "2026-02-20",
+          "amount": 5496.41,
+          "status": "paid",
+          "paid_date": "2026-02-16",
+          "memo": null
+        },
+        {
+          "id": 303,
+          "party": "Maple & Co Consulting",
+          "issue_date": "2026-02-04",
+          "due_date": "2026-02-19",
+          "amount": 5396.76,
+          "status": "paid",
+          "paid_date": "2026-02-07",
+          "memo": null
+        },
+        {
+          "id": 305,
+          "party": "Cedar & Pine Realty",
+          "issue_date": "2026-02-03",
+          "due_date": "2026-02-18",
+          "amount": 4796.64,
+          "status": "paid",
+          "paid_date": "2026-02-14",
+          "memo": null
+        },
+        {
+          "id": 299,
+          "party": "Oakhaus Interiors",
+          "issue_date": "2026-01-17",
+          "due_date": "2026-02-16",
+          "amount": 10837.84,
+          "status": "paid",
+          "paid_date": "2026-02-07",
+          "memo": null
+        },
+        {
+          "id": 300,
+          "party": "Cedar & Pine Realty",
+          "issue_date": "2026-01-13",
+          "due_date": "2026-02-12",
+          "amount": 9891.73,
+          "status": "paid",
+          "paid_date": "2026-02-04",
+          "memo": null
+        },
+        {
+          "id": 301,
+          "party": "Brightwave Media",
+          "issue_date": "2026-01-10",
+          "due_date": "2026-02-09",
+          "amount": 7730.35,
+          "status": "paid",
+          "paid_date": "2026-02-20",
+          "memo": null
+        },
+        {
+          "id": 296,
+          "party": "Maple & Co Consulting",
+          "issue_date": "2026-01-06",
+          "due_date": "2026-01-21",
+          "amount": 5219.3,
+          "status": "paid",
+          "paid_date": "2026-01-18",
+          "memo": null
+        },
+        {
+          "id": 297,
+          "party": "Tidewater Marketing",
+          "issue_date": "2026-01-04",
+          "due_date": "2026-01-19",
+          "amount": 5037.21,
+          "status": "paid",
+          "paid_date": "2026-01-21",
+          "memo": null
+        },
+        {
+          "id": 302,
+          "party": "Harborline Design",
+          "issue_date": "2026-01-03",
+          "due_date": "2026-02-02",
+          "amount": 8792.92,
+          "status": "paid",
+          "paid_date": "2026-02-26",
+          "memo": null
+        },
+        {
+          "id": 298,
+          "party": "Cedar & Pine Realty",
+          "issue_date": "2026-01-02",
+          "due_date": "2026-01-17",
+          "amount": 4754.3,
+          "status": "paid",
+          "paid_date": "2026-01-11",
+          "memo": null
+        },
+        {
+          "id": 295,
+          "party": "Summit Yoga Collective",
+          "issue_date": "2025-12-25",
+          "due_date": "2026-01-24",
+          "amount": 8332.13,
+          "status": "paid",
+          "paid_date": "2026-02-02",
+          "memo": null
+        },
+        {
+          "id": 293,
+          "party": "Summit Yoga Collective",
+          "issue_date": "2025-12-24",
+          "due_date": "2026-01-23",
+          "amount": 8477.15,
+          "status": "paid",
+          "paid_date": "2026-02-10",
+          "memo": null
+        },
+        {
+          "id": 294,
+          "party": "Maple & Co Consulting",
+          "issue_date": "2025-12-20",
+          "due_date": "2026-01-19",
+          "amount": 12328.07,
+          "status": "paid",
+          "paid_date": "2026-01-25",
+          "memo": null
+        },
+        {
+          "id": 292,
+          "party": "Harborline Design",
+          "issue_date": "2025-12-08",
+          "due_date": "2026-01-07",
+          "amount": 9538.9,
+          "status": "paid",
+          "paid_date": "2026-01-25",
+          "memo": null
+        },
+        {
+          "id": 290,
+          "party": "Tidewater Marketing",
+          "issue_date": "2025-12-04",
+          "due_date": "2025-12-19",
+          "amount": 6284.58,
+          "status": "paid",
+          "paid_date": "2025-12-11",
+          "memo": null
+        },
+        {
+          "id": 289,
+          "party": "Maple & Co Consulting",
+          "issue_date": "2025-12-04",
+          "due_date": "2025-12-19",
+          "amount": 6346.1,
+          "status": "paid",
+          "paid_date": "2025-12-17",
+          "memo": null
+        },
+        {
+          "id": 291,
+          "party": "Cedar & Pine Realty",
+          "issue_date": "2025-12-02",
+          "due_date": "2025-12-17",
+          "amount": 5852.29,
+          "status": "paid",
+          "paid_date": "2025-12-13",
+          "memo": null
+        },
+        {
+          "id": 286,
+          "party": "Riverside Studios LLC",
+          "issue_date": "2025-11-14",
+          "due_date": "2025-12-14",
+          "amount": 17083.81,
+          "status": "paid",
+          "paid_date": "2025-11-30",
+          "memo": null
+        },
+        {
+          "id": 285,
+          "party": "Cedar & Pine Realty",
+          "issue_date": "2025-11-06",
+          "due_date": "2025-11-21",
+          "amount": 6305.4,
+          "status": "paid",
+          "paid_date": "2025-11-13",
+          "memo": null
+        },
+        {
+          "id": 287,
+          "party": "Maple & Co Consulting",
+          "issue_date": "2025-11-05",
+          "due_date": "2025-12-05",
+          "amount": 12714.82,
+          "status": "paid",
+          "paid_date": "2025-11-29",
+          "memo": null
+        },
+        {
+          "id": 283,
+          "party": "Maple & Co Consulting",
+          "issue_date": "2025-11-05",
+          "due_date": "2025-11-20",
+          "amount": 6354.83,
+          "status": "paid",
+          "paid_date": "2025-11-19",
+          "memo": null
+        },
+        {
+          "id": 284,
+          "party": "Tidewater Marketing",
+          "issue_date": "2025-11-04",
+          "due_date": "2025-11-19",
+          "amount": 6342.42,
+          "status": "paid",
+          "paid_date": "2025-11-19",
+          "memo": null
+        }
+      ],
+      "bill": [
+        {
+          "id": 211,
+          "party": "Vivid Print House",
+          "issue_date": "2026-05-22",
+          "due_date": "2026-06-21",
+          "amount": 1878.63,
+          "status": "paid",
+          "paid_date": "2026-06-04",
+          "memo": null
+        },
+        {
+          "id": 209,
+          "party": "Northstar Subcontractors",
+          "issue_date": "2026-05-19",
+          "due_date": "2026-06-18",
+          "amount": 10772.97,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 210,
+          "party": "Adwell Media Buying",
+          "issue_date": "2026-05-18",
+          "due_date": "2026-06-17",
+          "amount": 4264.54,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 212,
+          "party": "Pinnacle Accounting Tools",
+          "issue_date": "2026-05-13",
+          "due_date": "2026-06-12",
+          "amount": 479.06,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 206,
+          "party": "Adwell Media Buying",
+          "issue_date": "2026-04-26",
+          "due_date": "2026-05-26",
+          "amount": 3236.6,
+          "status": "paid",
+          "paid_date": "2026-05-13",
+          "memo": null
+        },
+        {
+          "id": 207,
+          "party": "Vivid Print House",
+          "issue_date": "2026-04-18",
+          "due_date": "2026-05-18",
+          "amount": 3065.77,
+          "status": "paid",
+          "paid_date": "2026-05-22",
+          "memo": null
+        },
+        {
+          "id": 208,
+          "party": "Pinnacle Accounting Tools",
+          "issue_date": "2026-04-17",
+          "due_date": "2026-05-17",
+          "amount": 518.78,
+          "status": "paid",
+          "paid_date": "2026-05-15",
+          "memo": null
+        },
+        {
+          "id": 205,
+          "party": "Northstar Subcontractors",
+          "issue_date": "2026-04-07",
+          "due_date": "2026-05-07",
+          "amount": 11332.28,
+          "status": "paid",
+          "paid_date": "2026-05-15",
+          "memo": null
+        },
+        {
+          "id": 202,
+          "party": "Adwell Media Buying",
+          "issue_date": "2026-03-18",
+          "due_date": "2026-04-17",
+          "amount": 3641.31,
+          "status": "paid",
+          "paid_date": "2026-04-08",
+          "memo": null
+        },
+        {
+          "id": 201,
+          "party": "Northstar Subcontractors",
+          "issue_date": "2026-03-14",
+          "due_date": "2026-04-13",
+          "amount": 11502.33,
+          "status": "paid",
+          "paid_date": "2026-03-22",
+          "memo": null
+        },
+        {
+          "id": 203,
+          "party": "Vivid Print House",
+          "issue_date": "2026-03-06",
+          "due_date": "2026-04-05",
+          "amount": 1906.52,
+          "status": "paid",
+          "paid_date": "2026-03-16",
+          "memo": null
+        },
+        {
+          "id": 204,
+          "party": "Pinnacle Accounting Tools",
+          "issue_date": "2026-03-02",
+          "due_date": "2026-04-01",
+          "amount": 640.11,
+          "status": "paid",
+          "paid_date": "2026-03-29",
+          "memo": null
+        },
+        {
+          "id": 198,
+          "party": "Adwell Media Buying",
+          "issue_date": "2026-02-15",
+          "due_date": "2026-03-17",
+          "amount": 4518.22,
+          "status": "paid",
+          "paid_date": "2026-03-15",
+          "memo": null
+        },
+        {
+          "id": 200,
+          "party": "Pinnacle Accounting Tools",
+          "issue_date": "2026-02-13",
+          "due_date": "2026-03-15",
+          "amount": 621.8,
+          "status": "paid",
+          "paid_date": "2026-03-27",
+          "memo": null
+        },
+        {
+          "id": 199,
+          "party": "Vivid Print House",
+          "issue_date": "2026-02-08",
+          "due_date": "2026-03-10",
+          "amount": 2051.48,
+          "status": "paid",
+          "paid_date": "2026-03-12",
+          "memo": null
+        },
+        {
+          "id": 197,
+          "party": "Northstar Subcontractors",
+          "issue_date": "2026-02-03",
+          "due_date": "2026-03-05",
+          "amount": 8746.31,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 195,
+          "party": "Vivid Print House",
+          "issue_date": "2026-01-20",
+          "due_date": "2026-02-19",
+          "amount": 2077.88,
+          "status": "paid",
+          "paid_date": "2026-03-01",
+          "memo": null
+        },
+        {
+          "id": 196,
+          "party": "Pinnacle Accounting Tools",
+          "issue_date": "2026-01-18",
+          "due_date": "2026-02-17",
+          "amount": 725.7,
+          "status": "paid",
+          "paid_date": "2026-02-10",
+          "memo": null
+        },
+        {
+          "id": 194,
+          "party": "Adwell Media Buying",
+          "issue_date": "2026-01-13",
+          "due_date": "2026-02-12",
+          "amount": 3589.89,
+          "status": "paid",
+          "paid_date": "2026-02-10",
+          "memo": null
+        },
+        {
+          "id": 193,
+          "party": "Northstar Subcontractors",
+          "issue_date": "2026-01-04",
+          "due_date": "2026-02-03",
+          "amount": 7438.44,
+          "status": "paid",
+          "paid_date": "2026-02-05",
+          "memo": null
+        },
+        {
+          "id": 192,
+          "party": "Pinnacle Accounting Tools",
+          "issue_date": "2025-12-15",
+          "due_date": "2026-01-14",
+          "amount": 668.44,
+          "status": "paid",
+          "paid_date": "2025-12-28",
+          "memo": null
+        },
+        {
+          "id": 191,
+          "party": "Vivid Print House",
+          "issue_date": "2025-12-11",
+          "due_date": "2026-01-10",
+          "amount": 2464.36,
+          "status": "paid",
+          "paid_date": "2025-12-22",
+          "memo": null
+        },
+        {
+          "id": 189,
+          "party": "Northstar Subcontractors",
+          "issue_date": "2025-12-04",
+          "due_date": "2026-01-03",
+          "amount": 14871.96,
+          "status": "paid",
+          "paid_date": "2025-12-12",
+          "memo": null
+        },
+        {
+          "id": 190,
+          "party": "Adwell Media Buying",
+          "issue_date": "2025-12-02",
+          "due_date": "2026-01-01",
+          "amount": 3832.52,
+          "status": "paid",
+          "paid_date": "2026-01-13",
+          "memo": null
+        },
+        {
+          "id": 188,
+          "party": "Pinnacle Accounting Tools",
+          "issue_date": "2025-11-26",
+          "due_date": "2025-12-26",
+          "amount": 653.78,
+          "status": "paid",
+          "paid_date": "2025-12-21",
+          "memo": null
+        },
+        {
+          "id": 187,
+          "party": "Vivid Print House",
+          "issue_date": "2025-11-26",
+          "due_date": "2025-12-26",
+          "amount": 2760.3,
+          "status": "paid",
+          "paid_date": "2025-12-30",
+          "memo": null
+        },
+        {
+          "id": 186,
+          "party": "Adwell Media Buying",
+          "issue_date": "2025-11-07",
+          "due_date": "2025-12-07",
+          "amount": 4873.06,
+          "status": "paid",
+          "paid_date": "2025-11-20",
+          "memo": null
+        },
+        {
+          "id": 185,
+          "party": "Northstar Subcontractors",
+          "issue_date": "2025-11-02",
+          "due_date": "2025-12-02",
+          "amount": 11833.69,
+          "status": "paid",
+          "paid_date": "2025-11-14",
+          "memo": null
+        },
+        {
+          "id": 181,
+          "party": "Northstar Subcontractors",
+          "issue_date": "2025-10-24",
+          "due_date": "2025-11-23",
+          "amount": 15727.21,
+          "status": "paid",
+          "paid_date": "2025-11-07",
+          "memo": null
+        },
+        {
+          "id": 182,
+          "party": "Adwell Media Buying",
+          "issue_date": "2025-10-16",
+          "due_date": "2025-11-15",
+          "amount": 4034.69,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 183,
+          "party": "Vivid Print House",
+          "issue_date": "2025-10-11",
+          "due_date": "2025-11-10",
+          "amount": 1985.74,
+          "status": "paid",
+          "paid_date": "2025-11-23",
+          "memo": null
+        },
+        {
+          "id": 184,
+          "party": "Pinnacle Accounting Tools",
+          "issue_date": "2025-10-09",
+          "due_date": "2025-11-08",
+          "amount": 578.81,
+          "status": "paid",
+          "paid_date": "2025-11-09",
+          "memo": null
+        },
+        {
+          "id": 178,
+          "party": "Adwell Media Buying",
+          "issue_date": "2025-09-23",
+          "due_date": "2025-10-23",
+          "amount": 4108.61,
+          "status": "paid",
+          "paid_date": "2025-10-30",
+          "memo": null
+        },
+        {
+          "id": 180,
+          "party": "Pinnacle Accounting Tools",
+          "issue_date": "2025-09-18",
+          "due_date": "2025-10-18",
+          "amount": 494.95,
+          "status": "paid",
+          "paid_date": "2025-10-15",
+          "memo": null
+        },
+        {
+          "id": 177,
+          "party": "Northstar Subcontractors",
+          "issue_date": "2025-09-18",
+          "due_date": "2025-10-18",
+          "amount": 11127.05,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 179,
+          "party": "Vivid Print House",
+          "issue_date": "2025-09-17",
+          "due_date": "2025-10-17",
+          "amount": 2477.99,
+          "status": "paid",
+          "paid_date": "2025-10-17",
+          "memo": null
+        },
+        {
+          "id": 175,
+          "party": "Vivid Print House",
+          "issue_date": "2025-08-21",
+          "due_date": "2025-09-20",
+          "amount": 1438.85,
+          "status": "paid",
+          "paid_date": "2025-09-14",
+          "memo": null
+        },
+        {
+          "id": 176,
+          "party": "Pinnacle Accounting Tools",
+          "issue_date": "2025-08-12",
+          "due_date": "2025-09-11",
+          "amount": 604.92,
+          "status": "paid",
+          "paid_date": "2025-09-05",
+          "memo": null
+        },
+        {
+          "id": 173,
+          "party": "Northstar Subcontractors",
+          "issue_date": "2025-08-10",
+          "due_date": "2025-09-09",
+          "amount": 8007.07,
+          "status": "paid",
+          "paid_date": "2025-08-21",
+          "memo": null
+        },
+        {
+          "id": 174,
+          "party": "Adwell Media Buying",
+          "issue_date": "2025-08-04",
+          "due_date": "2025-09-03",
+          "amount": 3610.95,
+          "status": "paid",
+          "paid_date": "2025-08-28",
+          "memo": null
+        },
+        {
+          "id": 172,
+          "party": "Pinnacle Accounting Tools",
+          "issue_date": "2025-07-19",
+          "due_date": "2025-08-18",
+          "amount": 508.8,
+          "status": "paid",
+          "paid_date": "2025-08-08",
+          "memo": null
+        },
+        {
+          "id": 171,
+          "party": "Vivid Print House",
+          "issue_date": "2025-07-18",
+          "due_date": "2025-08-17",
+          "amount": 2180.95,
+          "status": "paid",
+          "paid_date": "2025-08-17",
+          "memo": null
+        },
+        {
+          "id": 169,
+          "party": "Northstar Subcontractors",
+          "issue_date": "2025-07-12",
+          "due_date": "2025-08-11",
+          "amount": 8852.11,
+          "status": "paid",
+          "paid_date": "2025-08-05",
+          "memo": null
+        },
+        {
+          "id": 170,
+          "party": "Adwell Media Buying",
+          "issue_date": "2025-07-10",
+          "due_date": "2025-08-09",
+          "amount": 2364.91,
+          "status": "paid",
+          "paid_date": "2025-08-08",
+          "memo": null
+        },
+        {
+          "id": 166,
+          "party": "Adwell Media Buying",
+          "issue_date": "2025-06-22",
+          "due_date": "2025-07-22",
+          "amount": 2716.63,
+          "status": "paid",
+          "paid_date": "2025-07-10",
+          "memo": null
+        },
+        {
+          "id": 165,
+          "party": "Northstar Subcontractors",
+          "issue_date": "2025-06-09",
+          "due_date": "2025-07-09",
+          "amount": 12610.37,
+          "status": "paid",
+          "paid_date": "2025-07-12",
+          "memo": null
+        },
+        {
+          "id": 167,
+          "party": "Vivid Print House",
+          "issue_date": "2025-06-07",
+          "due_date": "2025-07-07",
+          "amount": 1986.52,
+          "status": "paid",
+          "paid_date": "2025-07-20",
+          "memo": null
+        },
+        {
+          "id": 168,
+          "party": "Pinnacle Accounting Tools",
+          "issue_date": "2025-06-06",
+          "due_date": "2025-07-06",
+          "amount": 548.4,
+          "status": "paid",
+          "paid_date": "2025-06-19",
+          "memo": null
+        },
+        {
+          "id": 161,
+          "party": "Northstar Subcontractors",
+          "issue_date": "2025-05-21",
+          "due_date": "2025-06-20",
+          "amount": 12670.31,
+          "status": "paid",
+          "paid_date": "2025-05-31",
+          "memo": null
+        },
+        {
+          "id": 164,
+          "party": "Pinnacle Accounting Tools",
+          "issue_date": "2025-05-20",
+          "due_date": "2025-06-19",
+          "amount": 739.85,
+          "status": "paid",
+          "paid_date": "2025-06-15",
+          "memo": null
+        }
+      ],
+      "journal": [
+        {
+          "id": 2244,
+          "entry_date": "2026-06-09",
+          "description": "Internet & phone",
+          "payee": "Citywide Internet",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 175.0,
+          "credit": 175.0
+        },
+        {
+          "id": 2242,
+          "entry_date": "2026-06-09",
+          "description": "Payroll taxes",
+          "payee": "Payroll Taxes",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 1388.47,
+          "credit": 1388.47
+        },
+        {
+          "id": 2240,
+          "entry_date": "2026-06-09",
+          "description": "Office rent",
+          "payee": "Skyline Coworking",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 2818.33,
+          "credit": 2818.33
+        },
+        {
+          "id": 2252,
+          "entry_date": "2026-06-08",
+          "description": "Project invoice \u2014 Tidewater Marketing",
+          "payee": "Tidewater Marketing",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 11078.01,
+          "credit": 11078.01
+        },
+        {
+          "id": 2251,
+          "entry_date": "2026-06-06",
+          "description": "Monthly retainer \u2014 Cedar & Pine Realty",
+          "payee": "Cedar & Pine Realty",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 5548.66,
+          "credit": 5548.66
+        },
+        {
+          "id": 2249,
+          "entry_date": "2026-06-06",
+          "description": "Monthly retainer \u2014 Maple & Co Consulting",
+          "payee": "Maple & Co Consulting",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 5250.65,
+          "credit": 5250.65
+        },
+        {
+          "id": 2247,
+          "entry_date": "2026-06-06",
+          "description": "Meals & client entertainment",
+          "payee": "Citywide Internet",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 179.92,
+          "credit": 179.92
+        },
+        {
+          "id": 2243,
+          "entry_date": "2026-06-06",
+          "description": "Software subscriptions",
+          "payee": "Acme Software Co",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 536.0,
+          "credit": 536.0
+        },
+        {
+          "id": 2245,
+          "entry_date": "2026-06-05",
+          "description": "Business insurance",
+          "payee": "Apex Insurance",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 245.0,
+          "credit": 245.0
+        },
+        {
+          "id": 2182,
+          "entry_date": "2026-06-05",
+          "description": "Payment received \u2014 Summit Yoga Collective",
+          "payee": "Summit Yoga Collective",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 10969.86,
+          "credit": 10969.86
+        },
+        {
+          "id": 2250,
+          "entry_date": "2026-06-04",
+          "description": "Monthly retainer \u2014 Tidewater Marketing",
+          "payee": "Tidewater Marketing",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 5633.68,
+          "credit": 5633.68
+        },
+        {
+          "id": 2246,
+          "entry_date": "2026-06-04",
+          "description": "Bank & merchant fees",
+          "payee": "Business Checking",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 40.04,
+          "credit": 40.04
+        },
+        {
+          "id": 2232,
+          "entry_date": "2026-06-04",
+          "description": "Bill paid \u2014 Vivid Print House",
+          "payee": "Vivid Print House",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 1878.63,
+          "credit": 1878.63
+        },
+        {
+          "id": 2241,
+          "entry_date": "2026-06-03",
+          "description": "Salaries & wages",
+          "payee": "Payroll",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 10119.33,
+          "credit": 10119.33
+        },
+        {
+          "id": 2227,
+          "entry_date": "2026-06-03",
+          "description": "Payment received \u2014 Lantern Logistics",
+          "payee": "Lantern Logistics",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 8929.25,
+          "credit": 8929.25
+        },
+        {
+          "id": 2248,
+          "entry_date": "2026-06-01",
+          "description": "Office supplies",
+          "payee": "Citywide Internet",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 37.75,
+          "credit": 37.75
+        },
+        {
+          "id": 2225,
+          "entry_date": "2026-05-30",
+          "description": "Payment received \u2014 Tidewater Marketing",
+          "payee": "Tidewater Marketing",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 11841.36,
+          "credit": 11841.36
+        },
+        {
+          "id": 2367,
+          "entry_date": "2026-05-29",
+          "description": "Payroll",
+          "payee": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 15526.44,
+          "credit": 15526.44
+        },
+        {
+          "id": 2239,
+          "entry_date": "2026-05-28",
+          "description": "Transfer to business savings",
+          "payee": "Internal",
+          "source": "transfer",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 3487.26,
+          "credit": 3487.26
+        },
+        {
+          "id": 2235,
+          "entry_date": "2026-05-28",
+          "description": "Credit card payment",
+          "payee": "Card Issuer",
+          "source": "cc_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 3692.02,
+          "credit": 3692.02
+        },
+        {
+          "id": 2234,
+          "entry_date": "2026-05-28",
+          "description": "Payout from online payments",
+          "payee": "Stripe",
+          "source": "transfer",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 16151.27,
+          "credit": 16151.27
+        },
+        {
+          "id": 2216,
+          "entry_date": "2026-05-28",
+          "description": "Equipment & tools",
+          "payee": "Northstar Subcontractors",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 117.97,
+          "credit": 117.97
+        },
+        {
+          "id": 2238,
+          "entry_date": "2026-05-27",
+          "description": "Owner draw",
+          "payee": "Owner",
+          "source": "owner",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 1582.0,
+          "credit": 1582.0
+        },
+        {
+          "id": 2237,
+          "entry_date": "2026-05-27",
+          "description": "Interest earned \u2014 business savings",
+          "payee": "Business Savings",
+          "source": "interest",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 54.54,
+          "credit": 54.54
+        },
+        {
+          "id": 2236,
+          "entry_date": "2026-05-25",
+          "description": "Credit card payment",
+          "payee": "Card Issuer",
+          "source": "cc_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 1291.23,
+          "credit": 1291.23
+        },
+        {
+          "id": 2223,
+          "entry_date": "2026-05-25",
+          "description": "Project invoice \u2014 Bluepeak Ventures",
+          "payee": "Bluepeak Ventures",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 10307.07,
+          "credit": 10307.07
+        },
+        {
+          "id": 2231,
+          "entry_date": "2026-05-22",
+          "description": "Printing & production \u2014 Vivid Print House",
+          "payee": "Vivid Print House",
+          "source": "bill",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 1878.63,
+          "credit": 1878.63
+        },
+        {
+          "id": 2193,
+          "entry_date": "2026-05-22",
+          "description": "Bill paid \u2014 Vivid Print House",
+          "payee": "Vivid Print House",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 3065.77,
+          "credit": 3065.77
+        },
+        {
+          "id": 2229,
+          "entry_date": "2026-05-19",
+          "description": "Subcontractor services \u2014 Northstar Subcontractors",
+          "payee": "Northstar Subcontractors",
+          "source": "bill",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 10772.97,
+          "credit": 10772.97
+        },
+        {
+          "id": 2230,
+          "entry_date": "2026-05-18",
+          "description": "Client media & ad spend \u2014 Adwell Media Buying",
+          "payee": "Adwell Media Buying",
+          "source": "bill",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 4264.54,
+          "credit": 4264.54
+        },
+        {
+          "id": 2228,
+          "entry_date": "2026-05-18",
+          "description": "Project invoice \u2014 Northgate Retail",
+          "payee": "Northgate Retail",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 10351.27,
+          "credit": 10351.27
+        },
+        {
+          "id": 2222,
+          "entry_date": "2026-05-17",
+          "description": "Retainer payment \u2014 Cedar & Pine Realty",
+          "payee": "Cedar & Pine Realty",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 6398.39,
+          "credit": 6398.39
+        },
+        {
+          "id": 2366,
+          "entry_date": "2026-05-15",
+          "description": "Payroll",
+          "payee": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 15526.44,
+          "credit": 15526.44
+        },
+        {
+          "id": 2210,
+          "entry_date": "2026-05-15",
+          "description": "Travel & lodging",
+          "payee": "Skyline Coworking",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 766.98,
+          "credit": 766.98
+        },
+        {
+          "id": 2195,
+          "entry_date": "2026-05-15",
+          "description": "Bill paid \u2014 Pinnacle Accounting Tools",
+          "payee": "Pinnacle Accounting Tools",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 518.78,
+          "credit": 518.78
+        },
+        {
+          "id": 2189,
+          "entry_date": "2026-05-15",
+          "description": "Bill paid \u2014 Northstar Subcontractors",
+          "payee": "Northstar Subcontractors",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 11332.28,
+          "credit": 11332.28
+        },
+        {
+          "id": 2233,
+          "entry_date": "2026-05-13",
+          "description": "Professional services \u2014 Pinnacle Accounting Tools",
+          "payee": "Pinnacle Accounting Tools",
+          "source": "bill",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 479.06,
+          "credit": 479.06
+        },
+        {
+          "id": 2191,
+          "entry_date": "2026-05-13",
+          "description": "Bill paid \u2014 Adwell Media Buying",
+          "payee": "Adwell Media Buying",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 3236.6,
+          "credit": 3236.6
+        },
+        {
+          "id": 2186,
+          "entry_date": "2026-05-13",
+          "description": "Payment received \u2014 Summit Yoga Collective",
+          "payee": "Summit Yoga Collective",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 11612.82,
+          "credit": 11612.82
+        },
+        {
+          "id": 2209,
+          "entry_date": "2026-05-11",
+          "description": "Utilities",
+          "payee": "Lumen Utilities",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 229.47,
+          "credit": 229.47
+        },
+        {
+          "id": 2203,
+          "entry_date": "2026-05-11",
+          "description": "Payroll taxes",
+          "payee": "Payroll Taxes",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 1384.53,
+          "credit": 1384.53
+        },
+        {
+          "id": 2202,
+          "entry_date": "2026-05-11",
+          "description": "Salaries & wages",
+          "payee": "Payroll",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 10090.67,
+          "credit": 10090.67
+        },
+        {
+          "id": 2215,
+          "entry_date": "2026-05-10",
+          "description": "Equipment & tools",
+          "payee": "Adwell Media Buying",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 517.56,
+          "credit": 517.56
+        },
+        {
+          "id": 2211,
+          "entry_date": "2026-05-10",
+          "description": "Office supplies",
+          "payee": "Adwell Media Buying",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 59.13,
+          "credit": 59.13
+        },
+        {
+          "id": 2226,
+          "entry_date": "2026-05-09",
+          "description": "Project invoice \u2014 Lantern Logistics",
+          "payee": "Lantern Logistics",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 8929.25,
+          "credit": 8929.25
+        },
+        {
+          "id": 2224,
+          "entry_date": "2026-05-09",
+          "description": "Project invoice \u2014 Tidewater Marketing",
+          "payee": "Tidewater Marketing",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 11841.36,
+          "credit": 11841.36
+        },
+        {
+          "id": 2220,
+          "entry_date": "2026-05-09",
+          "description": "Retainer payment \u2014 Tidewater Marketing",
+          "payee": "Tidewater Marketing",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 6439.98,
+          "credit": 6439.98
+        },
+        {
+          "id": 2218,
+          "entry_date": "2026-05-08",
+          "description": "Retainer payment \u2014 Maple & Co Consulting",
+          "payee": "Maple & Co Consulting",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 5984.16,
+          "credit": 5984.16
+        },
+        {
+          "id": 2204,
+          "entry_date": "2026-05-08",
+          "description": "Software subscriptions",
+          "payee": "Acme Software Co",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 534.0,
+          "credit": 534.0
+        },
+        {
+          "id": 2214,
+          "entry_date": "2026-05-07",
+          "description": "Advertising & marketing",
+          "payee": "Vivid Print House",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 608.14,
+          "credit": 608.14
+        }
+      ],
+      "payment": [
+        {
+          "id": 2242,
+          "entry_date": "2026-06-09",
+          "party": "Payroll Taxes",
+          "description": "Payroll taxes",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 1388.47
+        },
+        {
+          "id": 2240,
+          "entry_date": "2026-06-09",
+          "party": "Skyline Coworking",
+          "description": "Office rent",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 2818.33
+        },
+        {
+          "id": 2247,
+          "entry_date": "2026-06-06",
+          "party": "Citywide Internet",
+          "description": "Meals & client entertainment",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 179.92
+        },
+        {
+          "id": 2243,
+          "entry_date": "2026-06-06",
+          "party": "Acme Software Co",
+          "description": "Software subscriptions",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 536.0
+        },
+        {
+          "id": 2245,
+          "entry_date": "2026-06-05",
+          "party": "Apex Insurance",
+          "description": "Business insurance",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 245.0
+        },
+        {
+          "id": 2182,
+          "entry_date": "2026-06-05",
+          "party": "Summit Yoga Collective",
+          "description": "Payment received \u2014 Summit Yoga Collective",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 10969.86
+        },
+        {
+          "id": 2246,
+          "entry_date": "2026-06-04",
+          "party": "Business Checking",
+          "description": "Bank & merchant fees",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 40.04
+        },
+        {
+          "id": 2241,
+          "entry_date": "2026-06-03",
+          "party": "Payroll",
+          "description": "Salaries & wages",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 10119.33
+        },
+        {
+          "id": 2227,
+          "entry_date": "2026-06-03",
+          "party": "Lantern Logistics",
+          "description": "Payment received \u2014 Lantern Logistics",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 8929.25
+        },
+        {
+          "id": 2225,
+          "entry_date": "2026-05-30",
+          "party": "Tidewater Marketing",
+          "description": "Payment received \u2014 Tidewater Marketing",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 11841.36
+        },
+        {
+          "id": 2367,
+          "entry_date": "2026-05-29",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 9971.73
+        },
+        {
+          "id": 2235,
+          "entry_date": "2026-05-28",
+          "party": "Card Issuer",
+          "description": "Credit card payment",
+          "source": "cc_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 3692.02
+        },
+        {
+          "id": 2216,
+          "entry_date": "2026-05-28",
+          "party": "Northstar Subcontractors",
+          "description": "Equipment & tools",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 117.97
+        },
+        {
+          "id": 2238,
+          "entry_date": "2026-05-27",
+          "party": "Owner",
+          "description": "Owner draw",
+          "source": "owner",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 1582.0
+        },
+        {
+          "id": 2237,
+          "entry_date": "2026-05-27",
+          "party": "Business Savings",
+          "description": "Interest earned \u2014 business savings",
+          "source": "interest",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 54.54
+        },
+        {
+          "id": 2236,
+          "entry_date": "2026-05-25",
+          "party": "Card Issuer",
+          "description": "Credit card payment",
+          "source": "cc_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 1291.23
+        },
+        {
+          "id": 2193,
+          "entry_date": "2026-05-22",
+          "party": "Vivid Print House",
+          "description": "Bill paid \u2014 Vivid Print House",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 3065.77
+        },
+        {
+          "id": 2222,
+          "entry_date": "2026-05-17",
+          "party": "Cedar & Pine Realty",
+          "description": "Retainer payment \u2014 Cedar & Pine Realty",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 6398.39
+        },
+        {
+          "id": 2366,
+          "entry_date": "2026-05-15",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 9971.73
+        },
+        {
+          "id": 2195,
+          "entry_date": "2026-05-15",
+          "party": "Pinnacle Accounting Tools",
+          "description": "Bill paid \u2014 Pinnacle Accounting Tools",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 518.78
+        },
+        {
+          "id": 2186,
+          "entry_date": "2026-05-13",
+          "party": "Summit Yoga Collective",
+          "description": "Payment received \u2014 Summit Yoga Collective",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 11612.82
+        },
+        {
+          "id": 2209,
+          "entry_date": "2026-05-11",
+          "party": "Lumen Utilities",
+          "description": "Utilities",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 229.47
+        },
+        {
+          "id": 2203,
+          "entry_date": "2026-05-11",
+          "party": "Payroll Taxes",
+          "description": "Payroll taxes",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 1384.53
+        },
+        {
+          "id": 2202,
+          "entry_date": "2026-05-11",
+          "party": "Payroll",
+          "description": "Salaries & wages",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 10090.67
+        },
+        {
+          "id": 2220,
+          "entry_date": "2026-05-09",
+          "party": "Tidewater Marketing",
+          "description": "Retainer payment \u2014 Tidewater Marketing",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 6439.98
+        },
+        {
+          "id": 2218,
+          "entry_date": "2026-05-08",
+          "party": "Maple & Co Consulting",
+          "description": "Retainer payment \u2014 Maple & Co Consulting",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 5984.16
+        },
+        {
+          "id": 2207,
+          "entry_date": "2026-05-07",
+          "party": "Business Checking",
+          "description": "Bank & merchant fees",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 51.78
+        },
+        {
+          "id": 2206,
+          "entry_date": "2026-05-06",
+          "party": "Apex Insurance",
+          "description": "Business insurance",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 245.0
+        },
+        {
+          "id": 2201,
+          "entry_date": "2026-05-04",
+          "party": "Skyline Coworking",
+          "description": "Office rent",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 2806.67
+        },
+        {
+          "id": 2205,
+          "entry_date": "2026-05-03",
+          "party": "Citywide Internet",
+          "description": "Internet & phone",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 175.0
+        },
+        {
+          "id": 2208,
+          "entry_date": "2026-05-02",
+          "party": "Pinnacle Accounting Tools",
+          "description": "Dues & memberships",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 65.0
+        },
+        {
+          "id": 2365,
+          "entry_date": "2026-05-01",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 9971.73
+        },
+        {
+          "id": 2213,
+          "entry_date": "2026-05-01",
+          "party": "Cloudhost Inc",
+          "description": "Advertising & marketing",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 1158.83
+        },
+        {
+          "id": 2145,
+          "entry_date": "2026-05-01",
+          "party": "Bluepeak Ventures",
+          "description": "Payment received \u2014 Bluepeak Ventures",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 17997.52
+        },
+        {
+          "id": 2169,
+          "entry_date": "2026-04-28",
+          "party": "Rapid Courier",
+          "description": "Travel & lodging",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 334.05
+        },
+        {
+          "id": 2199,
+          "entry_date": "2026-04-27",
+          "party": "Business Savings",
+          "description": "Interest earned \u2014 business savings",
+          "source": "interest",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 59.81
+        },
+        {
+          "id": 2198,
+          "entry_date": "2026-04-26",
+          "party": "Card Issuer",
+          "description": "Credit card payment",
+          "source": "cc_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 244.89
+        },
+        {
+          "id": 2197,
+          "entry_date": "2026-04-26",
+          "party": "Card Issuer",
+          "description": "Credit card payment",
+          "source": "cc_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 14699.46
+        },
+        {
+          "id": 2200,
+          "entry_date": "2026-04-24",
+          "party": "Owner",
+          "description": "Owner draw",
+          "source": "owner",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 1578.5
+        },
+        {
+          "id": 2176,
+          "entry_date": "2026-04-24",
+          "party": "Maple & Co Consulting",
+          "description": "Retainer payment \u2014 Maple & Co Consulting",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 6057.49
+        },
+        {
+          "id": 2171,
+          "entry_date": "2026-04-24",
+          "party": "Metro Print Shop",
+          "description": "Equipment & tools",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 637.82
+        },
+        {
+          "id": 2168,
+          "entry_date": "2026-04-20",
+          "party": "Lumen Utilities",
+          "description": "Utilities",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 224.75
+        },
+        {
+          "id": 2143,
+          "entry_date": "2026-04-19",
+          "party": "Harborline Design",
+          "description": "Payment received \u2014 Harborline Design",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 10276.67
+        },
+        {
+          "id": 2364,
+          "entry_date": "2026-04-17",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 9971.73
+        },
+        {
+          "id": 2184,
+          "entry_date": "2026-04-17",
+          "party": "Brightwave Media",
+          "description": "Payment received \u2014 Brightwave Media",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 12542.27
+        },
+        {
+          "id": 2174,
+          "entry_date": "2026-04-17",
+          "party": "Citywide Internet",
+          "description": "Continuing education",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 218.98
+        },
+        {
+          "id": 2172,
+          "entry_date": "2026-04-16",
+          "party": "Adwell Media Buying",
+          "description": "Equipment & tools",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 487.2
+        },
+        {
+          "id": 2178,
+          "entry_date": "2026-04-15",
+          "party": "Tidewater Marketing",
+          "description": "Retainer payment \u2014 Tidewater Marketing",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 6365.55
+        },
+        {
+          "id": 2161,
+          "entry_date": "2026-04-11",
+          "party": "Payroll",
+          "description": "Salaries & wages",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 10062.0
+        },
+        {
+          "id": 2160,
+          "entry_date": "2026-04-09",
+          "party": "Skyline Coworking",
+          "description": "Office rent",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 2795.0
+        }
+      ]
+    },
+    "pending_actions": [
+      {
+        "document_type": "invoice",
+        "document_id": 28,
+        "action": "send_invoice",
+        "label": "Send invoice #28",
+        "party": "Cedar & Pine Realty",
+        "amount": 3190.06,
+        "issue_date": "2022-05-05",
+        "due_date": "2022-05-20",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 25,
+        "action": "send_invoice",
+        "label": "Send invoice #25",
+        "party": "Greenfield Landscaping",
+        "amount": 13982.17,
+        "issue_date": "2022-04-24",
+        "due_date": "2022-05-24",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 49,
+        "action": "send_invoice",
+        "label": "Send invoice #49",
+        "party": "Harborline Design",
+        "amount": 5709.46,
+        "issue_date": "2022-08-17",
+        "due_date": "2022-09-16",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 52,
+        "action": "send_invoice",
+        "label": "Send invoice #52",
+        "party": "Tidewater Marketing",
+        "amount": 3543.36,
+        "issue_date": "2022-09-04",
+        "due_date": "2022-09-19",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 54,
+        "action": "send_invoice",
+        "label": "Send invoice #54",
+        "party": "Greenfield Landscaping",
+        "amount": 8463.27,
+        "issue_date": "2022-09-24",
+        "due_date": "2022-10-24",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 55,
+        "action": "send_invoice",
+        "label": "Send invoice #55",
+        "party": "Northgate Retail",
+        "amount": 10258.34,
+        "issue_date": "2022-09-26",
+        "due_date": "2022-10-26",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 62,
+        "action": "send_invoice",
+        "label": "Send invoice #62",
+        "party": "Riverside Studios LLC",
+        "amount": 11258.44,
+        "issue_date": "2022-10-24",
+        "due_date": "2022-11-23",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 91,
+        "action": "send_invoice",
+        "label": "Send invoice #91",
+        "party": "Riverside Studios LLC",
+        "amount": 7340.15,
+        "issue_date": "2023-03-06",
+        "due_date": "2023-04-05",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 94,
+        "action": "send_invoice",
+        "label": "Send invoice #94",
+        "party": "Maple & Co Consulting",
+        "amount": 3518.53,
+        "issue_date": "2023-04-05",
+        "due_date": "2023-04-20",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 145,
+        "action": "send_invoice",
+        "label": "Send invoice #145",
+        "party": "Maple & Co Consulting",
+        "amount": 3253.01,
+        "issue_date": "2024-01-06",
+        "due_date": "2024-01-21",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 179,
+        "action": "send_invoice",
+        "label": "Send invoice #179",
+        "party": "Cedar & Pine Realty",
+        "amount": 4221.96,
+        "issue_date": "2024-06-02",
+        "due_date": "2024-06-17",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 181,
+        "action": "send_invoice",
+        "label": "Send invoice #181",
+        "party": "Riverside Studios LLC",
+        "amount": 16266.34,
+        "issue_date": "2024-06-19",
+        "due_date": "2024-07-19",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 210,
+        "action": "send_invoice",
+        "label": "Send invoice #210",
+        "party": "Tidewater Marketing",
+        "amount": 5060.69,
+        "issue_date": "2024-11-03",
+        "due_date": "2024-11-18",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 265,
+        "action": "send_invoice",
+        "label": "Send invoice #265",
+        "party": "Bluepeak Ventures",
+        "amount": 8016.29,
+        "issue_date": "2025-07-19",
+        "due_date": "2025-08-18",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 264,
+        "action": "send_invoice",
+        "label": "Send invoice #264",
+        "party": "Brightwave Media",
+        "amount": 8459.6,
+        "issue_date": "2025-07-26",
+        "due_date": "2025-08-25",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 274,
+        "action": "send_invoice",
+        "label": "Send invoice #274",
+        "party": "Tidewater Marketing",
+        "amount": 5517.88,
+        "issue_date": "2025-09-05",
+        "due_date": "2025-09-20",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 322,
+        "action": "send_invoice",
+        "label": "Send invoice #322",
+        "party": "Lantern Logistics",
+        "amount": 13123.68,
+        "issue_date": "2026-04-13",
+        "due_date": "2026-05-13",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 329,
+        "action": "send_invoice",
+        "label": "Send invoice #329",
+        "party": "Northgate Retail",
+        "amount": 10351.27,
+        "issue_date": "2026-05-18",
+        "due_date": "2026-06-17",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 331,
+        "action": "send_invoice",
+        "label": "Send invoice #331",
+        "party": "Tidewater Marketing",
+        "amount": 5633.68,
+        "issue_date": "2026-06-04",
+        "due_date": "2026-06-19",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 330,
+        "action": "send_invoice",
+        "label": "Send invoice #330",
+        "party": "Maple & Co Consulting",
+        "amount": 5250.65,
+        "issue_date": "2026-06-06",
+        "due_date": "2026-06-21",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 332,
+        "action": "send_invoice",
+        "label": "Send invoice #332",
+        "party": "Cedar & Pine Realty",
+        "amount": 5548.66,
+        "issue_date": "2026-06-06",
+        "due_date": "2026-06-21",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 326,
+        "action": "send_invoice",
+        "label": "Send invoice #326",
+        "party": "Bluepeak Ventures",
+        "amount": 10307.07,
+        "issue_date": "2026-05-25",
+        "due_date": "2026-06-24",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 333,
+        "action": "send_invoice",
+        "label": "Send invoice #333",
+        "party": "Tidewater Marketing",
+        "amount": 11078.01,
+        "issue_date": "2026-06-08",
+        "due_date": "2026-07-08",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      }
+    ],
+    "capabilities": {
+      "send_invoice": "approval_required",
+      "reserve_number": "approval_required",
+      "external_delivery": "disabled_until_approved",
+      "ledger_write": "disabled_for_send_invoice"
+    }
+  },
+  "financial_state": {
+    "status": "active",
+    "liquidity": {
+      "cash": -655374.64,
+      "open_ar": 179352.57,
+      "open_ap": 63496.38,
+      "net_position": -539518.45,
+      "scale": 655374.64
+    },
+    "performance": {
+      "income": 672080.04,
+      "expense": 807429.42,
+      "net_income": -135349.38,
+      "operating_cash_net": -42328.47,
+      "scale": 807429.42
+    },
+    "balance": {
+      "assets": -476022.19,
+      "liabilities": 673265.14,
+      "equity": -1149287.33
+    }
   },
   "payroll": {
     "status": "active",

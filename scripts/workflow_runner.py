@@ -28,6 +28,7 @@ RUNNABLE = {
     "payroll_review",
     "sales_tax_review",
     "document_followup",
+    "send_invoice",
 }
 
 
@@ -203,6 +204,8 @@ def _write_receipt(job: sqlite3.Row) -> dict:
     job_key = str(job["job_key"])
     if job_key.startswith("document_request:"):
         execution = "document_followup"
+    elif job_key.startswith("send_invoice:"):
+        execution = "invoice_send_prep"
     elif job_key.startswith("ar_invoice_reminder:"):
         execution = "client_payment_reminder_prep"
     elif job_key.startswith("ap_bill_approval:"):
@@ -256,6 +259,7 @@ def run_approved(*, limit: int = 25) -> dict:
             runnable = (
                 row["job_key"] in RUNNABLE
                 or job_key.startswith("document_request:")
+                or job_key.startswith("send_invoice:")
                 or job_key.startswith("ar_invoice_reminder:")
                 or job_key.startswith("ap_bill_approval:")
             )

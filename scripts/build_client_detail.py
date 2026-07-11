@@ -10,7 +10,10 @@ from pathlib import Path
 import payroll_rollup
 import tenancy
 import automation_profile
+import book_schema
+import document_actions
 import document_requests
+import number_series
 
 PUBLIC_DIR = Path(__file__).resolve().parent.parent / "public"
 TOP_N = 8
@@ -359,6 +362,96 @@ def filing_obligations(con: sqlite3.Connection, prof: sqlite3.Row, as_of: str | 
         "payroll_tax_liability": round(float(payroll_tax_liability or 0), 2),
     }
 
+
+def _rows(con: sqlite3.Connection, sql: str, params: tuple = ()) -> list[dict]:
+    return [dict(r) for r in con.execute(sql, params)]
+
+
+def document_index(con: sqlite3.Connection, slug: str) -> dict:
+    number_series.ensure_number_series_schema(con)
+    invoices = _rows(con, """
+        SELECT id, party, issue_date, due_date, ROUND(amount, 2) AS amount,
+               status, paid_date, memo
+        FROM invoices ORDER BY issue_date DESC, id DESC LIMIT 50
+    """)
+    bills = _rows(con, """
+        SELECT id, party, issue_date, due_date, ROUND(amount, 2) AS amount,
+               status, paid_date, memo
+        FROM bills ORDER BY issue_date DESC, id DESC LIMIT 50
+    """)
+    journals = _rows(con, """
+        SELECT e.id, e.entry_date, e.description, e.payee, e.source,
+               e.source_ref, e.status, ROUND(COALESCE(SUM(s.dr), 0), 2) AS debit,
+               ROUND(COALESCE(SUM(s.cr), 0), 2) AS credit
+        FROM entries e LEFT JOIN splits s ON s.entry_id=e.id
+        GROUP BY e.id ORDER BY e.entry_date DESC, e.id DESC LIMIT 50
+    """)
+    payments = _rows(con, """
+        SELECT e.id, e.entry_date, COALESCE(e.payee, e.description) AS party,
+               e.description, e.source, e.source_ref, e.status,
+               ROUND(ABS(COALESCE(SUM(CASE WHEN s.account IN ('101','102','103','106')
+                   THEN s.dr-s.cr ELSE 0 END), 0)), 2) AS amount
+        FROM entries e JOIN splits s ON s.entry_id=e.id
+        GROUP BY e.id
+        HAVING amount > 0
+        ORDER BY e.entry_date DESC, e.id DESC LIMIT 50
+    """)
+    return {
+        "schemas": book_schema.document_schema_registry(),
+        "number_series": number_series.series_state(slug),
+        "documents": {
+            "invoice": invoices,
+            "bill": bills,
+            "journal": journals,
+            "payment": payments,
+        },
+        "pending_actions": document_actions.pending_invoice_actions(slug),
+        "capabilities": {
+            "send_invoice": "approval_required",
+            "reserve_number": "approval_required",
+            "external_delivery": "disabled_until_approved",
+            "ledger_write": "disabled_for_send_invoice",
+        },
+    }
+
+
+def financial_state(ar: dict, ap: dict, cash_flow: dict, pnl_balance: dict) -> dict:
+    period = (pnl_balance or {}).get("period", {})
+    bs = (pnl_balance or {}).get("balance_sheet", {})
+    cash = float((cash_flow or {}).get("ending_cash") or 0)
+    ar_total = float((ar or {}).get("open_total") or 0)
+    ap_total = float((ap or {}).get("open_total") or 0)
+    income = float(period.get("income") or 0)
+    expense = float(period.get("expense") or 0)
+    net_income = float(period.get("net_income") or 0)
+    assets = float(bs.get("assets") or cash)
+    liabilities = float(bs.get("liabilities") or 0)
+    operating_net = float((cash_flow or {}).get("net") or 0)
+    exposure_max = max(abs(cash), abs(ar_total), abs(ap_total), 1.0)
+    performance_max = max(abs(income), abs(expense), abs(net_income), 1.0)
+    return {
+        "status": "active" if (cash_flow or {}).get("status") == "active" else "no_posted_activity",
+        "liquidity": {
+            "cash": round(cash, 2),
+            "open_ar": round(ar_total, 2),
+            "open_ap": round(ap_total, 2),
+            "net_position": round(cash + ar_total - ap_total, 2),
+            "scale": round(exposure_max, 2),
+        },
+        "performance": {
+            "income": round(income, 2),
+            "expense": round(expense, 2),
+            "net_income": round(net_income, 2),
+            "operating_cash_net": round(operating_net, 2),
+            "scale": round(performance_max, 2),
+        },
+        "balance": {
+            "assets": round(assets, 2),
+            "liabilities": round(liabilities, 2),
+            "equity": round(float(bs.get("equity_total") or 0), 2),
+        },
+    }
+
 def build_client_detail(slug: str) -> dict:
     db = tenancy.resolve_db(slug)
     con = sqlite3.connect(db)
@@ -366,6 +459,7 @@ def build_client_detail(slug: str) -> dict:
     try:
         as_of = con.execute(
             "SELECT MAX(entry_date) FROM entries WHERE status='posted'").fetchone()[0]
+        ref_date = as_of or date.today().isoformat()
         inv = [dict(r) for r in con.execute(
             "SELECT party, due_date, amount FROM invoices WHERE status='open'")]
         bil = [dict(r) for r in con.execute(
@@ -392,11 +486,14 @@ def build_client_detail(slug: str) -> dict:
                 date.fromisoformat(as_of),
                 (prof["fiscal_year_end"] or "12-31")).isoformat()
         filing = filing_obligations(con, prof, as_of, next_due)
+        ar_summary = aging_buckets(inv, ref_date)
+        ap_summary = aging_buckets(bil, ref_date)
+        docs_workspace = document_index(con, slug)
+        state_graph = financial_state(ar_summary, ap_summary, cash_flow, pnl_balance)
     finally:
         con.close()
 
 
-    ref_date = as_of or date.today().isoformat()
     workflow_profile = tenancy.get_automation_profile(slug)
     workflow_jobs = automation_profile.plan_due_jobs(
         slug,
@@ -412,8 +509,8 @@ def build_client_detail(slug: str) -> dict:
         "entity_type": prof["entity_type"],
         "status": "active",
         "as_of": as_of,
-        "ar": aging_buckets(inv, ref_date),
-        "ap": aging_buckets(bil, ref_date),
+        "ar": ar_summary,
+        "ap": ap_summary,
         "admin": {
             "legal_name": prof["legal_name"],
             "ein_masked": mask_ein(prof["ein"]),
@@ -445,6 +542,8 @@ def build_client_detail(slug: str) -> dict:
         "automation_setup": workflow_setup,
         "due_jobs": workflow_jobs,
         "document_requests": doc_requests,
+        "document_workspace": docs_workspace,
+        "financial_state": state_graph,
         "payroll": payroll,
     }
 

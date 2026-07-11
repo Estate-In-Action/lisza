@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T20:04:24Z",
+  "generated_at": "2026-07-11T00:23:32Z",
   "slug": "lakeside-bakery",
   "display_name": "Lakeside Bakery",
   "entity_type": null,
@@ -232,7 +232,7 @@
     {
       "key": "weekly_digest",
       "label": "Weekly digest",
-      "due_date": "2026-07-06",
+      "due_date": "2026-07-11",
       "status": "due_now",
       "source": "profile.reports",
       "approval_required": true
@@ -240,74 +240,203 @@
   ],
   "document_requests": {
     "summary": {
-      "requested": 4,
+      "requested": 0,
       "received": 0,
       "waived": 0,
       "overdue": 0,
-      "open": 4
+      "open": 0
     },
-    "requests": [
-      {
-        "document_request_id": 14,
-        "client_slug": "lakeside-bakery",
-        "client_name": "Lakeside Bakery",
-        "doc_key": "bank_statement_current",
-        "label": "Current bank statement",
-        "description": "Needed for reconciliation and opening balance review.",
-        "due_date": "2026-07-20",
-        "status": "requested",
-        "requested_at": "2026-07-06 20:04:24",
-        "received_at": null,
-        "last_followup_at": null,
-        "followup_count": 0,
-        "updated_at": "2026-07-06 20:04:24"
+    "requests": []
+  },
+  "document_workspace": {
+    "schemas": {
+      "invoice": {
+        "label": "Invoice",
+        "table": "invoices",
+        "series_key": "invoice",
+        "identity_field": "id",
+        "sections": [
+          {
+            "key": "header",
+            "label": "Header",
+            "fields": [
+              "number",
+              "party",
+              "issue_date",
+              "due_date",
+              "status"
+            ]
+          },
+          {
+            "key": "amounts",
+            "label": "Amounts",
+            "fields": [
+              "amount",
+              "paid_date"
+            ]
+          },
+          {
+            "key": "actions",
+            "label": "Actions",
+            "fields": [
+              "send_invoice",
+              "payment_reminder"
+            ]
+          }
+        ]
       },
-      {
-        "document_request_id": 16,
-        "client_slug": "lakeside-bakery",
-        "client_name": "Lakeside Bakery",
-        "doc_key": "entity_docs",
-        "label": "Entity formation documents",
-        "description": "Needed to confirm legal name, entity type, and ownership.",
-        "due_date": "2026-07-20",
-        "status": "requested",
-        "requested_at": "2026-07-06 20:04:24",
-        "received_at": null,
-        "last_followup_at": null,
-        "followup_count": 0,
-        "updated_at": "2026-07-06 20:04:24"
+      "bill": {
+        "label": "Bill",
+        "table": "bills",
+        "series_key": "bill",
+        "identity_field": "id",
+        "sections": [
+          {
+            "key": "header",
+            "label": "Header",
+            "fields": [
+              "number",
+              "party",
+              "issue_date",
+              "due_date",
+              "status"
+            ]
+          },
+          {
+            "key": "amounts",
+            "label": "Amounts",
+            "fields": [
+              "amount",
+              "paid_date"
+            ]
+          },
+          {
+            "key": "actions",
+            "label": "Actions",
+            "fields": [
+              "approval_review"
+            ]
+          }
+        ]
       },
-      {
-        "document_request_id": 15,
-        "client_slug": "lakeside-bakery",
-        "client_name": "Lakeside Bakery",
-        "doc_key": "prior_year_tax_return",
-        "label": "Prior-year tax return",
-        "description": "Needed to understand carryovers and filing history.",
-        "due_date": "2026-07-20",
-        "status": "requested",
-        "requested_at": "2026-07-06 20:04:24",
-        "received_at": null,
-        "last_followup_at": null,
-        "followup_count": 0,
-        "updated_at": "2026-07-06 20:04:24"
+      "journal": {
+        "label": "Journal Entry",
+        "table": "entries",
+        "series_key": "journal",
+        "identity_field": "id",
+        "sections": [
+          {
+            "key": "header",
+            "label": "Header",
+            "fields": [
+              "number",
+              "entry_date",
+              "description",
+              "source",
+              "status"
+            ]
+          },
+          {
+            "key": "posting",
+            "label": "Posting",
+            "fields": [
+              "payee",
+              "source_ref",
+              "posted_at"
+            ]
+          }
+        ]
       },
-      {
-        "document_request_id": 13,
-        "client_slug": "lakeside-bakery",
-        "client_name": "Lakeside Bakery",
-        "doc_key": "w9",
-        "label": "W-9 or tax identity form",
-        "description": "Needed before 1099/vendor tax handling.",
-        "due_date": "2026-07-20",
-        "status": "requested",
-        "requested_at": "2026-07-06 20:04:24",
-        "received_at": null,
-        "last_followup_at": null,
-        "followup_count": 0,
-        "updated_at": "2026-07-06 20:04:24"
+      "payment": {
+        "label": "Payment",
+        "table": "entries",
+        "series_key": "payment",
+        "identity_field": "id",
+        "sections": [
+          {
+            "key": "header",
+            "label": "Header",
+            "fields": [
+              "number",
+              "entry_date",
+              "payee",
+              "description",
+              "status"
+            ]
+          },
+          {
+            "key": "cash",
+            "label": "Cash",
+            "fields": [
+              "amount",
+              "source",
+              "source_ref"
+            ]
+          }
+        ]
       }
-    ]
+    },
+    "number_series": {
+      "bill": {
+        "prefix": "BILL",
+        "next_value": 1,
+        "padding": 5,
+        "next_number": "BILL-00001"
+      },
+      "invoice": {
+        "prefix": "INV",
+        "next_value": 1,
+        "padding": 5,
+        "next_number": "INV-00001"
+      },
+      "journal": {
+        "prefix": "JRN",
+        "next_value": 1,
+        "padding": 5,
+        "next_number": "JRN-00001"
+      },
+      "payment": {
+        "prefix": "PAY",
+        "next_value": 1,
+        "padding": 5,
+        "next_number": "PAY-00001"
+      }
+    },
+    "documents": {
+      "invoice": [],
+      "bill": [],
+      "journal": [],
+      "payment": []
+    },
+    "pending_actions": [],
+    "capabilities": {
+      "send_invoice": "approval_required",
+      "reserve_number": "approval_required",
+      "external_delivery": "disabled_until_approved",
+      "ledger_write": "disabled_for_send_invoice"
+    }
+  },
+  "financial_state": {
+    "status": "no_posted_activity",
+    "liquidity": {
+      "cash": 0.0,
+      "open_ar": 0.0,
+      "open_ap": 0.0,
+      "net_position": 0.0,
+      "scale": 1.0
+    },
+    "performance": {
+      "income": 0.0,
+      "expense": 0.0,
+      "net_income": 0.0,
+      "operating_cash_net": 0.0,
+      "scale": 1.0
+    },
+    "balance": {
+      "assets": 0.0,
+      "liabilities": 0.0,
+      "equity": 0.0
+    }
   },
   "payroll": {
     "status": "none",

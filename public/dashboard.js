@@ -475,6 +475,133 @@ function documentRequestTile(docs) {
     `<h4>Request queue</h4>${rows}</div>`;
 }
 
+
+function pct(value, scale) {
+  const s = Math.max(Math.abs(Number(scale || 0)), 1);
+  return Math.max(2, Math.min(100, Math.round((Math.abs(Number(value || 0)) / s) * 100)));
+}
+
+function metricBar(label, value, scale, tone) {
+  const colors = {
+    "bar-cash": "#188a5d", "bar-ar": "#2d6cdf", "bar-ap": "#b45309",
+    "bar-income": "#188a5d", "bar-expense": "#b91c1c", "bar-net": "#4f46e5",
+  };
+  const color = colors[tone] || "#475569";
+  return `<div class="bar-row"><div class="kv"><span>${esc(label)}</span>` +
+    `<span class="money ${Number(value || 0) >= 0 ? "pos" : ""}">${money(value)}</span></div>` +
+    `<div class="mini-bar" style="height:8px;background:#eef2f7;border-radius:999px;overflow:hidden;margin:4px 0 8px">` +
+    `<span style="display:block;height:100%;width:${pct(value, scale)}%;background:${color}"></span></div></div>`;
+}
+
+function financialStateTile(state) {
+  if (!state || state.status !== "active") {
+    return `<div class="card"><h3>Client Financial State</h3><div class="muted">No posted activity for graph views</div></div>`;
+  }
+  const l = state.liquidity || {};
+  const p = state.performance || {};
+  const b = state.balance || {};
+  return `<div class="card"><h3>Client Financial State</h3>` +
+    `<h4>Liquidity</h4>` +
+    metricBar("Cash", l.cash, l.scale, "bar-cash") +
+    metricBar("Open AR", l.open_ar, l.scale, "bar-ar") +
+    metricBar("Open AP", l.open_ap, l.scale, "bar-ap") +
+    kv("Net position", money(l.net_position)) +
+    `<h4>Performance</h4>` +
+    metricBar("Income", p.income, p.scale, "bar-income") +
+    metricBar("Expense", p.expense, p.scale, "bar-expense") +
+    metricBar("Net income", p.net_income, p.scale, "bar-net") +
+    kv("Operating cash net", money(p.operating_cash_net)) +
+    `<h4>Balance</h4>` +
+    kv("Assets", money(b.assets)) + kv("Liabilities", money(b.liabilities)) +
+    kv("Equity", money(b.equity)) + `</div>`;
+}
+
+function docListRows(d, type, rows) {
+  if (!rows || !rows.length) return `<div class="muted">No ${esc(type)} documents</div>`;
+  return rows.slice(0, 8).map(row => {
+    const id = row.id;
+    const date = row.issue_date || row.entry_date || "—";
+    const party = row.party || row.payee || row.description || `${type} #${id}`;
+    const amount = row.amount !== undefined ? money(row.amount) : money(row.debit || row.credit || 0);
+    return `<div class="kv"><span><a class="clink" href="#client/${esc(d.slug)}/document/${esc(type)}/${esc(id)}">` +
+      `${esc(party)}</a> <span class="muted">${esc(date)} · #${esc(id)}</span></span>` +
+      `<span class="money">${amount} · ${esc(row.status || "—")}</span></div>`;
+  }).join("");
+}
+
+function actionRows(d, actions) {
+  if (!actions || !actions.length) return `<div class="muted">No approval-gated document actions queued.</div>`;
+  return actions.slice(0, 8).map(a =>
+    `<div class="kv"><span>${esc(a.label)} <span class="muted">${esc(a.party || "")} · ${esc(a.preview_number || "preview")}</span></span>` +
+    `<span class="actions"><button data-doc-action="${esc(a.action)}" data-doc-type="${esc(a.document_type)}" data-doc-id="${esc(a.document_id)}" data-doc-client="${esc(d.slug)}">Queue approval</button></span></div>`
+  ).join("");
+}
+
+function documentWorkspaceTile(d) {
+  const ws = d.document_workspace || {};
+  const docs = ws.documents || {};
+  const series = ws.number_series || {};
+  const seriesRows = Object.keys(series).sort().map(k =>
+    kv(k, series[k].next_number || "—")
+  ).join("");
+  return `<div class="card"><h3>Document Workspace</h3>` +
+    `<div class="muted">Schema-backed v2 document indexes and approval-gated actions.</div>` +
+    `<h4>Next numbers</h4>${seriesRows || `<div class="muted">No number series configured</div>`}` +
+    `<h4>Invoices</h4>${docListRows(d, "invoice", docs.invoice)}` +
+    `<h4>Bills</h4>${docListRows(d, "bill", docs.bill)}` +
+    `<h4>Journals</h4>${docListRows(d, "journal", docs.journal)}` +
+    `<h4>Payments</h4>${docListRows(d, "payment", docs.payment)}` +
+    `<h4>Approval actions</h4>${actionRows(d, ws.pending_actions)}` +
+    `</div>`;
+}
+
+function documentFieldRows(schema, doc) {
+  if (!schema || !schema.sections) return Object.keys(doc || {}).map(k => kv(k, doc[k])).join("");
+  return schema.sections.map(section => {
+    const rows = (section.fields || []).map(field => {
+      let value = doc && doc[field];
+      if (field === "number" && value === undefined) value = `#${doc.id}`;
+      if (field === "amount") value = money(value);
+      if (field === "send_invoice") value = doc.status === "open" ? "approval required" : "not available";
+      if (field === "payment_reminder") value = doc.status === "open" ? "available" : "not available";
+      if (field === "approval_review") value = doc.status === "unpaid" ? "available" : "not available";
+      return kv(field.replaceAll("_", " "), value ?? "—");
+    }).join("");
+    return `<h4>${esc(section.label)}</h4>${rows}`;
+  }).join("");
+}
+
+function renderDocumentDetail(d, type, id) {
+  const ws = d.document_workspace || {};
+  const docs = (ws.documents || {})[type] || [];
+  const doc = docs.find(x => String(x.id) === String(id));
+  const schema = (ws.schemas || {})[type];
+  if (!doc) {
+    return `<div class="detail"><a class="back" href="#client/${esc(d.slug)}">‹ client</a>` +
+      `<p class="muted">Document not found.</p></div>`;
+  }
+  const title = (schema && schema.label) || type;
+  const send = type === "invoice" && doc.status === "open"
+    ? `<button data-doc-action="send_invoice" data-doc-type="invoice" data-doc-id="${esc(doc.id)}" data-doc-client="${esc(d.slug)}">Queue send approval</button>`
+    : "";
+  return `<div class="detail"><a class="back" href="#client/${esc(d.slug)}">‹ client</a>` +
+    `<h2>${esc(title)} #${esc(doc.id)} <span class="muted">${esc(doc.status || "")}</span></h2>` +
+    `<div class="detail-tiles"><div class="card">${documentFieldRows(schema, doc)}` +
+    `<div class="actions">${send}</div><div class="muted" data-doc-action-status>` +
+    `Approval-gated actions prepare workflow receipts before any external delivery.</div></div></div></div>`;
+}
+
+function documentActionPost(params) {
+  return fetch(`/api/lisza?${new URLSearchParams(params).toString()}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: "{}",
+  }).then(r => r.json()).then(j => {
+    if (j.error) throw new Error(j.error);
+    return j;
+  });
+}
+
 function automationWorkflowTile(d) {
   const p = effectiveProfile(d);
   const reports = p.reports || {};
@@ -547,11 +674,13 @@ function renderClientDetail(d) {
           ${kv("Posted entries", d.historical.entry_count)}
           <h4>Recent months</h4>${trendRows(d.historical.monthly)}
         </div>
+        ${financialStateTile(d.financial_state)}
         ${cashFlowTile(d.cash_flow)}
         ${pnlBalanceTile(d.pnl_balance)}
         ${reconciliationTile(d.reconciliation)}
         ${filingTile(d.filing_obligations)}
         ${documentRequestTile(d.document_requests)}
+        ${documentWorkspaceTile(d)}
         ${automationWorkflowTile(d)}
         ${inspectionTile(d.inspection)}
         ${payrollTile(d.payroll)}
@@ -591,6 +720,26 @@ function bindWorkflowDrafts(host, d) {
       inp.checked = value !== false;
     });
   };
+  host.querySelectorAll("[data-doc-action]").forEach(btn => {
+    btn.onclick = () => {
+      const status = btn.closest(".card")?.querySelector("[data-doc-action-status]");
+      const original = btn.textContent;
+      btn.textContent = "Queueing...";
+      documentActionPost({
+        mode: "document_action",
+        client: btn.dataset.docClient || d.slug,
+        action: btn.dataset.docAction,
+        document_type: btn.dataset.docType,
+        document_id: btn.dataset.docId,
+      }).then(() => {
+        btn.textContent = "Queued";
+        if (status) status.textContent = "Approval queued in the workflow control plane.";
+      }).catch(e => {
+        btn.textContent = original;
+        if (status) status.textContent = `Queue failed: ${e.message || e}`;
+      });
+    };
+  });
   host.querySelectorAll("[data-profile-save]").forEach(btn => {
     btn.onclick = () => {
       const card = btn.closest("[data-workflow-slug]");
@@ -640,6 +789,8 @@ function bindWorkflowDrafts(host, d) {
 
 function parseHash() {
   const h = (typeof location !== "undefined" ? location.hash : "").replace(/^#/, "");
+  const docMatch = h.match(/^client\/([^/]+)\/document\/([^/]+)\/([^/]+)$/);
+  if (docMatch) return { view: "document", slug: docMatch[1], docType: docMatch[2], docId: docMatch[3] };
   if (h.indexOf("client/") === 0) return { view: "client", slug: h.slice(7) };
   return { view: "dashboard" };
 }
@@ -649,13 +800,18 @@ function route() {
   const controls = document.querySelector(".controls");
   const board = document.getElementById("board");
   const stamp = document.getElementById("stamp");
-  if (r.view === "client") {
+  if (r.view === "client" || r.view === "document") {
     if (controls) controls.style.visibility = "hidden";
     if (stamp) stamp.textContent = "";
-    board.innerHTML = `<p class="muted">Loading…</p>`;
+    board.innerHTML = `<p class="muted">Loading...</p>`;
     fetch(`clients/${encodeURIComponent(r.slug)}.json`)
       .then(x => x.json())
-      .then(d => { board.innerHTML = renderClientDetail(d); bindWorkflowDrafts(board, d); })
+      .then(d => {
+        board.innerHTML = r.view === "document"
+          ? renderDocumentDetail(d, r.docType, r.docId)
+          : renderClientDetail(d);
+        bindWorkflowDrafts(board, d);
+      })
       .catch(e => { board.innerHTML =
         `<p class="muted">Could not load client (${esc(e)}).</p>`; });
   } else {
@@ -683,6 +839,7 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     esc, money, kv, renderClientDetail, renderTiles, parseHash, payrollTile,
     inspectionTile, inspectionRows, cashFlowTile, pnlBalanceTile, reconciliationTile,
-    filingTile, dueJobRows, automationWorkflowTile, documentRequestTile
+    filingTile, dueJobRows, automationWorkflowTile, documentRequestTile,
+    financialStateTile, documentWorkspaceTile, renderDocumentDetail
   };
 }

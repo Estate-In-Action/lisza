@@ -88,12 +88,39 @@ if (!detail.document_requests) {
   };
 }
 
+
+if (!detail.document_workspace) {
+  detail.document_workspace = {
+    schemas: {
+      invoice: { label: "Invoice", sections: [{ key: "header", label: "Header", fields: ["number", "party", "amount", "status", "send_invoice"] }] },
+      bill: { label: "Bill", sections: [{ key: "header", label: "Header", fields: ["number", "party", "amount", "status"] }] },
+      journal: { label: "Journal Entry", sections: [{ key: "header", label: "Header", fields: ["number", "entry_date", "description", "status"] }] },
+      payment: { label: "Payment", sections: [{ key: "header", label: "Header", fields: ["number", "entry_date", "party", "amount"] }] },
+    },
+    number_series: { invoice: { next_number: "INV-00001" }, bill: { next_number: "BILL-00001" }, journal: { next_number: "JRN-00001" }, payment: { next_number: "PAY-00001" } },
+    documents: {
+      invoice: [{ id: 7, party: "Customer A", issue_date: "2026-07-01", due_date: "2026-07-31", amount: 1200, status: "open" }],
+      bill: [], journal: [], payment: [],
+    },
+    pending_actions: [{ document_type: "invoice", document_id: 7, action: "send_invoice", label: "Send invoice #7", party: "Customer A", preview_number: "INV-00001" }],
+  };
+}
+if (!detail.financial_state) {
+  detail.financial_state = {
+    status: "active",
+    liquidity: { cash: 600, open_ar: 1200, open_ap: 300, net_position: 1500, scale: 1200 },
+    performance: { income: 1000, expense: 400, net_income: 600, operating_cash_net: 600, scale: 1000 },
+    balance: { assets: 600, liabilities: 0, equity: 600 },
+  };
+}
+
 const html = renderClientDetail(detail);
 
 for (const tile of ["Accounts Receivable", "Accounts Payable", "Admin",
                     "Historical", "Cash Flow", "P&L / Balance Sheet",
-                    "Reconciliation", "Filing / Tax", "Automation Workflow",
-                    "Client Portal / Documents", "Inspection", "Payroll"]) {
+                    "Reconciliation", "Filing / Tax", "Client Financial State",
+                    "Automation Workflow", "Client Portal / Documents",
+                    "Document Workspace", "Inspection", "Payroll"]) {
   assert(html.includes(tile), `${tile} tile present`);
 }
 assert(html.includes("Guided setup"), "guided setup section present");
@@ -101,6 +128,17 @@ assert(html.includes("Apply suggested setup"), "suggested setup action present")
 assert(html.includes("‹ all clients"), "back link present");
 assert(html.includes("Read-only ledger slices"), "inspection helper copy present");
 assert(html.includes("auto exact"), "reconciliation match method renders");
+
+assert(html.includes("INV-00001"), "number series preview renders");
+assert(html.includes("Queue approval"), "approval-gated document action renders");
+assert(html.includes("#client/" + detail.slug + "/document/invoice/"), "document detail links render");
+const openInvoice = detail.document_workspace.documents.invoice.find(x => x.status === "open") ||
+  detail.document_workspace.documents.invoice[0];
+const docHtml = mod.renderDocumentDetail(detail, "invoice", openInvoice.id);
+assert(docHtml.includes("Invoice #"), "invoice detail page renders");
+if (openInvoice.status === "open") {
+  assert(docHtml.includes("Queue send approval"), "invoice detail send approval action renders");
+}
 if (detail.inspection && detail.inspection.periods) {
   for (const period of ["month", "quarter", "year"]) {
     assert(html.includes(period), `${period} inspection row present`);

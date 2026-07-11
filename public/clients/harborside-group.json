@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T20:04:24Z",
+  "generated_at": "2026-07-11T00:23:32Z",
   "slug": "harborside-group",
   "display_name": "Harborside Restaurant Group",
   "entity_type": "llc",
@@ -11308,74 +11308,2558 @@
   ],
   "document_requests": {
     "summary": {
-      "requested": 4,
+      "requested": 0,
       "received": 0,
       "waived": 0,
       "overdue": 0,
-      "open": 4
+      "open": 0
     },
-    "requests": [
-      {
-        "document_request_id": 6,
-        "client_slug": "harborside-group",
-        "client_name": "Harborside Restaurant Group",
-        "doc_key": "bank_statement_current",
-        "label": "Current bank statement",
-        "description": "Needed for reconciliation and opening balance review.",
-        "due_date": "2026-07-20",
-        "status": "requested",
-        "requested_at": "2026-07-06 20:04:24",
-        "received_at": null,
-        "last_followup_at": null,
-        "followup_count": 0,
-        "updated_at": "2026-07-06 20:04:24"
+    "requests": []
+  },
+  "document_workspace": {
+    "schemas": {
+      "invoice": {
+        "label": "Invoice",
+        "table": "invoices",
+        "series_key": "invoice",
+        "identity_field": "id",
+        "sections": [
+          {
+            "key": "header",
+            "label": "Header",
+            "fields": [
+              "number",
+              "party",
+              "issue_date",
+              "due_date",
+              "status"
+            ]
+          },
+          {
+            "key": "amounts",
+            "label": "Amounts",
+            "fields": [
+              "amount",
+              "paid_date"
+            ]
+          },
+          {
+            "key": "actions",
+            "label": "Actions",
+            "fields": [
+              "send_invoice",
+              "payment_reminder"
+            ]
+          }
+        ]
       },
-      {
-        "document_request_id": 8,
-        "client_slug": "harborside-group",
-        "client_name": "Harborside Restaurant Group",
-        "doc_key": "entity_docs",
-        "label": "Entity formation documents",
-        "description": "Needed to confirm legal name, entity type, and ownership.",
-        "due_date": "2026-07-20",
-        "status": "requested",
-        "requested_at": "2026-07-06 20:04:24",
-        "received_at": null,
-        "last_followup_at": null,
-        "followup_count": 0,
-        "updated_at": "2026-07-06 20:04:24"
+      "bill": {
+        "label": "Bill",
+        "table": "bills",
+        "series_key": "bill",
+        "identity_field": "id",
+        "sections": [
+          {
+            "key": "header",
+            "label": "Header",
+            "fields": [
+              "number",
+              "party",
+              "issue_date",
+              "due_date",
+              "status"
+            ]
+          },
+          {
+            "key": "amounts",
+            "label": "Amounts",
+            "fields": [
+              "amount",
+              "paid_date"
+            ]
+          },
+          {
+            "key": "actions",
+            "label": "Actions",
+            "fields": [
+              "approval_review"
+            ]
+          }
+        ]
       },
-      {
-        "document_request_id": 7,
-        "client_slug": "harborside-group",
-        "client_name": "Harborside Restaurant Group",
-        "doc_key": "prior_year_tax_return",
-        "label": "Prior-year tax return",
-        "description": "Needed to understand carryovers and filing history.",
-        "due_date": "2026-07-20",
-        "status": "requested",
-        "requested_at": "2026-07-06 20:04:24",
-        "received_at": null,
-        "last_followup_at": null,
-        "followup_count": 0,
-        "updated_at": "2026-07-06 20:04:24"
+      "journal": {
+        "label": "Journal Entry",
+        "table": "entries",
+        "series_key": "journal",
+        "identity_field": "id",
+        "sections": [
+          {
+            "key": "header",
+            "label": "Header",
+            "fields": [
+              "number",
+              "entry_date",
+              "description",
+              "source",
+              "status"
+            ]
+          },
+          {
+            "key": "posting",
+            "label": "Posting",
+            "fields": [
+              "payee",
+              "source_ref",
+              "posted_at"
+            ]
+          }
+        ]
       },
-      {
-        "document_request_id": 5,
-        "client_slug": "harborside-group",
-        "client_name": "Harborside Restaurant Group",
-        "doc_key": "w9",
-        "label": "W-9 or tax identity form",
-        "description": "Needed before 1099/vendor tax handling.",
-        "due_date": "2026-07-20",
-        "status": "requested",
-        "requested_at": "2026-07-06 20:04:24",
-        "received_at": null,
-        "last_followup_at": null,
-        "followup_count": 0,
-        "updated_at": "2026-07-06 20:04:24"
+      "payment": {
+        "label": "Payment",
+        "table": "entries",
+        "series_key": "payment",
+        "identity_field": "id",
+        "sections": [
+          {
+            "key": "header",
+            "label": "Header",
+            "fields": [
+              "number",
+              "entry_date",
+              "payee",
+              "description",
+              "status"
+            ]
+          },
+          {
+            "key": "cash",
+            "label": "Cash",
+            "fields": [
+              "amount",
+              "source",
+              "source_ref"
+            ]
+          }
+        ]
       }
-    ]
+    },
+    "number_series": {
+      "bill": {
+        "prefix": "BILL",
+        "next_value": 1,
+        "padding": 5,
+        "next_number": "BILL-00001"
+      },
+      "invoice": {
+        "prefix": "INV",
+        "next_value": 1,
+        "padding": 5,
+        "next_number": "INV-00001"
+      },
+      "journal": {
+        "prefix": "JRN",
+        "next_value": 1,
+        "padding": 5,
+        "next_number": "JRN-00001"
+      },
+      "payment": {
+        "prefix": "PAY",
+        "next_value": 1,
+        "padding": 5,
+        "next_number": "PAY-00001"
+      }
+    },
+    "documents": {
+      "invoice": [
+        {
+          "id": 480,
+          "party": "Event Booking",
+          "issue_date": "2026-06-09",
+          "due_date": "2026-07-09",
+          "amount": 22559.42,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 481,
+          "party": "Walk-in",
+          "issue_date": "2026-06-07",
+          "due_date": "2026-07-07",
+          "amount": 19652.77,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 475,
+          "party": "Delivery Apps",
+          "issue_date": "2026-05-24",
+          "due_date": "2026-06-23",
+          "amount": 21674.56,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 479,
+          "party": "Walk-in",
+          "issue_date": "2026-05-18",
+          "due_date": "2026-06-17",
+          "amount": 25670.76,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 477,
+          "party": "Event Booking",
+          "issue_date": "2026-05-18",
+          "due_date": "2026-06-17",
+          "amount": 19665.61,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 476,
+          "party": "Event Booking",
+          "issue_date": "2026-05-11",
+          "due_date": "2026-06-10",
+          "amount": 22745.49,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 473,
+          "party": "Event Booking",
+          "issue_date": "2026-05-08",
+          "due_date": "2026-06-07",
+          "amount": 26803.15,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 478,
+          "party": "Event Booking",
+          "issue_date": "2026-05-07",
+          "due_date": "2026-06-06",
+          "amount": 23602.59,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 474,
+          "party": "Catering Client",
+          "issue_date": "2026-05-07",
+          "due_date": "2026-06-06",
+          "amount": 18841.36,
+          "status": "paid",
+          "paid_date": "2026-05-26",
+          "memo": null
+        },
+        {
+          "id": 468,
+          "party": "Delivery Apps",
+          "issue_date": "2026-04-25",
+          "due_date": "2026-05-25",
+          "amount": 18580.18,
+          "status": "paid",
+          "paid_date": "2026-05-21",
+          "memo": null
+        },
+        {
+          "id": 472,
+          "party": "Delivery Apps",
+          "issue_date": "2026-04-24",
+          "due_date": "2026-05-24",
+          "amount": 22187.36,
+          "status": "paid",
+          "paid_date": "2026-05-20",
+          "memo": null
+        },
+        {
+          "id": 467,
+          "party": "Catering Client",
+          "issue_date": "2026-04-23",
+          "due_date": "2026-05-23",
+          "amount": 22223.65,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 464,
+          "party": "Event Booking",
+          "issue_date": "2026-04-22",
+          "due_date": "2026-05-22",
+          "amount": 21617.64,
+          "status": "paid",
+          "paid_date": "2026-05-15",
+          "memo": null
+        },
+        {
+          "id": 465,
+          "party": "Event Booking",
+          "issue_date": "2026-04-09",
+          "due_date": "2026-05-09",
+          "amount": 19138.39,
+          "status": "paid",
+          "paid_date": "2026-04-25",
+          "memo": null
+        },
+        {
+          "id": 466,
+          "party": "Event Booking",
+          "issue_date": "2026-04-05",
+          "due_date": "2026-05-05",
+          "amount": 19320.35,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 471,
+          "party": "Delivery Apps",
+          "issue_date": "2026-04-02",
+          "due_date": "2026-05-02",
+          "amount": 18659.02,
+          "status": "paid",
+          "paid_date": "2026-04-24",
+          "memo": null
+        },
+        {
+          "id": 470,
+          "party": "Event Booking",
+          "issue_date": "2026-04-02",
+          "due_date": "2026-05-02",
+          "amount": 22719.18,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 469,
+          "party": "Catering Client",
+          "issue_date": "2026-04-02",
+          "due_date": "2026-05-02",
+          "amount": 16716.72,
+          "status": "paid",
+          "paid_date": "2026-04-19",
+          "memo": null
+        },
+        {
+          "id": 460,
+          "party": "Event Booking",
+          "issue_date": "2026-03-24",
+          "due_date": "2026-04-23",
+          "amount": 18241.79,
+          "status": "paid",
+          "paid_date": "2026-04-26",
+          "memo": null
+        },
+        {
+          "id": 458,
+          "party": "Delivery Apps",
+          "issue_date": "2026-03-15",
+          "due_date": "2026-04-14",
+          "amount": 17347.71,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 456,
+          "party": "Delivery Apps",
+          "issue_date": "2026-03-15",
+          "due_date": "2026-04-14",
+          "amount": 17163.52,
+          "status": "paid",
+          "paid_date": "2026-04-18",
+          "memo": null
+        },
+        {
+          "id": 455,
+          "party": "Delivery Apps",
+          "issue_date": "2026-03-15",
+          "due_date": "2026-04-14",
+          "amount": 22780.02,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 461,
+          "party": "Catering Client",
+          "issue_date": "2026-03-07",
+          "due_date": "2026-04-06",
+          "amount": 18795.51,
+          "status": "paid",
+          "paid_date": "2026-04-10",
+          "memo": null
+        },
+        {
+          "id": 463,
+          "party": "Walk-in",
+          "issue_date": "2026-03-05",
+          "due_date": "2026-04-04",
+          "amount": 24662.14,
+          "status": "paid",
+          "paid_date": "2026-04-09",
+          "memo": null
+        },
+        {
+          "id": 459,
+          "party": "Catering Client",
+          "issue_date": "2026-03-04",
+          "due_date": "2026-04-03",
+          "amount": 14632.81,
+          "status": "paid",
+          "paid_date": "2026-03-30",
+          "memo": null
+        },
+        {
+          "id": 462,
+          "party": "Walk-in",
+          "issue_date": "2026-03-02",
+          "due_date": "2026-04-01",
+          "amount": 24231.2,
+          "status": "paid",
+          "paid_date": "2026-04-11",
+          "memo": null
+        },
+        {
+          "id": 457,
+          "party": "Walk-in",
+          "issue_date": "2026-03-02",
+          "due_date": "2026-04-01",
+          "amount": 19954.06,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 448,
+          "party": "Delivery Apps",
+          "issue_date": "2026-02-26",
+          "due_date": "2026-03-28",
+          "amount": 17966.12,
+          "status": "paid",
+          "paid_date": "2026-03-28",
+          "memo": null
+        },
+        {
+          "id": 447,
+          "party": "Catering Client",
+          "issue_date": "2026-02-24",
+          "due_date": "2026-03-26",
+          "amount": 12683.79,
+          "status": "paid",
+          "paid_date": "2026-04-03",
+          "memo": null
+        },
+        {
+          "id": 451,
+          "party": "Walk-in",
+          "issue_date": "2026-02-23",
+          "due_date": "2026-03-25",
+          "amount": 19328.75,
+          "status": "paid",
+          "paid_date": "2026-03-18",
+          "memo": null
+        },
+        {
+          "id": 444,
+          "party": "Event Booking",
+          "issue_date": "2026-02-22",
+          "due_date": "2026-03-24",
+          "amount": 18776.18,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 449,
+          "party": "Catering Client",
+          "issue_date": "2026-02-20",
+          "due_date": "2026-03-22",
+          "amount": 12375.01,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 445,
+          "party": "Walk-in",
+          "issue_date": "2026-02-20",
+          "due_date": "2026-03-22",
+          "amount": 14854.12,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 453,
+          "party": "Walk-in",
+          "issue_date": "2026-02-18",
+          "due_date": "2026-03-20",
+          "amount": 21310.87,
+          "status": "paid",
+          "paid_date": "2026-03-08",
+          "memo": null
+        },
+        {
+          "id": 454,
+          "party": "Delivery Apps",
+          "issue_date": "2026-02-17",
+          "due_date": "2026-03-19",
+          "amount": 20863.52,
+          "status": "paid",
+          "paid_date": "2026-03-28",
+          "memo": null
+        },
+        {
+          "id": 452,
+          "party": "Delivery Apps",
+          "issue_date": "2026-02-16",
+          "due_date": "2026-03-18",
+          "amount": 15655.73,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 446,
+          "party": "Delivery Apps",
+          "issue_date": "2026-02-06",
+          "due_date": "2026-03-08",
+          "amount": 13255.05,
+          "status": "paid",
+          "paid_date": "2026-03-10",
+          "memo": null
+        },
+        {
+          "id": 450,
+          "party": "Delivery Apps",
+          "issue_date": "2026-02-04",
+          "due_date": "2026-03-06",
+          "amount": 21264.62,
+          "status": "paid",
+          "paid_date": "2026-03-04",
+          "memo": null
+        },
+        {
+          "id": 443,
+          "party": "Walk-in",
+          "issue_date": "2026-02-04",
+          "due_date": "2026-03-06",
+          "amount": 13060.09,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 442,
+          "party": "Walk-in",
+          "issue_date": "2026-01-25",
+          "due_date": "2026-02-24",
+          "amount": 16878.94,
+          "status": "paid",
+          "paid_date": "2026-03-03",
+          "memo": null
+        },
+        {
+          "id": 440,
+          "party": "Event Booking",
+          "issue_date": "2026-01-23",
+          "due_date": "2026-02-22",
+          "amount": 21117.04,
+          "status": "paid",
+          "paid_date": "2026-02-05",
+          "memo": null
+        },
+        {
+          "id": 439,
+          "party": "Walk-in",
+          "issue_date": "2026-01-14",
+          "due_date": "2026-02-13",
+          "amount": 14703.13,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 438,
+          "party": "Walk-in",
+          "issue_date": "2026-01-14",
+          "due_date": "2026-02-13",
+          "amount": 20086.51,
+          "status": "paid",
+          "paid_date": "2026-01-28",
+          "memo": null
+        },
+        {
+          "id": 435,
+          "party": "Event Booking",
+          "issue_date": "2026-01-13",
+          "due_date": "2026-02-12",
+          "amount": 20548.03,
+          "status": "paid",
+          "paid_date": "2026-01-24",
+          "memo": null
+        },
+        {
+          "id": 437,
+          "party": "Walk-in",
+          "issue_date": "2026-01-10",
+          "due_date": "2026-02-09",
+          "amount": 15965.45,
+          "status": "paid",
+          "paid_date": "2026-01-26",
+          "memo": null
+        },
+        {
+          "id": 434,
+          "party": "Catering Client",
+          "issue_date": "2026-01-07",
+          "due_date": "2026-02-06",
+          "amount": 19115.27,
+          "status": "paid",
+          "paid_date": "2026-01-17",
+          "memo": null
+        },
+        {
+          "id": 433,
+          "party": "Delivery Apps",
+          "issue_date": "2026-01-06",
+          "due_date": "2026-02-05",
+          "amount": 21267.49,
+          "status": "paid",
+          "paid_date": "2026-01-22",
+          "memo": null
+        },
+        {
+          "id": 432,
+          "party": "Delivery Apps",
+          "issue_date": "2026-01-05",
+          "due_date": "2026-02-04",
+          "amount": 15179.63,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 441,
+          "party": "Delivery Apps",
+          "issue_date": "2026-01-04",
+          "due_date": "2026-02-03",
+          "amount": 20132.56,
+          "status": "open",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 436,
+          "party": "Delivery Apps",
+          "issue_date": "2026-01-04",
+          "due_date": "2026-02-03",
+          "amount": 17236.73,
+          "status": "paid",
+          "paid_date": "2026-01-12",
+          "memo": null
+        }
+      ],
+      "bill": [
+        {
+          "id": 159,
+          "party": "Seafood Direct",
+          "issue_date": "2026-05-20",
+          "due_date": "2026-06-19",
+          "amount": 25473.46,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 158,
+          "party": "Restaurant Supply Co",
+          "issue_date": "2026-05-17",
+          "due_date": "2026-06-16",
+          "amount": 18138.64,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 157,
+          "party": "Seafood Direct",
+          "issue_date": "2026-05-09",
+          "due_date": "2026-06-08",
+          "amount": 18952.11,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 155,
+          "party": "Linen & Laundry",
+          "issue_date": "2026-04-17",
+          "due_date": "2026-05-17",
+          "amount": 23359.99,
+          "status": "paid",
+          "paid_date": "2026-05-19",
+          "memo": null
+        },
+        {
+          "id": 156,
+          "party": "Utilities Group",
+          "issue_date": "2026-04-13",
+          "due_date": "2026-05-13",
+          "amount": 22163.74,
+          "status": "paid",
+          "paid_date": "2026-05-11",
+          "memo": null
+        },
+        {
+          "id": 154,
+          "party": "Restaurant Supply Co",
+          "issue_date": "2026-04-07",
+          "due_date": "2026-05-07",
+          "amount": 21898.31,
+          "status": "paid",
+          "paid_date": "2026-05-03",
+          "memo": null
+        },
+        {
+          "id": 152,
+          "party": "Restaurant Supply Co",
+          "issue_date": "2026-03-23",
+          "due_date": "2026-04-22",
+          "amount": 19851.64,
+          "status": "paid",
+          "paid_date": "2026-04-10",
+          "memo": null
+        },
+        {
+          "id": 153,
+          "party": "Restaurant Supply Co",
+          "issue_date": "2026-03-17",
+          "due_date": "2026-04-16",
+          "amount": 19544.23,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 151,
+          "party": "Restaurant Supply Co",
+          "issue_date": "2026-03-17",
+          "due_date": "2026-04-16",
+          "amount": 20761.21,
+          "status": "paid",
+          "paid_date": "2026-04-23",
+          "memo": null
+        },
+        {
+          "id": 148,
+          "party": "Utilities Group",
+          "issue_date": "2026-02-26",
+          "due_date": "2026-03-28",
+          "amount": 20065.88,
+          "status": "paid",
+          "paid_date": "2026-03-16",
+          "memo": null
+        },
+        {
+          "id": 149,
+          "party": "Fresh Produce Co",
+          "issue_date": "2026-02-22",
+          "due_date": "2026-03-24",
+          "amount": 19037.46,
+          "status": "paid",
+          "paid_date": "2026-03-16",
+          "memo": null
+        },
+        {
+          "id": 150,
+          "party": "Beverage Distributor",
+          "issue_date": "2026-02-09",
+          "due_date": "2026-03-11",
+          "amount": 15773.64,
+          "status": "paid",
+          "paid_date": "2026-03-03",
+          "memo": null
+        },
+        {
+          "id": 146,
+          "party": "Linen & Laundry",
+          "issue_date": "2026-01-07",
+          "due_date": "2026-02-06",
+          "amount": 15035.62,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 147,
+          "party": "Beverage Distributor",
+          "issue_date": "2026-01-02",
+          "due_date": "2026-02-01",
+          "amount": 15483.4,
+          "status": "paid",
+          "paid_date": "2026-01-21",
+          "memo": null
+        },
+        {
+          "id": 145,
+          "party": "Utilities Group",
+          "issue_date": "2026-01-01",
+          "due_date": "2026-01-31",
+          "amount": 14416.5,
+          "status": "paid",
+          "paid_date": "2026-01-16",
+          "memo": null
+        },
+        {
+          "id": 143,
+          "party": "Linen & Laundry",
+          "issue_date": "2025-12-25",
+          "due_date": "2026-01-24",
+          "amount": 23011.23,
+          "status": "paid",
+          "paid_date": "2026-01-29",
+          "memo": null
+        },
+        {
+          "id": 142,
+          "party": "Seafood Direct",
+          "issue_date": "2025-12-11",
+          "due_date": "2026-01-10",
+          "amount": 24722.58,
+          "status": "paid",
+          "paid_date": "2026-01-17",
+          "memo": null
+        },
+        {
+          "id": 144,
+          "party": "Restaurant Supply Co",
+          "issue_date": "2025-12-06",
+          "due_date": "2026-01-05",
+          "amount": 21387.42,
+          "status": "paid",
+          "paid_date": "2025-12-16",
+          "memo": null
+        },
+        {
+          "id": 141,
+          "party": "Beverage Distributor",
+          "issue_date": "2025-11-10",
+          "due_date": "2025-12-10",
+          "amount": 17398.68,
+          "status": "paid",
+          "paid_date": "2025-12-09",
+          "memo": null
+        },
+        {
+          "id": 140,
+          "party": "Utilities Group",
+          "issue_date": "2025-11-10",
+          "due_date": "2025-12-10",
+          "amount": 19543.22,
+          "status": "paid",
+          "paid_date": "2025-12-14",
+          "memo": null
+        },
+        {
+          "id": 139,
+          "party": "Beverage Distributor",
+          "issue_date": "2025-11-07",
+          "due_date": "2025-12-07",
+          "amount": 19242.92,
+          "status": "paid",
+          "paid_date": "2025-12-10",
+          "memo": null
+        },
+        {
+          "id": 138,
+          "party": "Seafood Direct",
+          "issue_date": "2025-10-25",
+          "due_date": "2025-11-24",
+          "amount": 21319.65,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 137,
+          "party": "Fresh Produce Co",
+          "issue_date": "2025-10-15",
+          "due_date": "2025-11-14",
+          "amount": 16804.96,
+          "status": "paid",
+          "paid_date": "2025-11-15",
+          "memo": null
+        },
+        {
+          "id": 136,
+          "party": "Beverage Distributor",
+          "issue_date": "2025-10-14",
+          "due_date": "2025-11-13",
+          "amount": 16953.85,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 135,
+          "party": "Restaurant Supply Co",
+          "issue_date": "2025-09-23",
+          "due_date": "2025-10-23",
+          "amount": 19758.71,
+          "status": "paid",
+          "paid_date": "2025-10-26",
+          "memo": null
+        },
+        {
+          "id": 133,
+          "party": "Linen & Laundry",
+          "issue_date": "2025-09-23",
+          "due_date": "2025-10-23",
+          "amount": 21986.48,
+          "status": "paid",
+          "paid_date": "2025-10-10",
+          "memo": null
+        },
+        {
+          "id": 134,
+          "party": "Fresh Produce Co",
+          "issue_date": "2025-09-13",
+          "due_date": "2025-10-13",
+          "amount": 18088.16,
+          "status": "paid",
+          "paid_date": "2025-10-08",
+          "memo": null
+        },
+        {
+          "id": 132,
+          "party": "Restaurant Supply Co",
+          "issue_date": "2025-08-25",
+          "due_date": "2025-09-24",
+          "amount": 17377.5,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 130,
+          "party": "Beverage Distributor",
+          "issue_date": "2025-08-07",
+          "due_date": "2025-09-06",
+          "amount": 18590.53,
+          "status": "paid",
+          "paid_date": "2025-08-31",
+          "memo": null
+        },
+        {
+          "id": 131,
+          "party": "Seafood Direct",
+          "issue_date": "2025-08-03",
+          "due_date": "2025-09-02",
+          "amount": 22237.24,
+          "status": "paid",
+          "paid_date": "2025-08-18",
+          "memo": null
+        },
+        {
+          "id": 129,
+          "party": "Beverage Distributor",
+          "issue_date": "2025-07-09",
+          "due_date": "2025-08-08",
+          "amount": 17220.44,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 127,
+          "party": "Seafood Direct",
+          "issue_date": "2025-07-06",
+          "due_date": "2025-08-05",
+          "amount": 22722.71,
+          "status": "paid",
+          "paid_date": "2025-08-01",
+          "memo": null
+        },
+        {
+          "id": 128,
+          "party": "Seafood Direct",
+          "issue_date": "2025-07-03",
+          "due_date": "2025-08-02",
+          "amount": 19176.53,
+          "status": "paid",
+          "paid_date": "2025-07-17",
+          "memo": null
+        },
+        {
+          "id": 124,
+          "party": "Beverage Distributor",
+          "issue_date": "2025-06-26",
+          "due_date": "2025-07-26",
+          "amount": 20634.81,
+          "status": "paid",
+          "paid_date": "2025-08-05",
+          "memo": null
+        },
+        {
+          "id": 126,
+          "party": "Fresh Produce Co",
+          "issue_date": "2025-06-20",
+          "due_date": "2025-07-20",
+          "amount": 17110.5,
+          "status": "paid",
+          "paid_date": "2025-07-28",
+          "memo": null
+        },
+        {
+          "id": 125,
+          "party": "Seafood Direct",
+          "issue_date": "2025-06-04",
+          "due_date": "2025-07-04",
+          "amount": 24748.11,
+          "status": "paid",
+          "paid_date": "2025-06-27",
+          "memo": null
+        },
+        {
+          "id": 123,
+          "party": "Beverage Distributor",
+          "issue_date": "2025-05-05",
+          "due_date": "2025-06-04",
+          "amount": 18514.01,
+          "status": "paid",
+          "paid_date": "2025-05-28",
+          "memo": null
+        },
+        {
+          "id": 122,
+          "party": "Linen & Laundry",
+          "issue_date": "2025-05-03",
+          "due_date": "2025-06-02",
+          "amount": 22813.47,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 121,
+          "party": "Seafood Direct",
+          "issue_date": "2025-05-02",
+          "due_date": "2025-06-01",
+          "amount": 17227.68,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 120,
+          "party": "Fresh Produce Co",
+          "issue_date": "2025-04-22",
+          "due_date": "2025-05-22",
+          "amount": 16618.0,
+          "status": "paid",
+          "paid_date": "2025-05-02",
+          "memo": null
+        },
+        {
+          "id": 119,
+          "party": "Seafood Direct",
+          "issue_date": "2025-04-11",
+          "due_date": "2025-05-11",
+          "amount": 17650.54,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 118,
+          "party": "Linen & Laundry",
+          "issue_date": "2025-04-02",
+          "due_date": "2025-05-02",
+          "amount": 19193.66,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 115,
+          "party": "Utilities Group",
+          "issue_date": "2025-03-25",
+          "due_date": "2025-04-24",
+          "amount": 21037.24,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 117,
+          "party": "Beverage Distributor",
+          "issue_date": "2025-03-18",
+          "due_date": "2025-04-17",
+          "amount": 16962.22,
+          "status": "paid",
+          "paid_date": "2025-04-18",
+          "memo": null
+        },
+        {
+          "id": 116,
+          "party": "Linen & Laundry",
+          "issue_date": "2025-03-06",
+          "due_date": "2025-04-05",
+          "amount": 21283.68,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 113,
+          "party": "Linen & Laundry",
+          "issue_date": "2025-02-25",
+          "due_date": "2025-03-27",
+          "amount": 19255.92,
+          "status": "paid",
+          "paid_date": "2025-03-09",
+          "memo": null
+        },
+        {
+          "id": 112,
+          "party": "Utilities Group",
+          "issue_date": "2025-02-07",
+          "due_date": "2025-03-09",
+          "amount": 18743.47,
+          "status": "paid",
+          "paid_date": "2025-03-19",
+          "memo": null
+        },
+        {
+          "id": 114,
+          "party": "Beverage Distributor",
+          "issue_date": "2025-02-03",
+          "due_date": "2025-03-05",
+          "amount": 13580.04,
+          "status": "paid",
+          "paid_date": "2025-02-24",
+          "memo": null
+        },
+        {
+          "id": 110,
+          "party": "Fresh Produce Co",
+          "issue_date": "2025-01-11",
+          "due_date": "2025-02-10",
+          "amount": 12715.09,
+          "status": "unpaid",
+          "paid_date": null,
+          "memo": null
+        },
+        {
+          "id": 109,
+          "party": "Seafood Direct",
+          "issue_date": "2025-01-10",
+          "due_date": "2025-02-09",
+          "amount": 18249.81,
+          "status": "paid",
+          "paid_date": "2025-02-04",
+          "memo": null
+        }
+      ],
+      "journal": [
+        {
+          "id": 1493,
+          "entry_date": "2026-06-09",
+          "description": "Office rent",
+          "payee": "Fresh Produce Co",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 1800.0,
+          "credit": 1800.0
+        },
+        {
+          "id": 1492,
+          "entry_date": "2026-06-09",
+          "description": "Invoice \u2014 Event Booking",
+          "payee": "Event Booking",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 22559.42,
+          "credit": 22559.42
+        },
+        {
+          "id": 1495,
+          "entry_date": "2026-06-08",
+          "description": "Office rent",
+          "payee": "Fresh Produce Co",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 1800.0,
+          "credit": 1800.0
+        },
+        {
+          "id": 1494,
+          "entry_date": "2026-06-07",
+          "description": "Invoice \u2014 Walk-in",
+          "payee": "Walk-in",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 19652.77,
+          "credit": 19652.77
+        },
+        {
+          "id": 1491,
+          "entry_date": "2026-06-07",
+          "description": "Office rent",
+          "payee": "Linen & Laundry",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 1800.0,
+          "credit": 1800.0
+        },
+        {
+          "id": 1840,
+          "entry_date": "2026-05-29",
+          "description": "Payroll",
+          "payee": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 4554.42,
+          "credit": 4554.42
+        },
+        {
+          "id": 1839,
+          "entry_date": "2026-05-29",
+          "description": "Payroll",
+          "payee": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 3684.95,
+          "credit": 3684.95
+        },
+        {
+          "id": 1838,
+          "entry_date": "2026-05-29",
+          "description": "Payroll",
+          "payee": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 5672.32,
+          "credit": 5672.32
+        },
+        {
+          "id": 1490,
+          "entry_date": "2026-05-26",
+          "description": "Inter-company management fee (expense)",
+          "payee": "Internal",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 4730.21,
+          "credit": 4730.21
+        },
+        {
+          "id": 1489,
+          "entry_date": "2026-05-26",
+          "description": "Inter-company management fee (revenue)",
+          "payee": "Internal",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 4730.21,
+          "credit": 4730.21
+        },
+        {
+          "id": 1488,
+          "entry_date": "2026-05-26",
+          "description": "Inter-company management fee (expense)",
+          "payee": "Internal",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 5835.59,
+          "credit": 5835.59
+        },
+        {
+          "id": 1487,
+          "entry_date": "2026-05-26",
+          "description": "Inter-company management fee (revenue)",
+          "payee": "Internal",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 5835.59,
+          "credit": 5835.59
+        },
+        {
+          "id": 1476,
+          "entry_date": "2026-05-26",
+          "description": "Payment \u2014 Catering Client",
+          "payee": "Catering Client",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 18841.36,
+          "credit": 18841.36
+        },
+        {
+          "id": 1477,
+          "entry_date": "2026-05-24",
+          "description": "Invoice \u2014 Delivery Apps",
+          "payee": "Delivery Apps",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 21674.56,
+          "credit": 21674.56
+        },
+        {
+          "id": 1456,
+          "entry_date": "2026-05-21",
+          "description": "Payment \u2014 Delivery Apps",
+          "payee": "Delivery Apps",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 18580.18,
+          "credit": 18580.18
+        },
+        {
+          "id": 1486,
+          "entry_date": "2026-05-20",
+          "description": "Materials \u2014 Seafood Direct",
+          "payee": "Seafood Direct",
+          "source": "bill",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 25473.46,
+          "credit": 25473.46
+        },
+        {
+          "id": 1466,
+          "entry_date": "2026-05-20",
+          "description": "Payment \u2014 Delivery Apps",
+          "payee": "Delivery Apps",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 22187.36,
+          "credit": 22187.36
+        },
+        {
+          "id": 1458,
+          "entry_date": "2026-05-19",
+          "description": "Bill paid \u2014 Linen & Laundry",
+          "payee": "Linen & Laundry",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 23359.99,
+          "credit": 23359.99
+        },
+        {
+          "id": 1485,
+          "entry_date": "2026-05-18",
+          "description": "Invoice \u2014 Walk-in",
+          "payee": "Walk-in",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 25670.76,
+          "credit": 25670.76
+        },
+        {
+          "id": 1481,
+          "entry_date": "2026-05-18",
+          "description": "Invoice \u2014 Event Booking",
+          "payee": "Event Booking",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 19665.61,
+          "credit": 19665.61
+        },
+        {
+          "id": 1482,
+          "entry_date": "2026-05-17",
+          "description": "Materials \u2014 Restaurant Supply Co",
+          "payee": "Restaurant Supply Co",
+          "source": "bill",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 18138.64,
+          "credit": 18138.64
+        },
+        {
+          "id": 1837,
+          "entry_date": "2026-05-15",
+          "description": "Payroll",
+          "payee": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 4554.42,
+          "credit": 4554.42
+        },
+        {
+          "id": 1836,
+          "entry_date": "2026-05-15",
+          "description": "Payroll",
+          "payee": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 3684.95,
+          "credit": 3684.95
+        },
+        {
+          "id": 1835,
+          "entry_date": "2026-05-15",
+          "description": "Payroll",
+          "payee": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 5672.32,
+          "credit": 5672.32
+        },
+        {
+          "id": 1447,
+          "entry_date": "2026-05-15",
+          "description": "Payment \u2014 Event Booking",
+          "payee": "Event Booking",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 21617.64,
+          "credit": 21617.64
+        },
+        {
+          "id": 1480,
+          "entry_date": "2026-05-11",
+          "description": "Invoice \u2014 Event Booking",
+          "payee": "Event Booking",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 22745.49,
+          "credit": 22745.49
+        },
+        {
+          "id": 1468,
+          "entry_date": "2026-05-11",
+          "description": "Bill paid \u2014 Utilities Group",
+          "payee": "Utilities Group",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 22163.74,
+          "credit": 22163.74
+        },
+        {
+          "id": 1478,
+          "entry_date": "2026-05-09",
+          "description": "Materials \u2014 Seafood Direct",
+          "payee": "Seafood Direct",
+          "source": "bill",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 18952.11,
+          "credit": 18952.11
+        },
+        {
+          "id": 1474,
+          "entry_date": "2026-05-08",
+          "description": "Invoice \u2014 Event Booking",
+          "payee": "Event Booking",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 26803.15,
+          "credit": 26803.15
+        },
+        {
+          "id": 1484,
+          "entry_date": "2026-05-07",
+          "description": "Invoice \u2014 Event Booking",
+          "payee": "Event Booking",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 23602.59,
+          "credit": 23602.59
+        },
+        {
+          "id": 1475,
+          "entry_date": "2026-05-07",
+          "description": "Invoice \u2014 Catering Client",
+          "payee": "Catering Client",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 18841.36,
+          "credit": 18841.36
+        },
+        {
+          "id": 1473,
+          "entry_date": "2026-05-05",
+          "description": "Office rent",
+          "payee": "Restaurant Supply Co",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 1800.0,
+          "credit": 1800.0
+        },
+        {
+          "id": 1479,
+          "entry_date": "2026-05-04",
+          "description": "Office rent",
+          "payee": "Fresh Produce Co",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 1800.0,
+          "credit": 1800.0
+        },
+        {
+          "id": 1483,
+          "entry_date": "2026-05-03",
+          "description": "Office rent",
+          "payee": "Beverage Distributor",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 1800.0,
+          "credit": 1800.0
+        },
+        {
+          "id": 1452,
+          "entry_date": "2026-05-03",
+          "description": "Bill paid \u2014 Restaurant Supply Co",
+          "payee": "Restaurant Supply Co",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 21898.31,
+          "credit": 21898.31
+        },
+        {
+          "id": 1834,
+          "entry_date": "2026-05-01",
+          "description": "Payroll",
+          "payee": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 4554.42,
+          "credit": 4554.42
+        },
+        {
+          "id": 1833,
+          "entry_date": "2026-05-01",
+          "description": "Payroll",
+          "payee": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 3684.95,
+          "credit": 3684.95
+        },
+        {
+          "id": 1832,
+          "entry_date": "2026-05-01",
+          "description": "Payroll",
+          "payee": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 5672.32,
+          "credit": 5672.32
+        },
+        {
+          "id": 1472,
+          "entry_date": "2026-04-28",
+          "description": "Inter-company management fee (expense)",
+          "payee": "Internal",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 4974.68,
+          "credit": 4974.68
+        },
+        {
+          "id": 1471,
+          "entry_date": "2026-04-28",
+          "description": "Inter-company management fee (revenue)",
+          "payee": "Internal",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 4974.68,
+          "credit": 4974.68
+        },
+        {
+          "id": 1470,
+          "entry_date": "2026-04-28",
+          "description": "Inter-company management fee (expense)",
+          "payee": "Internal",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 2215.21,
+          "credit": 2215.21
+        },
+        {
+          "id": 1469,
+          "entry_date": "2026-04-28",
+          "description": "Inter-company management fee (revenue)",
+          "payee": "Internal",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 2215.21,
+          "credit": 2215.21
+        },
+        {
+          "id": 1432,
+          "entry_date": "2026-04-26",
+          "description": "Payment \u2014 Event Booking",
+          "payee": "Event Booking",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 18241.79,
+          "credit": 18241.79
+        },
+        {
+          "id": 1455,
+          "entry_date": "2026-04-25",
+          "description": "Invoice \u2014 Delivery Apps",
+          "payee": "Delivery Apps",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 18580.18,
+          "credit": 18580.18
+        },
+        {
+          "id": 1449,
+          "entry_date": "2026-04-25",
+          "description": "Payment \u2014 Event Booking",
+          "payee": "Event Booking",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 19138.39,
+          "credit": 19138.39
+        },
+        {
+          "id": 1465,
+          "entry_date": "2026-04-24",
+          "description": "Invoice \u2014 Delivery Apps",
+          "payee": "Delivery Apps",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 22187.36,
+          "credit": 22187.36
+        },
+        {
+          "id": 1464,
+          "entry_date": "2026-04-24",
+          "description": "Payment \u2014 Delivery Apps",
+          "payee": "Delivery Apps",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 18659.02,
+          "credit": 18659.02
+        },
+        {
+          "id": 1454,
+          "entry_date": "2026-04-23",
+          "description": "Invoice \u2014 Catering Client",
+          "payee": "Catering Client",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 22223.65,
+          "credit": 22223.65
+        },
+        {
+          "id": 1421,
+          "entry_date": "2026-04-23",
+          "description": "Bill paid \u2014 Restaurant Supply Co",
+          "payee": "Restaurant Supply Co",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 20761.21,
+          "credit": 20761.21
+        },
+        {
+          "id": 1446,
+          "entry_date": "2026-04-22",
+          "description": "Invoice \u2014 Event Booking",
+          "payee": "Event Booking",
+          "source": "invoice",
+          "source_ref": null,
+          "status": "posted",
+          "debit": 21617.64,
+          "credit": 21617.64
+        }
+      ],
+      "payment": [
+        {
+          "id": 1493,
+          "entry_date": "2026-06-09",
+          "party": "Fresh Produce Co",
+          "description": "Office rent",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 1800.0
+        },
+        {
+          "id": 1495,
+          "entry_date": "2026-06-08",
+          "party": "Fresh Produce Co",
+          "description": "Office rent",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 1800.0
+        },
+        {
+          "id": 1491,
+          "entry_date": "2026-06-07",
+          "party": "Linen & Laundry",
+          "description": "Office rent",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 1800.0
+        },
+        {
+          "id": 1840,
+          "entry_date": "2026-05-29",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 3405.52
+        },
+        {
+          "id": 1839,
+          "entry_date": "2026-05-29",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 2842.41
+        },
+        {
+          "id": 1838,
+          "entry_date": "2026-05-29",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 4208.06
+        },
+        {
+          "id": 1490,
+          "entry_date": "2026-05-26",
+          "party": "Internal",
+          "description": "Inter-company management fee (expense)",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 4730.21
+        },
+        {
+          "id": 1489,
+          "entry_date": "2026-05-26",
+          "party": "Internal",
+          "description": "Inter-company management fee (revenue)",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 4730.21
+        },
+        {
+          "id": 1488,
+          "entry_date": "2026-05-26",
+          "party": "Internal",
+          "description": "Inter-company management fee (expense)",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 5835.59
+        },
+        {
+          "id": 1487,
+          "entry_date": "2026-05-26",
+          "party": "Internal",
+          "description": "Inter-company management fee (revenue)",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 5835.59
+        },
+        {
+          "id": 1476,
+          "entry_date": "2026-05-26",
+          "party": "Catering Client",
+          "description": "Payment \u2014 Catering Client",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 18841.36
+        },
+        {
+          "id": 1456,
+          "entry_date": "2026-05-21",
+          "party": "Delivery Apps",
+          "description": "Payment \u2014 Delivery Apps",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 18580.18
+        },
+        {
+          "id": 1466,
+          "entry_date": "2026-05-20",
+          "party": "Delivery Apps",
+          "description": "Payment \u2014 Delivery Apps",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 22187.36
+        },
+        {
+          "id": 1458,
+          "entry_date": "2026-05-19",
+          "party": "Linen & Laundry",
+          "description": "Bill paid \u2014 Linen & Laundry",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 23359.99
+        },
+        {
+          "id": 1837,
+          "entry_date": "2026-05-15",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 3405.52
+        },
+        {
+          "id": 1836,
+          "entry_date": "2026-05-15",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 2842.41
+        },
+        {
+          "id": 1835,
+          "entry_date": "2026-05-15",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 4208.06
+        },
+        {
+          "id": 1447,
+          "entry_date": "2026-05-15",
+          "party": "Event Booking",
+          "description": "Payment \u2014 Event Booking",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 21617.64
+        },
+        {
+          "id": 1468,
+          "entry_date": "2026-05-11",
+          "party": "Utilities Group",
+          "description": "Bill paid \u2014 Utilities Group",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 22163.74
+        },
+        {
+          "id": 1473,
+          "entry_date": "2026-05-05",
+          "party": "Restaurant Supply Co",
+          "description": "Office rent",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 1800.0
+        },
+        {
+          "id": 1479,
+          "entry_date": "2026-05-04",
+          "party": "Fresh Produce Co",
+          "description": "Office rent",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 1800.0
+        },
+        {
+          "id": 1483,
+          "entry_date": "2026-05-03",
+          "party": "Beverage Distributor",
+          "description": "Office rent",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 1800.0
+        },
+        {
+          "id": 1452,
+          "entry_date": "2026-05-03",
+          "party": "Restaurant Supply Co",
+          "description": "Bill paid \u2014 Restaurant Supply Co",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 21898.31
+        },
+        {
+          "id": 1834,
+          "entry_date": "2026-05-01",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 3405.52
+        },
+        {
+          "id": 1833,
+          "entry_date": "2026-05-01",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 2842.41
+        },
+        {
+          "id": 1832,
+          "entry_date": "2026-05-01",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 4208.06
+        },
+        {
+          "id": 1472,
+          "entry_date": "2026-04-28",
+          "party": "Internal",
+          "description": "Inter-company management fee (expense)",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 4974.68
+        },
+        {
+          "id": 1471,
+          "entry_date": "2026-04-28",
+          "party": "Internal",
+          "description": "Inter-company management fee (revenue)",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 4974.68
+        },
+        {
+          "id": 1470,
+          "entry_date": "2026-04-28",
+          "party": "Internal",
+          "description": "Inter-company management fee (expense)",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 2215.21
+        },
+        {
+          "id": 1469,
+          "entry_date": "2026-04-28",
+          "party": "Internal",
+          "description": "Inter-company management fee (revenue)",
+          "source": "intercompany",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 2215.21
+        },
+        {
+          "id": 1432,
+          "entry_date": "2026-04-26",
+          "party": "Event Booking",
+          "description": "Payment \u2014 Event Booking",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 18241.79
+        },
+        {
+          "id": 1449,
+          "entry_date": "2026-04-25",
+          "party": "Event Booking",
+          "description": "Payment \u2014 Event Booking",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 19138.39
+        },
+        {
+          "id": 1464,
+          "entry_date": "2026-04-24",
+          "party": "Delivery Apps",
+          "description": "Payment \u2014 Delivery Apps",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 18659.02
+        },
+        {
+          "id": 1421,
+          "entry_date": "2026-04-23",
+          "party": "Restaurant Supply Co",
+          "description": "Bill paid \u2014 Restaurant Supply Co",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 20761.21
+        },
+        {
+          "id": 1461,
+          "entry_date": "2026-04-19",
+          "party": "Catering Client",
+          "description": "Payment \u2014 Catering Client",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 16716.72
+        },
+        {
+          "id": 1418,
+          "entry_date": "2026-04-18",
+          "party": "Delivery Apps",
+          "description": "Payment \u2014 Delivery Apps",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 17163.52
+        },
+        {
+          "id": 1831,
+          "entry_date": "2026-04-17",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 3405.52
+        },
+        {
+          "id": 1830,
+          "entry_date": "2026-04-17",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 2842.41
+        },
+        {
+          "id": 1829,
+          "entry_date": "2026-04-17",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 4208.06
+        },
+        {
+          "id": 1436,
+          "entry_date": "2026-04-11",
+          "party": "Walk-in",
+          "description": "Payment \u2014 Walk-in",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 24231.2
+        },
+        {
+          "id": 1434,
+          "entry_date": "2026-04-10",
+          "party": "Catering Client",
+          "description": "Payment \u2014 Catering Client",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 18795.51
+        },
+        {
+          "id": 1428,
+          "entry_date": "2026-04-10",
+          "party": "Restaurant Supply Co",
+          "description": "Bill paid \u2014 Restaurant Supply Co",
+          "source": "ap_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 19851.64
+        },
+        {
+          "id": 1438,
+          "entry_date": "2026-04-09",
+          "party": "Walk-in",
+          "description": "Payment \u2014 Walk-in",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 24662.14
+        },
+        {
+          "id": 1453,
+          "entry_date": "2026-04-07",
+          "party": "Utilities Group",
+          "description": "Office rent",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 1800.0
+        },
+        {
+          "id": 1459,
+          "entry_date": "2026-04-04",
+          "party": "Fresh Produce Co",
+          "description": "Office rent",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 1800.0
+        },
+        {
+          "id": 1445,
+          "entry_date": "2026-04-04",
+          "party": "Fresh Produce Co",
+          "description": "Office rent",
+          "source": "synthetic",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 1800.0
+        },
+        {
+          "id": 1828,
+          "entry_date": "2026-04-03",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 3405.52
+        },
+        {
+          "id": 1827,
+          "entry_date": "2026-04-03",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 2842.41
+        },
+        {
+          "id": 1826,
+          "entry_date": "2026-04-03",
+          "party": "Payroll",
+          "description": "Payroll",
+          "source": "payroll",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 4208.06
+        },
+        {
+          "id": 1393,
+          "entry_date": "2026-04-03",
+          "party": "Catering Client",
+          "description": "Payment \u2014 Catering Client",
+          "source": "ar_payment",
+          "source_ref": null,
+          "status": "posted",
+          "amount": 12683.79
+        }
+      ]
+    },
+    "pending_actions": [
+      {
+        "document_type": "invoice",
+        "document_id": 7,
+        "action": "send_invoice",
+        "label": "Send invoice #7",
+        "party": "Event Booking",
+        "amount": 13512.06,
+        "issue_date": "2022-01-02",
+        "due_date": "2022-02-01",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 6,
+        "action": "send_invoice",
+        "label": "Send invoice #6",
+        "party": "Event Booking",
+        "amount": 12704.68,
+        "issue_date": "2022-01-03",
+        "due_date": "2022-02-02",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 10,
+        "action": "send_invoice",
+        "label": "Send invoice #10",
+        "party": "Walk-in",
+        "amount": 11021.1,
+        "issue_date": "2022-01-22",
+        "due_date": "2022-02-21",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 11,
+        "action": "send_invoice",
+        "label": "Send invoice #11",
+        "party": "Event Booking",
+        "amount": 10753.25,
+        "issue_date": "2022-02-05",
+        "due_date": "2022-03-07",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 19,
+        "action": "send_invoice",
+        "label": "Send invoice #19",
+        "party": "Delivery Apps",
+        "amount": 10133.14,
+        "issue_date": "2022-02-18",
+        "due_date": "2022-03-20",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 24,
+        "action": "send_invoice",
+        "label": "Send invoice #24",
+        "party": "Walk-in",
+        "amount": 17367.02,
+        "issue_date": "2022-03-08",
+        "due_date": "2022-04-07",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 25,
+        "action": "send_invoice",
+        "label": "Send invoice #25",
+        "party": "Walk-in",
+        "amount": 10759.56,
+        "issue_date": "2022-03-18",
+        "due_date": "2022-04-17",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 27,
+        "action": "send_invoice",
+        "label": "Send invoice #27",
+        "party": "Walk-in",
+        "amount": 12447.32,
+        "issue_date": "2022-04-10",
+        "due_date": "2022-05-10",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 31,
+        "action": "send_invoice",
+        "label": "Send invoice #31",
+        "party": "Delivery Apps",
+        "amount": 16293.82,
+        "issue_date": "2022-04-22",
+        "due_date": "2022-05-22",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 36,
+        "action": "send_invoice",
+        "label": "Send invoice #36",
+        "party": "Event Booking",
+        "amount": 18370.42,
+        "issue_date": "2022-05-11",
+        "due_date": "2022-06-10",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 39,
+        "action": "send_invoice",
+        "label": "Send invoice #39",
+        "party": "Delivery Apps",
+        "amount": 12034.62,
+        "issue_date": "2022-05-22",
+        "due_date": "2022-06-21",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 42,
+        "action": "send_invoice",
+        "label": "Send invoice #42",
+        "party": "Delivery Apps",
+        "amount": 14045.25,
+        "issue_date": "2022-06-25",
+        "due_date": "2022-07-25",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 62,
+        "action": "send_invoice",
+        "label": "Send invoice #62",
+        "party": "Delivery Apps",
+        "amount": 14800.98,
+        "issue_date": "2022-08-11",
+        "due_date": "2022-09-10",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 65,
+        "action": "send_invoice",
+        "label": "Send invoice #65",
+        "party": "Delivery Apps",
+        "amount": 20805.9,
+        "issue_date": "2022-08-19",
+        "due_date": "2022-09-18",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 68,
+        "action": "send_invoice",
+        "label": "Send invoice #68",
+        "party": "Event Booking",
+        "amount": 14789.76,
+        "issue_date": "2022-09-03",
+        "due_date": "2022-10-03",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 77,
+        "action": "send_invoice",
+        "label": "Send invoice #77",
+        "party": "Event Booking",
+        "amount": 16693.7,
+        "issue_date": "2022-09-04",
+        "due_date": "2022-10-04",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 69,
+        "action": "send_invoice",
+        "label": "Send invoice #69",
+        "party": "Event Booking",
+        "amount": 11249.13,
+        "issue_date": "2022-09-16",
+        "due_date": "2022-10-16",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 75,
+        "action": "send_invoice",
+        "label": "Send invoice #75",
+        "party": "Event Booking",
+        "amount": 13578.9,
+        "issue_date": "2022-09-19",
+        "due_date": "2022-10-19",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 71,
+        "action": "send_invoice",
+        "label": "Send invoice #71",
+        "party": "Walk-in",
+        "amount": 13667.05,
+        "issue_date": "2022-09-22",
+        "due_date": "2022-10-22",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 78,
+        "action": "send_invoice",
+        "label": "Send invoice #78",
+        "party": "Catering Client",
+        "amount": 16418.52,
+        "issue_date": "2022-09-25",
+        "due_date": "2022-10-25",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 84,
+        "action": "send_invoice",
+        "label": "Send invoice #84",
+        "party": "Delivery Apps",
+        "amount": 15041.69,
+        "issue_date": "2022-10-04",
+        "due_date": "2022-11-03",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 82,
+        "action": "send_invoice",
+        "label": "Send invoice #82",
+        "party": "Delivery Apps",
+        "amount": 18381.81,
+        "issue_date": "2022-10-09",
+        "due_date": "2022-11-08",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 80,
+        "action": "send_invoice",
+        "label": "Send invoice #80",
+        "party": "Delivery Apps",
+        "amount": 17748.63,
+        "issue_date": "2022-10-21",
+        "due_date": "2022-11-20",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 83,
+        "action": "send_invoice",
+        "label": "Send invoice #83",
+        "party": "Event Booking",
+        "amount": 15083.26,
+        "issue_date": "2022-10-26",
+        "due_date": "2022-11-25",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      },
+      {
+        "document_type": "invoice",
+        "document_id": 98,
+        "action": "send_invoice",
+        "label": "Send invoice #98",
+        "party": "Walk-in",
+        "amount": 13419.72,
+        "issue_date": "2022-12-03",
+        "due_date": "2023-01-02",
+        "status": "approval_required",
+        "preview_number": "INV-00001"
+      }
+    ],
+    "capabilities": {
+      "send_invoice": "approval_required",
+      "reserve_number": "approval_required",
+      "external_delivery": "disabled_until_approved",
+      "ledger_write": "disabled_for_send_invoice"
+    }
+  },
+  "financial_state": {
+    "status": "active",
+    "liquidity": {
+      "cash": 1927554.9,
+      "open_ar": 2697818.47,
+      "open_ap": 956766.59,
+      "net_position": 3668606.78,
+      "scale": 2697818.47
+    },
+    "performance": {
+      "income": 2109447.52,
+      "expense": 1217111.11,
+      "net_income": 892336.41,
+      "operating_cash_net": 524344.19,
+      "scale": 2109447.52
+    },
+    "balance": {
+      "assets": 4625373.37,
+      "liabilities": 1367911.82,
+      "equity": 3257461.55
+    }
   },
   "payroll": {
     "status": "active",
