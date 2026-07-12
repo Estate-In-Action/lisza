@@ -43,8 +43,8 @@ money**, not by feature size:
   `scripts/period_close.py`. Core: `close_period(client, start, end, memo=)` sums posted splits
   per account over the window, computes net income (income − expense), posts ONE balanced closing
   entry that debits each income account and credits each expense account by its period balance and
-  books the net to retained earnings 300 (`Cr 300` on a profit, `Dr 300` on a loss), then writes a
-  `periods` row with `status='closed'`. A period lock guard was added to `post_json`: any new entry
+  books the net to retained earnings 300 (`Cr 300` on a profit, `Dr 300` on a loss), then writes an
+  `accounting_periods` row with `status='closed'`. A period lock guard was added to `post_json`: any new entry
   dated inside a closed window is rejected (corrections must be a new reversing entry in an open
   period — PLAN.md principle #2, never edits-in-place). `close-json` CLI subcommand +
   `period_summary` (preview income/expense/net before committing) + `list_periods`. Wired

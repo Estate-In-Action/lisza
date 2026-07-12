@@ -29,7 +29,7 @@ The mechanic is standard double-entry close, done as one balanced journal:
   to retained earnings 300 — `Cr 300` on a profit, `Dr 300` on a loss. The sign of the retained
   side flips with the result, and every leg is drawn from the same summed balances so the entry
   ties by construction (the DB balance trigger would reject it otherwise).
-- **Lock the window.** A `periods` row is written `status='closed'`, and a guard added to
+- **Lock the window.** An `accounting_periods` row is written `status='closed'`, and a guard added to
   `post_json` now rejects any new entry dated inside a closed window. This is the accounting
   invariant made physical: you don't edit a closed period, you post a reversing entry into an
   open one (PLAN.md principle #2).
