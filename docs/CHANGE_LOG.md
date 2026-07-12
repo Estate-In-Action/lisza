@@ -33,6 +33,167 @@ money**, not by feature size:
 
 ---
 
+### CR-008 — Period close: roll income/expense into retained earnings and lock the fiscal period — ledger-affecting
+- **Date:** 2026-07-12
+- **Tier:** ledger-affecting (posts a balanced closing journal that zeroes every P&L account
+  into retained earnings 300, then locks the window against further posting)
+- **What / Why:** LISZA could post, invoice, bill, tax, dun, and credit-note, but a book never
+  *closed* — income and expense accumulated forever with no period boundary, no retained-earnings
+  roll, and nothing stopping a backdated posting into a "finished" month. Added
+  `scripts/period_close.py`. Core: `close_period(client, start, end, memo=)` sums posted splits
+  per account over the window, computes net income (income − expense), posts ONE balanced closing
+  entry that debits each income account and credits each expense account by its period balance and
+  books the net to retained earnings 300 (`Cr 300` on a profit, `Dr 300` on a loss), then writes a
+  `periods` row with `status='closed'`. A period lock guard was added to `post_json`: any new entry
+  dated inside a closed window is rejected (corrections must be a new reversing entry in an open
+  period — PLAN.md principle #2, never edits-in-place). `close-json` CLI subcommand +
+  `period_summary` (preview income/expense/net before committing) + `list_periods`. Wired
+  `period_close` (POST) and `period` (GET: `action=summary|periods`) modes on `/api/lisza`, and a
+  **Close** section (NAV + dispatch + `PeriodSection`, preview-then-close UX) in `/lisza/workspace`.
+- **Risk:** medium — posts a real multi-way GL entry and then *locks* posting for the window, so
+  it changes what future postings are allowed. Blast radius bounded: the DB balance trigger makes a
+  non-balancing close impossible; the close reads only `status='posted'` splits; re-closing an
+  already-closed period is rejected; the lock only blocks NEW entries dated in-window, never mutates
+  existing ones. A close is not silently reversible — reopening requires a deliberate reversing
+  entry, matching the principle that corrections are always new entries.
+- **Rollback:** remove `scripts/period_close.py` + `test_period_close.py`; drop the `period_close`
+  + `period` route modes and the Close NAV tuple + dispatch branch + `PeriodSection` in
+  `/lisza/workspace`; remove the period-lock guard block from `post_json`. Already-posted closing
+  entries remain valid ledger entries; to undo a specific close, post a reversing entry against
+  journal (the closing entry_id) in a reopened period.
+- **Verify:** `cd scripts && python3 -m pytest test_period_close.py -q` → 14 passed (income/expense
+  sum, net-income roll on profit + on loss, balanced closing split, retained-earnings side flips
+  with sign, closed-period status write, re-close rejection, post-into-closed-period rejection,
+  post-into-open-period allowed, preview matches committed totals, out-of-window exclusion,
+  posted-only filter, list_periods, CLI). Full suite green. Live: `/lisza/workspace` HTTP 200;
+  `POST ?mode=period_close` closed `harborside-group` 2026-01 → entry_id 1841, net_income
+  122,965.16, closed_income 211,080.63, closed_expense 88,115.47; verified the closing split ties
+  (Dr 400 202,230.78 + Dr 410 8,849.85 = 211,080.63; Cr 500 53,785.37 + Cr 520 5,400.00 + Cr 555
+  25,846.16 + Cr 556 3,083.94 + Cr 300 122,965.16 = 211,080.63 — balanced); `GET ?mode=period
+  &action=periods` shows the window `status: closed`.
+- **Status:** executed
+
+### CR-007 — Tax engine: sales-tax / VAT rate tables, taxed documents, liability report, 1099 — ledger-affecting
+- **Date:** 2026-07-12
+- **Tier:** ledger-affecting (a taxed invoice/bill posts a balanced multi-way GL split that
+  moves the sales-tax-payable control account 230)
+- **What / Why:** LISZA could invoice and bill, but every document was tax-free — a
+  bookkeeper had to hand-key the tax split, and there was no rate table, no output-vs-input
+  liability view, and no 1099 support. Added `scripts/tax.py`. Core: `compute_tax(amount,
+  rate_pct, inclusive=)` → `{net, tax, gross}` (exclusive adds tax on top; inclusive carves
+  it out of the total). A per-book `tax_rates` table (`set_rate`/`get_rates`, code +
+  jurisdiction + `sales|vat` kind). **Taxed documents post their own balanced split and are
+  stored at gross** so downstream payments / dunning / credit-notes see the true receivable:
+  `record_tax_invoice` posts `Dr 110 A/R gross / Cr <revenue> net / Cr 230 tax` and creates
+  the invoice at gross; `record_tax_bill` posts `Dr <expense> net / Dr 230 input tax / Cr 200
+  A/P gross`. Every taxed line also writes a `tax_transactions` row (kind `output|input`) so
+  the liability report reads tax straight from a ledger rather than re-deriving it from
+  splits. `tax_liability(start, end)` nets output − input into `net_payable` with a by-rate
+  breakdown. 1099: `set_vendor_1099` flags a vendor, `form_1099_report(year)` totals that
+  vendor's disbursements from the `payments` table and marks it reportable at ≥ $600. Rate
+  resolution accepts either a stored `rate_code` or an ad-hoc `rate_pct`; revenue/expense
+  offset accounts are type-checked. Wired `tax_post` (POST dispatcher: invoice/bill/rate/
+  flag_1099) + `tax` (GET: rates/liability/1099) modes on `/api/lisza`, and a **Tax** section
+  (NAV + dispatch + `TaxSection` with Rates / Taxed Invoice / Liability / 1099 sub-tabs) in
+  `/lisza/workspace`.
+- **Risk:** low-to-medium — posts real GL entries, but the DB balance trigger makes a
+  non-balancing journal impossible, `compute_tax` rounds each leg so the split always ties,
+  a $0-tax line is rejected (routes back to the untaxed path), and non-income/expense offset
+  accounts are rejected by the type check. Reads are pure aggregation over `tax_transactions`
+  / `payments`. Uses the existing sales-tax-payable account 230 (already seeded) — no COA
+  change.
+- **Rollback:** remove `scripts/tax.py` + `test_tax.py`; drop the two `tax*` route modes and
+  the Tax NAV tuple + dispatch branch + `TaxSection`/`TaxRates`/`TaxInvoice`/`TaxLiability`/
+  `Tax1099` components in `/lisza/workspace`. No existing posting path changes; already-posted
+  taxed documents remain valid ledger entries (corrections are new entries, never
+  edits-in-place).
+- **Verify:** `cd scripts && python3 -m pytest test_tax.py -q` → 16 passed (exclusive +
+  inclusive compute, rate roundtrip, 3-way output split, stored-at-gross receivable,
+  inclusive carve-out, rate-code resolution, unknown/missing-rate guards, non-revenue-account
+  guard, input-tax bill split, liability output − input net, out-of-period exclusion, 1099
+  threshold + flag, unflagged-vendor exclusion, CLI); full suite **307 passed**. Live:
+  `/lisza/workspace` HTTP 200; `POST ?mode=tax_post` set rate CA 7.25% and posted a $1,000 @CA
+  taxed invoice on `jb-design` (invoice #159, journal #486, net 1000 / tax 72.5 / gross
+  1072.5); `GET ?mode=tax&action=liability` returned output_tax 72.5 / net_payable 72.5;
+  `GET action=rates` and `action=1099` returned clean JSON.
+- **Status:** executed
+
+### CR-006 — Dunning / late-fee escalation ladder — ledger-affecting
+- **Date:** 2026-07-12
+- **Tier:** ledger-affecting (a late fee posts a balanced GL entry that increases A/R)
+- **What / Why:** the AR reminder planner (`ar_ap_workflows.py`) only *surfaced* overdue
+  invoices — there was no escalation ladder and no way to charge a late fee except a
+  hand-keyed journal. Added `scripts/dunning.py`: a per-book, configurable escalation
+  policy (`dunning_policy`, defaulting to reminder@1d / first_notice@15d 1.5% /
+  second_notice@30d 1.5% / final_demand@60d flat $25) and a `dunning_fees` sub-ledger.
+  Two layers, deliberately split: **`dunning_ladder()` is read-only** (mirrors the
+  prep-only AR planner) — for each overdue open invoice it reports days-overdue, the stage
+  reached, the fee that stage would charge, and whether that stage was already assessed;
+  **`assess_late_fee()` is the only ledger-affecting call** — it posts `Dr 110 A/R / Cr
+  <late-fee income>` and records the charge. A late fee is a *new charge*, never an edit to
+  the invoice (PLAN.md principle #2). `UNIQUE(invoice_id, stage)` makes assessment
+  idempotent so a daily re-run can never double-bill a stage. Fee income defaults to new COA
+  **445 Late Fee & Finance Charge Income** when present, else falls back to 490 Other Income;
+  the income account is type-checked. Balance math reuses `payments._allocated_so_far`, so an
+  invoice already netted by payments/credits shows its true remaining balance. Added COA row
+  445 to `coa.csv` (new books only). Wired `dunning_assess` (POST) + `dunning` (GET ladder)
+  modes on `/api/lisza` and a **Dunning** section (NAV + dispatch + `DunningSection`, an
+  overdue table with one-click per-row assess) in `/lisza/workspace`.
+- **Risk:** low-to-medium — posts real GL entries, but the DB balance trigger makes a
+  non-balancing journal impossible, the idempotency guard prevents double-billing, and
+  non-income offset accounts are rejected. Read-only ladder never mutates a book. The COA
+  addition affects new books only; existing demo books fall back to 490 (verified live —
+  entry booked to 490 on `jb-design`).
+- **Rollback:** remove `scripts/dunning.py` + `test_dunning.py`; revert the 445 row in
+  `coa.csv`; drop the two `dunning*` route modes and the Dunning NAV tuple + dispatch branch
+  + `DunningSection` in `/lisza/workspace`. No existing posting path changes; already-assessed
+  late fees remain valid ledger entries (corrections are new entries, never edits-in-place).
+- **Verify:** `cd scripts && python3 -m pytest test_dunning.py -q` → 15 passed (ordered
+  policy, ladder stage/suggested-fee, ignores not-yet-due + paid invoices, Dr-A/R/Cr-income
+  posting, percent + flat fees, per-stage idempotency, non-income-account guard, not-overdue
+  guard, dunning-state totals, list, CLI); full suite **291 passed**. Live: `/lisza/workspace`
+  HTTP 200; `GET /api/lisza?mode=dunning` returned the overdue ladder; end-to-end
+  `POST ?mode=dunning_assess` charged a $25 final-demand fee to `jb-design` invoice #7 (journal
+  #485, booked to 490), and the idempotent re-POST was rejected 400.
+- **Status:** executed
+
+### CR-005 — Credit notes / debit notes / vendor credits (reversing credit documents) — ledger-affecting
+- **Date:** 2026-07-12
+- **Tier:** ledger-affecting (posts a reversing GL entry against the AR/AP control account)
+- **What / Why:** the money loop stopped at cash. A customer over-charge, goodwill
+  discount, or returned purchase had no first-class document — bookkeepers hand-keyed an
+  ad-hoc journal and the invoice/bill sub-ledger never reflected it. Added
+  `scripts/credit_notes.py`: per-book `credit_notes` + `credit_note_allocations` tables and
+  `record_credit_note()`. Two kinds mirror `payments.py`: **customer** credit memo posts
+  `Dr <revenue> / Cr 110 A/R`, **vendor** credit (debit note) posts `Dr 200 A/P / Cr
+  <expense>`. Offset account is type-checked (customer needs an income account, vendor an
+  expense account). Allocations relieve open invoices/bills and flip them to `paid` once
+  fully covered; an unallocated remainder sits as an on-account credit (full amount always
+  hits the control account, exactly like an over-payment). Honours PLAN.md principle #2 —
+  the original invoice/bill and its entry are never mutated; the credit is a new offsetting
+  document. **Cross-module:** an invoice's true balance now nets payments **and** credits, so
+  `credit_notes._relieved_so_far` and `payments._allocated_so_far` both sum the two
+  allocation tables (each guarded by a table-exists check). Wired `credit_apply` (POST) +
+  `credit_notes` (GET) modes on `/api/lisza` and a **Credit Notes** section (NAV + dispatch +
+  `CreditNotesSection`) in `/lisza/workspace`, mirroring the Payments lane.
+- **Risk:** medium — posts real GL entries, but the DB balance trigger makes a non-balancing
+  journal impossible and the allocation guards make over-relieving an invoice/bill impossible.
+  The added credit-awareness in `payments._allocated_so_far` is backward-safe: a book with no
+  `credit_note_allocations` table skips it and behaves exactly as before (verified — 12
+  payments tests still green).
+- **Rollback:** remove `scripts/credit_notes.py` + `test_credit_notes.py`; revert the
+  `_allocated_so_far` change in `payments.py` (restore the single-table query); drop the two
+  `credit*` route modes and the Credit Notes NAV tuple + dispatch branch + `CreditNotesSection`
+  in `/lisza/workspace`. No existing posting path changes; already-issued credit notes remain
+  valid ledger entries (corrections are new entries, never edits-in-place).
+- **Verify:** `cd scripts && python3 -m pytest test_credit_notes.py test_payments.py -q` → 24
+  passed (reversing-entry direction for both kinds, apply-marks-paid, partial balance,
+  credit+payment cross-settle, offset-type guard, over-allocation guards, CLI); full suite
+  **276 passed**. Live: `/lisza/workspace` HTTP 200 after the edit; end-to-end
+  `POST /api/lisza?mode=credit_apply` posted credit note #1 (journal #484) on the `jb-design`
+  demo book and `GET ?mode=credit_notes` read it back.
+- **Status:** executed
+
 ### CR-004 — Recurring / subscription invoicing (templates → approval-gated generation) — ledger-affecting
 - **Date:** 2026-07-11
 - **Tier:** ledger-affecting (generation posts a balanced A/R journal — `Dr 110 / Cr <revenue>` — when approved)

@@ -15,11 +15,13 @@ code,name,type,sign_normal,group
 250,Income Tax Payable,liability,credit,current_liabilities
 260,Equipment Loan Payable,liability,credit,long_term_debt
 300,Owner's Equity,equity,credit,equity
+310,Retained Earnings,equity,credit,equity
 400,Service Revenue,income,credit,revenue
 410,Consulting Revenue,income,credit,revenue
 420,Retainer Revenue,income,credit,revenue
 430,Project Revenue,income,credit,revenue
 440,Interest Income,income,credit,revenue
+445,Late Fee & Finance Charge Income,income,credit,revenue
 490,Other Income,income,credit,revenue
 500,Subcontractor Costs,expense,debit,cost_of_services
 505,Media & Ad Spend,expense,debit,cost_of_services

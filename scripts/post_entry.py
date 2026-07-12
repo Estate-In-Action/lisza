@@ -435,6 +435,22 @@ def post_json(payload: dict, db_path: str) -> dict:
                 f"cannot post an unbalanced entry "
                 f"(DR {total_dr:.2f} vs CR {total_cr:.2f})")
 
+        # Period lock: refuse posting into a closed accounting period. Guarded on
+        # table existence so books that have never closed a period are unaffected
+        # (period_close.py owns accounting_periods; the closing entry itself posts
+        # before its lock row is written, so it is never blocked by its own close).
+        if want_post and con.execute(
+            "SELECT 1 FROM sqlite_master WHERE type='table' AND name='accounting_periods'"
+        ).fetchone():
+            locked = con.execute(
+                "SELECT MAX(period_end) AS pe FROM accounting_periods "
+                "WHERE status='closed' AND period_end >= ?", (entry_date,)
+            ).fetchone()
+            if locked and locked["pe"]:
+                raise ValueError(
+                    f"accounting period ending {locked['pe']} is closed; "
+                    f"entry dated {entry_date} cannot post into a locked period")
+
         status = "posted" if (want_post and balanced) else "pending"
         now = iso_now()
         posted_at = now if status == "posted" else None

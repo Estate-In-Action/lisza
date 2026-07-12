@@ -88,12 +88,25 @@ def _book(slug: str) -> sqlite3.Connection:
 
 
 def _allocated_so_far(con: sqlite3.Connection, target_type: str, target_id: int) -> float:
-    row = con.execute(
-        """SELECT COALESCE(SUM(amount), 0) FROM payment_allocations
-           WHERE target_type=? AND target_id=?""",
-        (target_type, target_id),
-    ).fetchone()
-    return round(float(row[0] or 0), 2)
+    """Total relief on a target from cash payments AND credit notes combined.
+
+    Credit notes (credit_notes.py) relieve the same invoices/bills, so a target's
+    true remaining balance nets both sub-ledgers. The credit table is queried
+    defensively so a book that has only ever taken payments still resolves.
+    """
+    total = 0.0
+    for table in ("payment_allocations", "credit_note_allocations"):
+        if not con.execute(
+            "SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (table,)
+        ).fetchone():
+            continue
+        row = con.execute(
+            f"SELECT COALESCE(SUM(amount), 0) FROM {table} "
+            "WHERE target_type=? AND target_id=?",
+            (target_type, target_id),
+        ).fetchone()
+        total += float(row[0] or 0)
+    return round(total, 2)
 
 
 def target_balance(slug: str, target_type: str, target_id: int) -> float:
