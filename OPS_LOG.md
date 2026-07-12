@@ -12,6 +12,42 @@ public repo.
 
 ---
 
+### 2026-07-12 — Cost centers: slicing the P&L by project / department / class (CR-009)
+
+First of the "buildable now" bucket-A/B items after the 1–5 workflow. LISZA could produce a
+book-level P&L but couldn't answer "what did the West region earn" or "is the Apollo project
+profitable" — there were no accounting dimensions. `scripts/cost_centers.py` (TDD, 17 tests,
+RED→GREEN) adds them, and it's the lowest-risk kind of change: it posts nothing.
+
+The design choice that keeps this safe is the same one budgeting and period_close made — **add
+tables, never touch the core ledger.** A `cost_centers` registry holds the taggable values
+(code, name, and a `kind` that's one of cost_center / project / department / class), and a
+`split_dimensions` sidecar maps a posted split id to a cost center. Nothing about how entries
+post changes; the dimension is a pure overlay laid on top of already-posted lines.
+
+- **Post-hoc tagging.** You post normally, then tag: `tag_entry(journal#, center)` stamps every
+  line of an entry, `tag_split` does one line. Because tagging happens after the fact, every
+  existing poster — payments, tax, credit notes, the closing entry — keeps working untouched,
+  and a book is never forced to tag everything at once. Untagged lines land in an `(unassigned)`
+  bucket in the report.
+- **Soft-delete, always.** `deactivate_cost_center` flips a flag; the row and its historical
+  tags survive (add-don't-subtract). Re-tagging is an idempotent upsert — it *moves* a line to a
+  new center rather than duplicating it.
+- **Reports are pure aggregation.** `dimension_report(start, end)` sums posted income (cr−dr)
+  and expense (dr−cr) per center plus the unassigned bucket; `cost_center_pnl` drills into one
+  center account-by-account. Posted-only, period-bounded.
+
+Wired `cost_center_post` (add/deactivate/tag/untag/tag_entry) + `cost_center` (list/report/pnl)
+on `/api/lisza`, and a **Cost Centers** section in `/lisza/workspace`: a new-dimension form, an
+active-dimensions list with deactivate, a "tag a journal entry" form, and a dimension P&L report
+with the unassigned bucket as its own row.
+
+Full suite **338 passed**. Live on `jb-design`: added WEST; the report showed unassigned expense
+$28,112.80 and no centers; tagging journal #481 (2 lines) to WEST moved $3,287.66 into WEST and
+dropped unassigned to $24,825.14 — total expense conserved, just reallocated, which is exactly
+the invariant a dimensional cut must hold. Page served HTTP 200 after the UI edit. Details in
+`docs/CHANGE_LOG.md` CR-009.
+
 ### 2026-07-12 — Period close: rolling a fiscal month into retained earnings and locking it (CR-008)
 
 Last of the operator's 1–5 workflow, and the piece that turns LISZA from "a ledger you keep

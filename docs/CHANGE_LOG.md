@@ -33,6 +33,48 @@ money**, not by feature size:
 
 ---
 
+### CR-009 — Cost centers / accounting dimensions: tag ledger lines, report P&L per dimension — read-only/additive
+- **Date:** 2026-07-12
+- **Tier:** read-only/additive — adds two new tables and an overlay tag; **posts no GL
+  entries and changes no posting path**. Tagging annotates existing posted lines; reports
+  are pure aggregation over posted splits.
+- **What / Why:** LISZA could produce a book-level P&L but had no way to slice it by
+  cost center, project, department, or class — a bookkeeper couldn't answer "what did the
+  West region / the Apollo project actually earn." Added `scripts/cost_centers.py`. Design
+  follows the house convention (budgeting/period_close): **additive tables, the core
+  `splits`/`entries` are never touched.** A `cost_centers` registry (`code` UNIQUE, `name`,
+  `kind` ∈ cost_center|project|department|class, `active`) holds the taggable values; a
+  `split_dimensions` sidecar (`split_id` PK → `cost_center`) maps posted lines to a
+  dimension. Tagging is **post-hoc** — `tag_split`/`tag_entry` annotate after posting — so no
+  poster (payments, tax, credit notes, closing entries) changes and untagged lines simply
+  fall into an `(unassigned)` bucket. `set_cost_center` upserts the registry;
+  `deactivate_cost_center` is a **soft-delete** (row + historical tags preserved,
+  add-don't-subtract). `dimension_report(start, end)` groups posted income (cr−dr) and
+  expense (dr−cr) per cost center + an unassigned bucket; `cost_center_pnl(code, …)` gives a
+  single-center per-account breakdown. Wired `cost_center_post` (POST: add/deactivate/tag/
+  untag/tag_entry) + `cost_center` (GET: list/report/pnl) modes on `/api/lisza`, and a
+  **Cost Centers** section (registry form + active-dimensions list + tag-a-journal-entry +
+  dimension P&L report) in `/lisza/workspace`.
+- **Risk:** low — no posted data is written or mutated; the sidecar only references existing
+  split ids and validates the center is active before tagging. Reports read `status='posted'`
+  splits only. A re-tag is an idempotent upsert (moves the line, no duplicate); a deactivated
+  center's past tags remain and still report until re-tagged/untagged. Worst case is a
+  mis-tagged line, corrected by re-tagging — never a ledger imbalance.
+- **Rollback:** remove `scripts/cost_centers.py` + `test_cost_centers.py`; drop the two
+  `cost_center*` route modes and the Cost Centers NAV tuple + dispatch branch +
+  `CostCenterSection` in `/lisza/workspace`. The `cost_centers` / `split_dimensions` tables
+  are inert once the readers are gone; they can be left in place or dropped per book.
+- **Verify:** `cd scripts && python3 -m pytest test_cost_centers.py -q` → 17 passed (registry
+  set/list/kind-filter, soft-delete keeps row, tag assign, unknown-split/unknown-center/
+  inactive-center guards, idempotent reassign, untag, tag_entry all-legs, report income+
+  expense grouping, unassigned bucket, period bounds, posted-only, single-center pnl, CLI).
+  Full suite **338 passed**. Live on `jb-design` via the preview API: added cost center WEST;
+  `report` showed unassigned expense 28,112.80 / centers []; `POST tag_entry` on journal #481
+  tagged 2 lines; `report` then showed WEST expense 3,287.66 and unassigned expense 24,825.14
+  (28,112.80 − 3,287.66 — total expense conserved, just reallocated). `/lisza/workspace`
+  served HTTP 200 after the UI edit (TSX compiled).
+- **Status:** executed
+
 ### CR-008 — Period close: roll income/expense into retained earnings and lock the fiscal period — ledger-affecting
 - **Date:** 2026-07-12
 - **Tier:** ledger-affecting (posts a balanced closing journal that zeroes every P&L account
