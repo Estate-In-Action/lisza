@@ -4,6 +4,17 @@
 business's finances — receipt photos, emailed invoices, bank-statement CSVs — into
 a clean, balanced double-entry ledger with almost no manual data entry.
 
+## Writing Rules
+
+Use these rules on all written surfaces unless a stronger local requirement overrides them:
+
+1. Never use a metaphor, simile, or other figure of speech that is overused in print.
+2. Never use a long word where a short one will do.
+3. If a word can be cut, cut it.
+4. Prefer the active voice.
+5. Never use a foreign phrase, a scientific word, or jargon when an everyday English equivalent will do.
+6. Break any of these rules sooner than say anything outright barbarous.
+
 It is local-first (a single SQLite ledger), auditable (every posted entry must
 balance), and automation-friendly (Telegram + email intake, vision receipt
 parsing, rule-based categorization, and scheduled reports).
