@@ -119,7 +119,7 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 > - **Tree chart-of-accounts** (`isTree`, `parentAccount`, `rootType` = Asset/Liability/Equity/Income/Expense) — confirms LISZA's `income` (not `revenue`) choice; a parent-account tree is the upgrade path when the flat COA outgrows itself.
 > - **`NumberSeries` as a first-class entity** — document numbering (invoice #, journal #) is configurable data, not hardcoded.
 
-### New workstream — Frappe Books alignment (2026-07-09)
+### 🟡 New workstream — Frappe Books alignment (2026-07-09)
 
 - [x] **Phase 1: accounting workspace shell** — move LISZA from dashboard-first
   to document-first UX. First slice: persistent left nav, dashboard as one
@@ -156,7 +156,7 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 > import added alongside the existing CSV path. Remaining A/B/C/D items stay the
 > committed backlog; C-bucket new modules still confirm-first before file creation.
 
-### A. Money movement & billing depth (highest leverage; mostly `[Finance-first]`)
+### 🟡 A. Money movement & billing depth (highest leverage; mostly `[Finance-first]`)
 - [x] **Payment application & reconciliation** — record a payment and allocate it across one/many invoices or bills; partial payments, deposits, over/underpayment handling. `[Finance-first]` *(extends: Sales/Purchasing pipelines stop at "open invoice"/"unpaid bill")* — Bigcapital, ERPNext, LedgerSMB. *(Shipped 2026-07-11: `scripts/payments.py` — receipts/disbursements, multi-invoice/bill allocation, partial + on-account/unapplied handling, over-allocation guards, posts balanced cash journal + relieves sub-ledger to paid. Wired: `/api/lisza` `payment_apply`/`payments`/`open_items` modes + v2 Payments tab. Tested end-to-end.)*
 - [ ] **Online payment collection** — payment-gateway integrations (Stripe/PayPal/etc.) so a client can pay an invoice online; record the receipt back to the ledger. — Invoice Ninja, Akaunting, Dolibarr, ERPNext, Bigcapital.
 - [x] **Recurring / subscription invoicing** — schedule-driven auto-generation of invoices (and bills). *(extends: AP/AR note "recurring invoice generation remains later")* — Invoice Ninja, Akaunting, ERPNext, Dolibarr. *(Shipped 2026-07-11 CR-004: `scripts/recurring_invoicing.py` — templates + `recurring_invoice_runs` idempotency ledger; Manual/Review/Auto modes; approval-gated `generate_due` posts `Dr110/Cr revenue`; advisory `recurring_invoice_due` planner job; `/api/lisza` `recurring`/`recurring_add`/`recurring_generate` + Sales "Recurring" sub-tab. 27 tests; full suite 263 passed.)*
@@ -165,7 +165,7 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 - [ ] **Client payment portal** — client-facing view to see and pay open invoices. *(extends: client portal is doc-request only today)* — Invoice Ninja, Akaunting, ERPNext.
 - [ ] **Estimate/quote acceptance + e-signature** — client approves a quote to convert it to an order/invoice. — Invoice Ninja, FreshBooks-style.
 
-### B. Accounting depth (statement & compliance completeness; `[Finance-first]`)
+### 🟡 B. Accounting depth (statement & compliance completeness; `[Finance-first]`)
 - [x] **AR / AP aging reports** — bucketed receivables/payables aging (0–30/31–60/…). `[Finance-first]` — Bigcapital, ERPNext, LedgerSMB. *(Live: `/api/lisza/report?type=ar_aging|ap_aging` — current/1–30/31–60/61–90/90+ buckets, surfaced in the Reports tab and per-client AR/AP tiles.)*
 - [x] **Cash flow statement** — formal CFS alongside the shipped P&L / BS / TB suite. `[Finance-first]` *(extends: reporting suite)* — Bigcapital, ERPNext. *(Shipped 2026-07-11: direct-method `statement_suite.cash_flow()` — cash-account-centric, buckets each entry's cash delta into operating/investing/financing by non-cash counterpart type, reconciles opening+net=closing; `/api/lisza/report?type=cash_flow` + Reports tab "Cash Flow" pill. 4 unit tests.)*
 - [x] **Tax engine** — sales-tax/VAT rate tables, tax-inclusive/exclusive lines, tax-liability report, 1099 support. **Shipped 2026-07-12 (CR-007):** `scripts/tax.py` — `compute_tax` (inclusive/exclusive), `tax_rates` table, taxed invoice/bill posting the tax split (stored at gross), `tax_transactions` ledger, `tax_liability` (output−input), 1099 vendor totals @ ≥$600. `tax_post`/`tax` API modes + **Tax** section (Rates/Invoice/Liability/1099) in `/lisza/workspace`. 16 tests; full suite 307. (Tax *templates* — reusable per-customer default rate — deferred as a thin later add.)
@@ -175,7 +175,7 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 - [ ] **FX revaluation & realized/unrealized gain-loss posting** — actually post FX gain/loss, not just store source-currency metadata. `[Finance-first]` *(extends: multi-currency first slice)* — ERPNext.
 - [ ] **Live bank feeds** — real bank/card sync (Plaid or equivalent) into the reconciliation lane. *(extends: reconciliation ships with deterministic matching only)* — Bigcapital, ERPNext, Akaunting.
 
-### C. ERP breadth (new modules; per-module confirm before building)
+### 🟡 C. ERP breadth (new modules; per-module confirm before building)
 - [ ] **CRM opportunity pipeline** — lead → opportunity → quotation with stages/forecast. *(extends: party directory has a `lead` role but no pipeline)* — Dolibarr, ERPNext.
 - [ ] **Multi-company / consolidated financials** — group-level statements across client entities. — ERPNext, Akaunting, Dolibarr.
 - [ ] **Warehouse & stock depth** — multi-location stock, batch/serial tracking, stock transfers, landed-cost allocation. *(extends: inventory movement ledger)* — ERPNext, Dolibarr.
@@ -185,7 +185,7 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 - [ ] **POS** — point-of-sale sales capture for retail/restaurant client personas (Harborside). — Dolibarr, ERPNext.
 - [ ] **E-commerce / marketplace connectors** — sync orders from external storefronts. — Dolibarr, ERPNext, Akaunting.
 
-### D. Platform & configurability (cross-cutting)
+### 🟡 D. Platform & configurability (cross-cutting)
 - [ ] **Role-based access control + 2FA** — per-user roles/permissions on client books and multi-bookkeeper access. — ERPNext, Dolibarr, Akaunting.
 - [ ] **E-invoicing standards** — PEPPOL / UBL / GST-style structured e-invoice output. — ERPNext, Dolibarr.
 - [ ] **Branded document/PDF template designer** — customizable invoice/statement templates. — Invoice Ninja, Akaunting.
@@ -198,7 +198,7 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 > primitives every client book needs, versus bucket C which is per-vertical ERP
 > breadth. Awaiting operator priority call before any new module files (Rule #7).
 
-### Insights — peer benchmarking (2026-07-11)
+### 🟡 Insights — peer benchmarking (2026-07-11)
 
 - [ ] **Insights tab — wire a real peer-benchmark source.** Prototype shipped in
   v2 (`/lisza/workspace` → Insights): source selector + NAICS vertical selector +
