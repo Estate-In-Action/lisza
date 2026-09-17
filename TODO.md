@@ -129,11 +129,12 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
   remains available at `https://dadadanja.zo.space/lisza/console` while the new
   shell proves itself. Implementation note:
   `docs/plans/2026-07-09-frappe-books-alignment.md`
-- [ ] **Phase 2: make v2 the canonical LISZA surface** — v2 is now the build line.
-  Public/showpiece links should point to `/lisza/workspace`; v1 console/demo
-  remains available only as a deprecated comparison path. Next build slices:
-  document detail pages, lightweight schema registry for document fields,
-  number-series helpers, and first approval-gated write actions.
+- [x] **Phase 2: make v2 the canonical LISZA surface — shipped 2026-09-17
+  (CR-010).** `/lisza` now opens `/lisza/workspace`; `/lisza/console` remains a
+  deprecated comparison path. The workspace has schema-driven invoice, bill,
+  journal, and payment indexes and detail views; per-client number previews;
+  and an invoice-send action that only creates a `pending_approval` workflow.
+  It sends nothing and posts nothing until the separate approval workflow runs.
 
 ## Accounting-suite gap scan — 6-package review (2026-07-11)
 

@@ -2,6 +2,7 @@
 """Project each client ledger.db into public/clients/<slug>.json (read-only)."""
 from __future__ import annotations
 
+import argparse
 import json
 import sqlite3
 from datetime import date, datetime, timezone
@@ -563,5 +564,31 @@ def write_all() -> int:
     return n
 
 
-if __name__ == "__main__":
+def build_section(slug: str, section: str) -> dict:
+    if section != "document_workspace":
+        raise ValueError(f"unknown client-detail section: {section}")
+    con = sqlite3.connect(tenancy.resolve_db(slug))
+    con.row_factory = sqlite3.Row
+    try:
+        return document_index(con, slug)
+    finally:
+        con.close()
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--client")
+    parser.add_argument("--section", choices=["document_workspace"])
+    args = parser.parse_args()
+    if args.section and not args.client:
+        parser.error("--section requires --client")
+    if args.client:
+        payload = build_section(args.client, args.section) if args.section else build_client_detail(args.client)
+        print(json.dumps(payload, indent=2, sort_keys=True))
+        return 0
     print(f"wrote {write_all()} client detail files")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

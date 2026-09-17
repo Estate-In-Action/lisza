@@ -141,6 +141,22 @@ def test_build_detail_end_to_end(tmp_path, monkeypatch):
     assert d["financial_state"]["liquidity"]["open_ar"] == 1000.0
 
 
+def test_build_section_exposes_document_workspace(tmp_path, monkeypatch):
+    monkeypatch.setenv("LISZA_HOME", str(tmp_path))
+    import tenancy
+    importlib.reload(tenancy)
+    importlib.reload(bcd)
+    monkeypatch.setattr(tenancy, "COA_PATH",
+                        __import__("pathlib").Path(COA_PATH))
+    tenancy.register_client(slug="acme", display_name="Acme Co")
+
+    section = bcd.build_section("acme", "document_workspace")
+
+    assert set(section["schemas"]) >= {"invoice", "bill", "journal", "payment"}
+    assert section["number_series"]["invoice"]["next_number"] == "INV-00001"
+    assert section["capabilities"]["send_invoice"] == "approval_required"
+
+
 def test_client_isolation(tmp_path, monkeypatch):
     """Build for client_a must reflect only client_a's data, not client_b's."""
     monkeypatch.setenv("LISZA_HOME", str(tmp_path))

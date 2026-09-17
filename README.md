@@ -42,6 +42,9 @@ INTAKE                      REVIEW                     LEDGER & REPORTS
   amount, date, and a suggested account from a receipt image or PDF.
 - **Categorization** (`payee_rules`) — pattern → account rules auto-suggest the
   booking for recurring payees.
+- **Document workspace** (`book_schema.py`, `number_series.py`,
+  `document_actions.py`) — schema-driven invoice, bill, journal, and payment
+  details with number previews and approval-gated actions in `/lisza/workspace`.
 - **Reporting** (`weekly_report.py`, `quarterly_reports.py`, `sheet_sync.py`) —
   trial balance, spend by category, and optional Google Sheets mirror.
 - **Statement automation** (`statement_automation.py`) — scans

@@ -33,6 +33,23 @@ money**, not by feature size:
 
 ---
 
+### CR-010 — Canonical v2 document workspace
+- **Date:** 2026-09-17
+- **Tier:** read-only/additive — document reads are projections; the only write
+  creates a `pending_approval` workflow record and cannot send or post.
+- **What / Why:** made `/lisza/workspace` the `/lisza` front door and surfaced
+  the existing schema registry, document indexes/details, number-series
+  previews, and approval-gated invoice-send plan in one Documents section.
+- **Risk:** low. Existing books and posted entries are unchanged; the legacy
+  `/lisza/console` remains available.
+- **Rollback:** restore the three Zo Space route versions and revert the narrow
+  `build_client_detail.py --section` CLI seam.
+- **Verify:** 19 focused Python tests passed; live API returned all four schemas
+  and `approval_required` capabilities for the synthetic `jb-design` book;
+  Zo Space reported zero route errors; browser render showed Documents and its
+  detail action without executing it.
+- **Status:** executed
+
 ### CR-009 — Cost centers / accounting dimensions: tag ledger lines, report P&L per dimension — read-only/additive
 - **Date:** 2026-07-12
 - **Tier:** read-only/additive — adds two new tables and an overlay tag; **posts no GL

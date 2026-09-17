@@ -273,3 +273,15 @@ confirm-first before file creation), bucket D (RBAC+2FA, e-invoicing, branded PD
 
 Verify: `cd scripts && python3 -m pytest -q` → 234 passed. Live-API checks recorded per-CR in
 `docs/CHANGE_LOG.md`.
+
+### 2026-09-17T17:15:20Z — CR-010: canonical v2 document workspace
+
+`/lisza` now opens `/lisza/workspace`; the legacy `/lisza/console` remains as a
+comparison path. The workspace gained a Documents destination backed by the
+existing per-client schema registry, document indexes, number-series previews,
+and invoice-send planning. Selecting a document opens its schema-driven detail
+view. The only new action creates a `pending_approval` workflow job; it sends no
+email and posts no ledger entry. Added a narrow `build_client_detail.py
+--client ... --section document_workspace` JSON seam for the live API. Focused
+tests: 19 passed. Live synthetic-book API and browser render passed; Zo Space
+reported zero route errors. No real personal data or posted ledger row changed.
