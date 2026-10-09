@@ -129,11 +129,12 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
   remains available at `https://dadadanja.zo.space/lisza/console` while the new
   shell proves itself. Implementation note:
   `docs/plans/2026-07-09-frappe-books-alignment.md`
-- [ ] **Phase 2: make v2 the canonical LISZA surface** — v2 is now the build line.
-  Public/showpiece links should point to `/lisza/workspace`; v1 console/demo
-  remains available only as a deprecated comparison path. Next build slices:
-  document detail pages, lightweight schema registry for document fields,
-  number-series helpers, and first approval-gated write actions.
+- [x] **Phase 2: make v2 the canonical LISZA surface — shipped 2026-09-17
+  (CR-010).** `/lisza` now opens `/lisza/workspace`; `/lisza/console` remains a
+  deprecated comparison path. The workspace has schema-driven invoice, bill,
+  journal, and payment indexes and detail views; per-client number previews;
+  and an invoice-send action that only creates a `pending_approval` workflow.
+  It sends nothing and posts nothing until the separate approval workflow runs.
 
 ## Accounting-suite gap scan — 6-package review (2026-07-11)
 
@@ -158,7 +159,7 @@ Decide the standard tile set a bookkeeper needs per client. Candidate set:
 
 ### 🟡 A. Money movement & billing depth (highest leverage; mostly `[Finance-first]`)
 - [x] **Payment application & reconciliation** — record a payment and allocate it across one/many invoices or bills; partial payments, deposits, over/underpayment handling. `[Finance-first]` *(extends: Sales/Purchasing pipelines stop at "open invoice"/"unpaid bill")* — Bigcapital, ERPNext, LedgerSMB. *(Shipped 2026-07-11: `scripts/payments.py` — receipts/disbursements, multi-invoice/bill allocation, partial + on-account/unapplied handling, over-allocation guards, posts balanced cash journal + relieves sub-ledger to paid. Wired: `/api/lisza` `payment_apply`/`payments`/`open_items` modes + v2 Payments tab. Tested end-to-end.)*
-- [ ] **Online payment collection** — payment-gateway integrations (Stripe/PayPal/etc.) so a client can pay an invoice online; record the receipt back to the ledger. — Invoice Ninja, Akaunting, Dolibarr, ERPNext, Bigcapital.
+- [ ] **Online payment collection** — gated foundation shipped 2026-09-18 in `scripts/online_payments.py`: dry-run/queue prepares one idempotent request per open invoice, explicit operator approval is required, and `LISZA_ONLINE_PAYMENTS_ENABLED=1` is required before a provider-neutral checkout payload can be produced. It makes no provider call, posts no ledger entry, and has no settlement authority. Remaining: choose/provider adapter, signed webhook verification, idempotent receipt application through `payments.py`, and client portal UI. — Invoice Ninja, Akaunting, Dolibarr, ERPNext, Bigcapital.
 - [x] **Recurring / subscription invoicing** — schedule-driven auto-generation of invoices (and bills). *(extends: AP/AR note "recurring invoice generation remains later")* — Invoice Ninja, Akaunting, ERPNext, Dolibarr. *(Shipped 2026-07-11 CR-004: `scripts/recurring_invoicing.py` — templates + `recurring_invoice_runs` idempotency ledger; Manual/Review/Auto modes; approval-gated `generate_due` posts `Dr110/Cr revenue`; advisory `recurring_invoice_due` planner job; `/api/lisza` `recurring`/`recurring_add`/`recurring_generate` + Sales "Recurring" sub-tab. 27 tests; full suite 263 passed.)*
 - [x] **Credit notes / debit notes / vendor credits** — first-class credit documents that post reversing/offsetting ledger entries (fits add-don't-subtract). `[Finance-first]` — Bigcapital, ERPNext, Invoice Ninja. *(Shipped 2026-07-12 CR-005: `scripts/credit_notes.py` — customer credit memo `Dr revenue/Cr 110`, vendor credit `Dr 200/Cr expense`; offset type-checked; allocations relieve open invoices/bills to paid, remainder on-account; balance nets payments+credits across both modules. `/api/lisza` `credit_apply`/`credit_notes` + v2 Credit Notes section. 12 tests; full suite 276 passed; live e2e on jb-design.)*
 - [x] **Dunning / late-fee escalation** — tiered automated reminder ladder + late fees. *(extends: AR reminder workflow exists; escalation/fees do not)* — Invoice Ninja, Akaunting. *(Shipped 2026-07-12 CR-006: `scripts/dunning.py` — read-only `dunning_ladder` + ledger-affecting `assess_late_fee` (`Dr 110/Cr late-fee income`); per-book `dunning_policy` (reminder@1d→first@15d 1.5%→second@30d 1.5%→final@60d flat $25); idempotent `UNIQUE(invoice_id,stage)`; COA 445 Late Fee Income. `/api/lisza` `dunning_assess`/`dunning` + Dunning section in `/lisza/workspace`. 15 tests; full suite 291 passed; live e2e on jb-design (journal #485).)*
